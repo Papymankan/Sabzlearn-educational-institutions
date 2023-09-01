@@ -5,6 +5,7 @@ import Header from '../../Components/Header/Header';
 import LastCourses from '../../Components/LastCourses/LastCourses';
 import Popular from '../../Components/Popular/Popular';
 import Presell from '../../Components/Presell/Presell';
+import Footer from '../../Components/Footer/Footer';
 
 export default function Home() {
   return (
@@ -15,6 +16,7 @@ export default function Home() {
       <Popular/>
       <Presell/>
       <Articles/>
+      <Footer/>
     </>
   )
 }
