@@ -4,6 +4,7 @@ import BreadCrumb from '../../Components/BreadCrumb/BreadCrumb'
 import NavBar from '../../Components/Header/NavBar/NavBar'
 import TopBar from '../../Components/Header/TopBar/TopBar'
 import Footer from '../../Components/Footer/Footer'
+import CommentSection from '../../Components/CommentSection/CommentSection'
 
 export default function ArticleInfo() {
   return (
@@ -140,6 +141,7 @@ export default function ArticleInfo() {
                   </div>
                 </div>
               </div>
+              <CommentSection/>
             </div>
             <div className="col-4">
 
