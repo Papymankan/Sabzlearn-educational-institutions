@@ -43,6 +43,10 @@
 
 /* Finish Course Info Styles */
 
+.main{
+    margin-top: 4rem;
+}
+
 /* Start Course boxes styles */
 
 
@@ -117,6 +121,7 @@
     padding: 0.8rem 1.5rem;
     font-weight: bold;
     font-size: 1.5rem;
+    margin-left: 1rem;
 }
 
 .introduction__btns-item:hover {
