@@ -9,13 +9,13 @@ export default function AboutUs() {
                 <SectionHeader btn_title="" main_title="ما چه کمکی بهتون میکنیم؟" primary_title="از اونجایی که آکادمی آموزشی سبزلرن یک آکادمی خصوصی هست" />
                 <div class="container">
                     <div class="row">
-                        <AboutUsCard desc="با پشتیبانی و کیفیت بالا ارائه میده !" icon="copyright" title="دوره های اختصاصی"/>
+                        <AboutUsCard desc="با پشتیبانی و کیفیت بالا ارائه میده !" icon="far fa-copyright" title="دوره های اختصاصی" />
 
-                        <AboutUsCard title="اجازه تدریس" icon="leaf" desc="به هر مدرسی رو نمیده. چون کیفیت براش مهمه !"/>
+                        <AboutUsCard title="اجازه تدریس" icon="fas fa-leaf" desc="به هر مدرسی رو نمیده. چون کیفیت براش مهمه !" />
 
-                        <AboutUsCard desc="براش مهم نیست. به مدرسینش حقوق میده تا نهایت کیفیت رو در پشتیبانی و اپدیت دوره ارائه بده" icon="copyright" title="دوره پولی و رایگان"/>
+                        <AboutUsCard desc="براش مهم نیست. به مدرسینش حقوق میده تا نهایت کیفیت رو در پشتیبانی و اپدیت دوره ارائه بده" icon="fas fa-gem" title="دوره پولی و رایگان" />
 
-                        <AboutUsCard desc="اولویت اول و آخر آکادمی آموزش برنامه نویسی سبزلرن اهمیت به کاربرها و رفع نیاز های آموزشی و رسوندن اونها به بازار کار هست" icon="copyright" title="اهمیت به کاربر"/>
+                        <AboutUsCard desc="اولویت اول و آخر آکادمی آموزش برنامه نویسی سبزلرن اهمیت به کاربرها و رفع نیاز های آموزشی و رسوندن اونها به بازار کار هست" icon="fas fa-crown" title="اهمیت به کاربر" />
                     </div>
                 </div>
             </div>

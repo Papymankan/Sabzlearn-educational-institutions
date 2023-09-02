@@ -355,8 +355,6 @@
     border-radius: 0.5rem;
     margin-top: 1rem;
     padding: 2.2rem;
-    box-shadow: 0 0 13px 1px rgba(70, 72, 77, 0.08);
-    border: 1px solid #f2f2f2;
 }
 
 .course-info__topic-title {
