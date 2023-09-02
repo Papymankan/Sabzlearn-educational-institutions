@@ -133,31 +133,7 @@
     margin-top: 4rem;
 }
 
-.accordion {
-    margin-bottom: 2rem;
-}
 
-.accordion-item {
-    background-color: #f7f9fa;
-}
-
-.accordion-button {
-    background-color: #f7f9fa;
-    font-size: 1.5rem;
-    padding: 1.25rem;
-}
-
-.accordion-button:not(.collapsed) {
-    background-color: #f7f9fa;
-}
-
-.accordion-button::after {
-    position: absolute;
-    left: 1.5rem;
-    width: 2rem;
-    height: 2rem;
-    background-position: center;
-}
 
 .introduction__accordion-body {
     display: flex;
@@ -203,7 +179,7 @@
 .techer-details {
     border-radius: 0.5rem;
     padding: 2rem;
-    margin-top: 2rem;
+    margin: 2rem 0;
     box-shadow: 0 0 13px 1px rgba(70, 72, 77, 0.08);
 }
 

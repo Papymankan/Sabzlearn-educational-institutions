@@ -6,6 +6,8 @@ import BreadCrumb from '../../Components/BreadCrumb/BreadCrumb'
 import './CourseInfo.css'
 import CourseInfoBox from '../../Components/CourseInfoBox/CourseInfoBox'
 import SectionHeader from '../../Components/SectionHeader/SectionHeader'
+import CommentSection from '../../Components/CommentSection/CommentSection'
+import AccordionCourse from '../../Components/AccordionCourse/AccordionCourse'
 
 export default function CourseInfo() {
   return (
@@ -118,6 +120,7 @@ export default function CourseInfo() {
                     <a href="#" class="introduction__btns-item">دانلود همگانی ویدیوها</a>
                     <a href="#" class="introduction__btns-item">دانلود همگانی پیوست‌ها</a>
                   </div>
+                    <AccordionCourse/>
                 </div>
                 {/* Introduction end */}
 
@@ -145,6 +148,7 @@ export default function CourseInfo() {
                 {/* Teacher end */}
 
               </div>
+              <CommentSection/>
             </div>
             <div className="col-4">
               <div class="courses-info">
