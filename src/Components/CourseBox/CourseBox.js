@@ -1,12 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import './CourseBox.css'
+import { Skeleton } from '@mui/material'
 
 export default function CourseBox() {
+    const [courseImg, setCourseImg] = useState(false)
+
+    const onImgLoaded = () => setCourseImg(true)
     return (
         <div class="col-4">
             <div class="course-box">
                 <a href="#">
-                    <img src="/images/courses/fareelancer.png" alt="Course img" class="course-box__img" />
+                    <img src="/images/courses/fareelancer.png" alt="Course img" class="course-box__img" onLoad={onImgLoaded} />
+                    {
+                        !courseImg && (<Skeleton variant="rectangular" width={"100%"} height={200} />) 
+                    }
                 </a>
                 <div class="course-box__main">
                     <a href="#" class="course-box__title">دوره پروژه محور متخصص جنگو</a>
