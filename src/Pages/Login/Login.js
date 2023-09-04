@@ -7,6 +7,7 @@ import NavBar from "../../Components/Header/NavBar/NavBar";
 import "./Login.css";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
+import { requiredValidator, minValidator, maxValidator, emailValidator } from "../../Validators/rules";
 
 export default function Login() {
   return (
@@ -33,23 +34,30 @@ export default function Login() {
                 type="text"
                 placeholder="نام کاربری یا آدرس ایمیل"
                 element='input'
+                validation={[
+                  requiredValidator(),
+                  minValidator(8),
+                  maxValidator(20),
+                  emailValidator()
+                ]}
               />
               <i class="login-form__username-icon fa fa-user"></i>
             </div>
             <div class="login-form__password">
               <Input
                 classname="login-form__password-input"
-                type="text"
+                type="password"
                 placeholder="رمز عبور"
                 element='input'
+                validation={[
+                  requiredValidator(),
+                  minValidator(8),
+                  maxValidator(18)
+                ]}
               />
               <i class="login-form__password-icon fa fa-lock-open"></i>
             </div>
-            {/* <button class="login-form__btn" type="submit">
-              <i class="login-form__btn-icon fas fa-sign-out-alt"></i>
-              <span class="login-form__btn-text">ورود</span>
-            </button> */}
-            <Button  classname="login-form__btn" type="submit" disabled={false} onclick={()=>{}}>
+            <Button classname="login-form__btn" type="submit" disabled={false} onclick={() => { }}>
               <i class="login-form__btn-icon fas fa-sign-out-alt"></i>
               <span class="login-form__btn-text">ورود</span>
             </Button>
