@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import Validator from '../../Validators/Validator'
 import './Input.css'
 
@@ -18,9 +18,12 @@ export default function Input(props) {
   const [mainInput, dispatch] = useReducer(inputReducer, { value: '', isValid: false })
 
   const InputOnChange = (e) => {
-      dispatch({type:'CHANGE' , value : e.target.value , isValid:true , validation:props.validation})
-
+      dispatch({type:'CHANGE' , value : e.target.value  , validation:props.validation})
   }
+
+  useEffect(()=>{
+    props.onInputHandler(props.id , mainInput.value , mainInput.isValid)
+  } , [mainInput.value])
 
   const element = props.element == 'input' ? (
     <input placeholder={props.placeholder} type={props.type} className={`${props.classname} ${mainInput.isValid ? 'success' : 'error'}`} onChange={InputOnChange} value={mainInput.value}/>

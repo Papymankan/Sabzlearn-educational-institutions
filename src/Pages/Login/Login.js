@@ -3,13 +3,27 @@ import { Link } from 'react-router-dom'
 import Footer from "../../Components/Footer/Footer";
 import TopBar from "../../Components/Header/TopBar/TopBar";
 import NavBar from "../../Components/Header/NavBar/NavBar";
-
 import "./Login.css";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import { requiredValidator, minValidator, maxValidator, emailValidator } from "../../Validators/rules";
+import { useForm } from "../../hooks/useForm";
 
 export default function Login() {
+
+  const [formState, onInputHandler] = useForm({
+    username: {
+      value: '',
+      isValid: false
+    },
+    password: {
+      value: '',
+      isValid: false
+    },
+  }, false)
+
+  console.log(formState);
+
   return (
     <>
       <TopBar />
@@ -31,6 +45,7 @@ export default function Login() {
             <div class="login-form__username">
               <Input
                 classname="login-form__username-input"
+                id="username"
                 type="text"
                 placeholder="نام کاربری یا آدرس ایمیل"
                 element='input'
@@ -40,12 +55,14 @@ export default function Login() {
                   maxValidator(20),
                   emailValidator()
                 ]}
+                onInputHandler={onInputHandler}
               />
               <i class="login-form__username-icon fa fa-user"></i>
             </div>
             <div class="login-form__password">
               <Input
                 classname="login-form__password-input"
+                id="password"
                 type="password"
                 placeholder="رمز عبور"
                 element='input'
@@ -54,10 +71,15 @@ export default function Login() {
                   minValidator(8),
                   maxValidator(18)
                 ]}
+                onInputHandler={onInputHandler}
               />
               <i class="login-form__password-icon fa fa-lock-open"></i>
             </div>
-            <Button classname="login-form__btn" type="submit" disabled={false} onclick={() => { }}>
+            <Button classname={`login-form__btn ${formState.isFormValid
+                ? "login-form__btn-success"
+                : "login-form__btn-error"
+              }`} type="submit" disabled={!formState.isFormValid}
+              onclick={() => { }}>
               <i class="login-form__btn-icon fas fa-sign-out-alt"></i>
               <span class="login-form__btn-text">ورود</span>
             </Button>
