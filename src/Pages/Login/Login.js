@@ -51,8 +51,7 @@ export default function Login() {
                 element='input'
                 validation={[
                   requiredValidator(),
-                  minValidator(8),
-                  maxValidator(20),
+                  minValidator(7),
                   emailValidator()
                 ]}
                 onInputHandler={onInputHandler}

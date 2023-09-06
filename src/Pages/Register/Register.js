@@ -3,12 +3,21 @@ import { Link } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import TopBar from "../../Components/Header/TopBar/TopBar";
 import NavBar from "../../Components/Header/NavBar/NavBar";
-
 import "./Register.css";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
+import { useForm } from "../../hooks/useForm";
+
+import { requiredValidator , minValidator , maxValidator , emailValidator } from "../../Validators/rules";
 
 export default function Register() {
+
+  // const [formState , onInputHandler] = useForm(
+  //   {
+
+  //   }
+  // )
+
   return (
     <>
       <TopBar />
@@ -28,6 +37,7 @@ export default function Register() {
             <div class="login-form__username">
               <Input
                 classname="login-form__username-input"
+                id="username"
                 type="text"
                 placeholder="نام کاربری"
                 element='input'
@@ -37,14 +47,16 @@ export default function Register() {
             <div class="login-form__password">
               <Input
                 classname="login-form__password-input"
+                id="email"
                 type="text"
                 placeholder="آدرس ایمیل"
                 element='input'
-              />
+                />
               <i class="login-form__password-icon fa fa-envelope"></i>
             </div>
             <div class="login-form__password">
               <Input
+                id="password"
                 classname="login-form__password-input"
                 type="text"
                 placeholder="رمز عبور"
