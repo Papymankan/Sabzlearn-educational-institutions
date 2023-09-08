@@ -14,7 +14,7 @@ export default function Register() {
 
   const [formState, onInputHandler] = useForm(
     {
-      fullname: {
+      name: {
         value: '',
         isValid: false
       },
@@ -30,8 +30,40 @@ export default function Register() {
         value: '',
         isValid: false
       },
+      confirmPassword: {
+        value: '',
+        isValid: false
+      },
     }, false
   )
+
+  const RegisterNewUser = () => {
+    console.log('register');
+
+    const newUser = {
+      name: formState.inputs.name.value,
+      username: formState.inputs.username.value,
+      phone: 0,
+      email: formState.inputs.email.value,
+      password: formState.inputs.password.value,
+      confirmPassword: formState.inputs.confirmPassword.value
+    }
+
+    fetch(`http://localhost:4000/v1/auth/register`, {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json"
+      },
+      body: JSON.stringify(newUser)
+    }).then(res => res.json())
+    .then(data =>{
+      if(data.message[0].message == 'کلمه ی عبور و تکرار آن یکسان نیستند'){
+        console.log('کلمه ی عبور و تکرار آن یکسان نیستند');
+      }
+    })
+
+  }
+  // کلمه ی عبور و تکرار آن یکسان نیستند
 
   return (
     <>
@@ -52,7 +84,7 @@ export default function Register() {
             <div class="login-form__username">
               <Input
                 classname="login-form__username-input"
-                id="fullname"
+                id="name"
                 type="text"
                 placeholder="نام و نام خانوادگی"
                 element='input'
@@ -114,10 +146,26 @@ export default function Register() {
               />
               <i class="login-form__password-icon fa fa-lock-open"></i>
             </div>
+            <div class="login-form__password">
+              <Input
+                id="confirmPassword"
+                classname="login-form__password-input"
+                type="text"
+                placeholder="تکرار رمز عبور"
+                element='input'
+                validation={[
+                  requiredValidator(),
+                  minValidator(8),
+                  maxValidator(20),
+                ]}
+                onInputHandler={onInputHandler}
+              />
+              <i class="login-form__password-icon fa fa-lock-open"></i>
+            </div>
             <Button classname={`login-form__btn ${formState.isFormValid
               ? "login-form__btn-success"
               : "login-form__btn-error"
-              }`} type="submit" disabled={!formState.isFormValid} onclick={() => { }}>
+              }`} type="button" disabled={!formState.isFormValid} onclick={RegisterNewUser}>
               <i class="login-form__btn-icon fa fa-user-plus"></i>
               <span class="login-form__btn-text">عضویت</span>
             </Button>
