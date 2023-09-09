@@ -12,20 +12,22 @@ function App() {
   const [token, setToken] = useState(null)
   const [userInfos, setUserInfos] = useState({})
 
-  const login = useCallback((userInfo, token) => {
-    setToken(token)
-    setIsloggedIn(true)
-    setUserInfos(userInfo)
-    localStorage.setItem('user', JSON.stringify({ token }))
-  }, [])
-
   const logout = useCallback(() => {
     setToken(null)
     setUserInfos({})
     localStorage.removeItem('user')
   }, [])
 
+  const login = useCallback((userInfo, token) => {
+    console.log('loggend in');
+    setToken(token)
+    setIsloggedIn(true)
+    setUserInfos(userInfo)
+    localStorage.setItem('user', JSON.stringify({ token }))
+  }, [])
+
   useEffect(() => {
+    console.log('app useEffect');
     const localData = JSON.parse(localStorage.getItem('user'))
     if (localData) {
       fetch('http://localhost:4000/v1/auth/me', {

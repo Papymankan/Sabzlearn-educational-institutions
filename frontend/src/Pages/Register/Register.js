@@ -1,4 +1,4 @@
-import React , {useContext} from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import TopBar from "../../Components/Header/TopBar/TopBar";
@@ -13,9 +13,8 @@ import AuthContext from "../../Context/authContext";
 import { requiredValidator, minValidator, maxValidator, emailValidator } from "../../Validators/rules";
 
 export default function Register() {
-  
+
   const authContext = useContext(AuthContext)
-  console.log(authContext);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -62,7 +61,7 @@ export default function Register() {
       body: JSON.stringify(newUser)
     }).then(res => res.json())
       .then(data => {
-        authContext.login(data.user , data.accessToken)
+        authContext.login(data.user, data.accessToken)
       })
 
   }
