@@ -8,15 +8,17 @@ import { useState } from 'react';
 function App() {
   const router = useRoutes(routes)
 
-  const [isloggedIn, setIsloggedIn] = useState(null)
+  const [isloggedIn, setIsloggedIn] = useState(false)
   const [token, setToken] = useState(null)
   const [userInfos, setUserInfos] = useState({})
 
-  const login = (token)=>{
+  const login = (userInfo ,token)=>{
     setToken(token)
+    setIsloggedIn(true)
+    setUserInfos(userInfo)
     localStorage.setItem('user' , JSON.stringify({token}))
   }
-  const logout = (token)=>{
+  const logout = ()=>{
     setToken(null)
     setUserInfos({})
     localStorage.removeItem('user')

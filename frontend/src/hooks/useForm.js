@@ -38,7 +38,6 @@ export const useForm = (initInputs, initFormIsValid) => {
     });
 
     const onInputHandler = (id, value, isValid) => {
-        console.log(id , value , isValid);
         dispatch({
             type: "INPUT_CHANGE",
             value,

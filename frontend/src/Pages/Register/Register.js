@@ -1,4 +1,4 @@
-import React from "react";
+import React , {useContext} from "react";
 import { Link } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import TopBar from "../../Components/Header/TopBar/TopBar";
@@ -7,10 +7,15 @@ import "./Register.css";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import { useForm } from "../../hooks/useForm";
+import AuthContext from "../../Context/authContext";
+
 
 import { requiredValidator, minValidator, maxValidator, emailValidator } from "../../Validators/rules";
 
 export default function Register() {
+  
+  const authContext = useContext(AuthContext)
+  console.log(authContext);
 
   const [formState, onInputHandler] = useForm(
     {
@@ -38,7 +43,7 @@ export default function Register() {
   )
 
   const RegisterNewUser = () => {
-    console.log('register');
+    // console.log('register');
 
     const newUser = {
       name: formState.inputs.name.value,
@@ -57,9 +62,7 @@ export default function Register() {
       body: JSON.stringify(newUser)
     }).then(res => res.json())
       .then(data => {
-        if (data.message[0].message == 'کلمه ی عبور و تکرار آن یکسان نیستند') {
-          console.log('کلمه ی عبور و تکرار آن یکسان نیستند');
-        }
+        authContext.login(data.user , data.accessToken)
       })
 
   }
