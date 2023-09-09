@@ -56,15 +56,13 @@ export default function Register() {
       },
       body: JSON.stringify(newUser)
     }).then(res => res.json())
-    .then(data =>{
-      if(data.message[0].message == 'کلمه ی عبور و تکرار آن یکسان نیستند'){
-        console.log('کلمه ی عبور و تکرار آن یکسان نیستند');
-      }
-    })
+      .then(data => {
+        if (data.message[0].message == 'کلمه ی عبور و تکرار آن یکسان نیستند') {
+          console.log('کلمه ی عبور و تکرار آن یکسان نیستند');
+        }
+      })
 
   }
-  // کلمه ی عبور و تکرار آن یکسان نیستند
-
   return (
     <>
       <TopBar />
