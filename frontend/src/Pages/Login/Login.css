@@ -155,4 +155,10 @@
     margin-top: 1rem;
   }
   /* ============================== Login-Register Style ============================== */
-  
+  .swal2-icon{
+    justify-self: center;
+  }
+  .swal2-confirm{
+    width: 150px;
+    font-size: 16px !important;
+  }

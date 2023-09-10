@@ -16,6 +16,7 @@
     "react-router": "^6.15.0",
     "react-router-dom": "^6.15.0",
     "react-scripts": "5.0.1",
+    "sweetalert2": "^11.7.27",
     "typewriter-effect": "^2.20.1",
     "web-vitals": "^2.1.4"
   },

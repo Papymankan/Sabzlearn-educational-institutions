@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import Footer from "../../Components/Footer/Footer";
 import TopBar from "../../Components/Header/TopBar/TopBar";
 import NavBar from "../../Components/Header/NavBar/NavBar";
@@ -9,9 +9,11 @@ import Button from "../../Components/Button/Button";
 import { requiredValidator, minValidator, maxValidator, emailValidator } from "../../Validators/rules";
 import { useForm } from "../../hooks/useForm";
 import AuthContext from "../../Context/authContext";
+import Swal from 'sweetalert2'
 
 export default function Login() {
 
+  const navigate = useNavigate()
 
   const authContext = useContext(AuthContext)
 
@@ -48,9 +50,31 @@ export default function Login() {
     })
       .then(data => {
         authContext.login({}, data.accessToken)
+        Swal.fire({
+          title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت لاگین شدید</p>',
+          icon: 'success',
+          padding: '20px',
+          html: '<p style="font-size: 20px ; margin-bottom: 20px;">در حال منتقل شدن...</p>',
+          didOpen: () => {
+            Swal.showLoading()
+          },
+          width: '380px',
+          timer: 1500,
+          willClose: () => {
+            navigate('/', { replace: true })
+            window.location.reload()
+          }
+        })
       })
       .catch(err => {
-
+        Swal.fire({
+          title: '<p style="font-size: 30px ; margin-bottom: 10px;">همچین کاربری یافت نشد</p>',
+          icon: 'error',
+          padding: '20px',
+          html: '<p style="font-size: 20px ; margin-bottom: 20px;">از رمز و نام کاربری خود مطمئن شوید</p>',
+          width: '400px',
+          confirmButtonText: 'تلاش دوباره'
+        })
       })
   }
 

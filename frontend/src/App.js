@@ -19,7 +19,6 @@ function App() {
   }, [])
 
   const login = useCallback((userInfo, token) => {
-    console.log('loggend in');
     setToken(token)
     setIsloggedIn(true)
     setUserInfos(userInfo)
@@ -27,7 +26,6 @@ function App() {
   }, [])
 
   useEffect(() => {
-    console.log('app useEffect');
     const localData = JSON.parse(localStorage.getItem('user'))
     if (localData) {
       fetch('http://localhost:4000/v1/auth/me', {
@@ -36,7 +34,6 @@ function App() {
         }
       }).then(res => res.json())
         .then(data => {
-          console.log(data);
           setIsloggedIn(true)
           setToken(localData.token)
           setUserInfos(data)
