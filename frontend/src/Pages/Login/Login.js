@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from 'react-router-dom'
 import Footer from "../../Components/Footer/Footer";
 import TopBar from "../../Components/Header/TopBar/TopBar";
@@ -8,8 +8,12 @@ import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
 import { requiredValidator, minValidator, maxValidator, emailValidator } from "../../Validators/rules";
 import { useForm } from "../../hooks/useForm";
+import AuthContext from "../../Context/authContext";
 
 export default function Login() {
+
+
+  const authContext = useContext(AuthContext)
 
   const [formState, onInputHandler] = useForm({
     username: {
@@ -22,7 +26,33 @@ export default function Login() {
     },
   }, false)
 
-  console.log(formState);
+  const userLogin = () => {
+    const userData = {
+      identifier: formState.inputs.username.value,
+      password: formState.inputs.password.value,
+    }
+    fetch(`http://localhost:4000/v1/auth/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(userData)
+    }).then(res => {
+      if (!res.ok) {
+        return res.text().then(text => {
+          throw new Error(text)
+        })
+      } else {
+        return res.json()
+      }
+    })
+      .then(data => {
+        authContext.login({}, data.accessToken)
+      })
+      .catch(err => {
+
+      })
+  }
 
   return (
     <>
@@ -52,7 +82,6 @@ export default function Login() {
                 validation={[
                   requiredValidator(),
                   minValidator(7),
-                  emailValidator()
                 ]}
                 onInputHandler={onInputHandler}
               />
@@ -75,10 +104,10 @@ export default function Login() {
               <i class="login-form__password-icon fa fa-lock-open"></i>
             </div>
             <Button classname={`login-form__btn ${formState.isFormValid
-                ? "login-form__btn-success"
-                : "login-form__btn-error"
-              }`} type="submit" disabled={!formState.isFormValid}
-              onclick={() => { }}>
+              ? "login-form__btn-success"
+              : "login-form__btn-error"
+              }`} type="button" disabled={!formState.isFormValid}
+              onclick={userLogin}>
               <i class="login-form__btn-icon fas fa-sign-out-alt"></i>
               <span class="login-form__btn-text">ورود</span>
             </Button>
