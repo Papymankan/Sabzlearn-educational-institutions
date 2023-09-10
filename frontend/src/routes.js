@@ -9,7 +9,7 @@ import Register from './Pages/Register/Register'
 
 const routes = [
     { path: '/', element: <Home/> },
-    { path: '/courseInfo/:courseName', element: <CourseInfo /> },
+    { path: '/course-info/:courseName', element: <CourseInfo /> },
     { path: '/category/:categoryName', element: <Category/> },
     { path: '/articleInfo/:articleName', element: <ArticleInfo/> }, 
     { path: '/courses', element: <Courses/> } ,

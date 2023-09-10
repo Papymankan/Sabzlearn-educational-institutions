@@ -1,31 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './TopBar.css'
 
 export default function TopBar() {
+    const [topBarLinks, setTopBarLinks] = useState([])
+
+    const getRandomLinks = (links, ranNum) => {
+        const shuffled = [...links].sort(() => 0.5 - Math.random())
+        return shuffled.slice(0, ranNum)
+    }
+
+    useEffect(() => {
+        fetch('http://localhost:4000/v1/menus/topbar')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setTopBarLinks(data)
+            })
+    }, [])
+
     return (
         <div class="top-bar">
             <div class="container-fluid">
                 <div class="top-bar__content">
                     <div class="top-bar__right">
                         <ul class="top-bar__menu">
-                            <li class="top-bar__item">
-                                <a href="#" class="top-bar__link">آموزش Html</a>
-                            </li>
-                            <li class="top-bar__item">
-                                <a href="#" class="top-bar__link">آموزش Css</a>
-                            </li>
-                            <li class="top-bar__item">
-                                <a href="#" class="top-bar__link">آموزش جاوا اسکریپت</a>
-                            </li>
-                            <li class="top-bar__item">
-                                <a href="#" class="top-bar__link">آموزش بوت استرپ</a>
-                            </li>
-                            <li class="top-bar__item">
-                                <a href="#" class="top-bar__link">آموزش پایتون</a>
-                            </li>
-                            <li class="top-bar__item">
-                                <a href="#" class="top-bar__link">آموزش ری‌اکت</a>
-                            </li>
+                            {
+                                getRandomLinks(topBarLinks, 6).map(link => (
+                                    <li class="top-bar__item">
+                                        <Link className='top-bar__link' to={link.href}>
+                                            {link.title}
+                                        </Link>
+                                    </li>
+                                ))
+                            }
                             <li class="top-bar__item">
                                 <a href="#" class="top-bar__link">20,000 تومان</a>
                             </li>
