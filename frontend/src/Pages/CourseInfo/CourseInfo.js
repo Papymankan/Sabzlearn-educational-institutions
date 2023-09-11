@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import TopBar from './../../Components/Header/TopBar/TopBar'
-import NavBar from './../../Components/Header/NavBar/NavBar'
+import Comments from '../../Components/Comments/Comments'
 import Footer from './../../Components/Footer/Footer'
 import BreadCrumb from '../../Components/BreadCrumb/BreadCrumb'
 import './CourseInfo.css'
@@ -177,7 +176,7 @@ export default function CourseInfo() {
                 {/* Teacher end */}
 
               </div>
-              <CommentSection />
+              <Comments comments={comments}/>
             </div>
             <div className="col-4">
               <div class="courses-info">
