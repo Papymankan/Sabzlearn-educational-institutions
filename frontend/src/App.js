@@ -3,6 +3,8 @@ import routes from './routes';
 import { useRoutes } from 'react-router-dom'
 import AuthContext from './Context/authContext';
 import { useCallback, useEffect, useState } from 'react';
+import TopBar from './Components/Header/TopBar/TopBar';
+import NavBar from './Components/Header/NavBar/NavBar';
 
 
 function App() {
@@ -50,6 +52,8 @@ function App() {
         login,
         logout
       }}>
+        <TopBar/>
+        <NavBar/>
         {router}
       </AuthContext.Provider>
     </div>

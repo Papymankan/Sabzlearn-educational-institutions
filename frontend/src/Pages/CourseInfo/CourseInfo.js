@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import TopBar from './../../Components/Header/TopBar/TopBar'
 import NavBar from './../../Components/Header/NavBar/NavBar'
 import Footer from './../../Components/Footer/Footer'
@@ -15,25 +15,35 @@ export default function CourseInfo() {
 
   const { courseName } = useParams()
 
+  const [courseData, setCourseData] = useState({})
+  const [comments, setComments] = useState([])
+  const [sessions, setSessions] = useState([])
+
+
   useEffect(() => {
-    fetch(`http://localhost:4000/v1/courses/${courseName}`,{
-      method:'GET',
-      headers:{
-        'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}` 
+    fetch(`http://localhost:4000/v1/courses/${courseName}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
       }
     }).then(res => res.json())
-    .then(data => console.log(data))
+      .then(data => {
+        setCourseData(data)
+        setComments(data.comments)
+        setSessions(data.sessions)
+      })
   }, [])
+
 
   return (
     <>
-      <TopBar />
-      <NavBar />
+      {/* <TopBar />
+      <NavBar /> */}
       <BreadCrumb
         links={[
           { id: 1, title: 'خانه', to: '/' },
-          { id: 2, title: 'آموزش برنامه نویسی فرانت اند', to: '/category/frontend' },
-          { id: 3, title: 'دوره متخصص جاوا اسکریپت', to: '/courseInfo/javascript' },
+          { id: 2, title: '', to: '/category/frontend' },
+          { id: 3, title: 'دوره متخصص جاوا اسکریپت', to: '/course-info/javascript' },
         ]}
       />
       <section class="course-info">
@@ -41,13 +51,12 @@ export default function CourseInfo() {
           <div class="row">
             <div class="col-6">
               <a href="#" class="course-info__link">
-                آموزش برنامه نویسی فرانت اند
               </a>
               <h1 class="course-info__title">
-                آموزش 20 کتابخانه جاوااسکریپت برای بازار کار
+                {courseData.name}
               </h1>
               <p class="course-info__text">
-                امروزه کتابخانه‌ها کد نویسی را خیلی آسان و لذت بخش تر کرده اند. به قدری که حتی امروزه هیچ شرکت برنامه نویسی پروژه های خود را با Vanilla Js پیاده سازی نمی کند و همیشه از کتابخانه ها و فریمورک های موجود استفاده می کند. پس شما هم اگه میخواید یک برنامه نویس عالی فرانت اند باشید، باید کتابخانه های کاربردی که در بازار کار استفاده می شوند را به خوبی بلد باشید
+                {courseData.description}
               </p>
               <div class="course-info__social-media">
                 <a href="#" class="course-info__social-media-item">
@@ -63,7 +72,7 @@ export default function CourseInfo() {
             </div>
 
             <div class="col-6">
-              <video src="" poster="/images/courses/js_project.png" class="course-info__video" controls></video>
+              <video src="" poster={`/images/courses/${courseData.cover}`} class="course-info__video" controls></video>
             </div>
           </div>
         </div>
@@ -77,10 +86,10 @@ export default function CourseInfo() {
                 {/* Course Detail Boxes start */}
                 <div class="course-boxes">
                   <div className="row">
-                    <CourseInfoBox icon="fa-graduation-cap" title="وضعیت دوره:" status="به اتمام رسیده" />
+                    <CourseInfoBox icon="fa-graduation-cap" title="وضعیت دوره:" status={courseData.isComplete ? 'تمام شده' : 'در حال برگزاری'} />
                     <CourseInfoBox icon="fa-clock" title="مدت زمان دوره:" status="19 ساعت" />
                     <CourseInfoBox icon="fa-calendar-alt" title="آخرین بروزرسانی:" status="1401/03/02" />
-                    <CourseInfoBox icon="fa-user-alt" title="روش پشتیبانی" status="آنلاین" />
+                    <CourseInfoBox icon="fa-user-alt" title="روش پشتیبانی" status={courseData.support} />
                     <CourseInfoBox icon="fa-info-circle" title="پیش نیاز:" status="HTML CSS" />
                     <CourseInfoBox icon="fa-play" title="نوع مشاهده:" status="ضبط شده / آنلاین" />
                   </div>
@@ -184,7 +193,7 @@ export default function CourseInfo() {
                           تعداد دانشجو :
                         </span>
                         <span class="course-info__total-sale-number">
-                          178
+                          {courseData.courseStudentsCount}
                         </span>
                       </div>
                     </div>

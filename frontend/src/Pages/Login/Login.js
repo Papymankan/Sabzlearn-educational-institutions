@@ -80,8 +80,8 @@ export default function Login() {
 
   return (
     <>
-      <TopBar />
-      <NavBar />
+      {/* <TopBar />
+      <NavBar /> */}
 
       <section class="login-register">
         <div class="login">
