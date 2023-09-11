@@ -18,6 +18,8 @@ export default function CourseInfo() {
   const [courseData, setCourseData] = useState({})
   const [comments, setComments] = useState([])
   const [sessions, setSessions] = useState([])
+  const [createdAt, setCreatedAt] = useState([])
+  const [updatedAt, setUpdatedAt] = useState([])
 
 
   useEffect(() => {
@@ -28,9 +30,12 @@ export default function CourseInfo() {
       }
     }).then(res => res.json())
       .then(data => {
+        console.log(data);
         setCourseData(data)
         setComments(data.comments)
         setSessions(data.sessions)
+        setCreatedAt(data.createdAt)
+        setUpdatedAt(data.updatedAt)
       })
   }, [])
 
@@ -87,8 +92,8 @@ export default function CourseInfo() {
                 <div class="course-boxes">
                   <div className="row">
                     <CourseInfoBox icon="fa-graduation-cap" title="وضعیت دوره:" status={courseData.isComplete ? 'تمام شده' : 'در حال برگزاری'} />
-                    <CourseInfoBox icon="fa-clock" title="مدت زمان دوره:" status="19 ساعت" />
-                    <CourseInfoBox icon="fa-calendar-alt" title="آخرین بروزرسانی:" status="1401/03/02" />
+                    <CourseInfoBox icon="fa-clock" title="شروع دوره" status={createdAt.slice(0, 10)} />
+                    <CourseInfoBox icon="fa-calendar-alt" title="آخرین بروزرسانی:" status={updatedAt.slice(0, 10)} />
                     <CourseInfoBox icon="fa-user-alt" title="روش پشتیبانی" status={courseData.support} />
                     <CourseInfoBox icon="fa-info-circle" title="پیش نیاز:" status="HTML CSS" />
                     <CourseInfoBox icon="fa-play" title="نوع مشاهده:" status="ضبط شده / آنلاین" />
@@ -144,7 +149,7 @@ export default function CourseInfo() {
                     <a href="#" class="introduction__btns-item">دانلود همگانی ویدیوها</a>
                     <a href="#" class="introduction__btns-item">دانلود همگانی پیوست‌ها</a>
                   </div>
-                  <AccordionCourse />
+                  <AccordionCourse sessions={sessions} />
                 </div>
                 {/* Introduction end */}
 
@@ -178,10 +183,19 @@ export default function CourseInfo() {
               <div class="courses-info">
                 <div class="course-info">
                   <div class="course-info__register">
-                    <span class="course-info__register-title">
-                      <i class="fas fa-graduation-cap course-info__register-icon"></i>
-                      دانشجوی دوره هستید
-                    </span>
+                    {
+                      courseData.isUserRegisteredToThisCourse ? (
+                        <span class="course-info__register-title">
+                          <i class="fas fa-graduation-cap course-info__register-icon"></i>
+                          &nbsp;
+                          دانشجوی دوره هستید
+                        </span>
+                      ) : (
+                        <span class="course-info__register-title">
+                          ثبت نام در دوره
+                        </span>
+                      )
+                    }
                   </div>
                 </div>
                 <div class="course-info">
@@ -201,7 +215,7 @@ export default function CourseInfo() {
                       <div class="course-info__total-comment">
                         <i class="far fa-comments course-info__total-comment-icon"></i>
                         <span class="course-info__total-comment-text">
-                          67 دیدگاه
+                          {comments.length} دیدگاه
                         </span>
                       </div>
                       <div class="course-info__total-view">
