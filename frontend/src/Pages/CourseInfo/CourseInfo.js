@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import TopBar from './../../Components/Header/TopBar/TopBar'
 import NavBar from './../../Components/Header/NavBar/NavBar'
 import Footer from './../../Components/Footer/Footer'
@@ -8,8 +8,23 @@ import CourseInfoBox from '../../Components/CourseInfoBox/CourseInfoBox'
 import SectionHeader from '../../Components/SectionHeader/SectionHeader'
 import CommentSection from '../../Components/CommentSection/CommentSection'
 import AccordionCourse from '../../Components/AccordionCourse/AccordionCourse'
+import { useParams } from 'react-router'
+
 
 export default function CourseInfo() {
+
+  const { courseName } = useParams()
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/v1/courses/${courseName}`,{
+      method:'GET',
+      headers:{
+        'Authorization' : `Bearer ${JSON.parse(localStorage.getItem('user')).token}` 
+      }
+    }).then(res => res.json())
+    .then(data => console.log(data))
+  }, [])
+
   return (
     <>
       <TopBar />
@@ -120,7 +135,7 @@ export default function CourseInfo() {
                     <a href="#" class="introduction__btns-item">دانلود همگانی ویدیوها</a>
                     <a href="#" class="introduction__btns-item">دانلود همگانی پیوست‌ها</a>
                   </div>
-                    <AccordionCourse/>
+                  <AccordionCourse />
                 </div>
                 {/* Introduction end */}
 
@@ -148,7 +163,7 @@ export default function CourseInfo() {
                 {/* Teacher end */}
 
               </div>
-              <CommentSection/>
+              <CommentSection />
             </div>
             <div className="col-4">
               <div class="courses-info">
