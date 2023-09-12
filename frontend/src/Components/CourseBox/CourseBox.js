@@ -10,7 +10,7 @@ export default function CourseBox() {
         <div class="col-4">
             <div class="course-box">
                 <a href="#">
-                    <img src="/images/courses/fareelancer.png" alt="Course img" class="course-box__img" onLoad={onImgLoaded} />
+                    <img src="/images/courses/freelancer.png" alt="Course img" class="course-box__img" onLoad={onImgLoaded} />
                     {
                         !courseImg && (<Skeleton variant="rectangular" width={"100%"} height={200} />) 
                     }

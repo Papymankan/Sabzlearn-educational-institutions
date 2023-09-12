@@ -25,7 +25,7 @@ export default function NavBar() {
 
                         <ul class="main-header__menu">
                             <li class="main-header__item">
-                                <a href="#" class="main-header__link">صفحه اصلی</a>
+                                <Link to={'/'} class="main-header__link">صفحه اصلی</Link>
                             </li>
                             {
                                 allMenus.map(headlink => (

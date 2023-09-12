@@ -24,21 +24,24 @@ export default function CourseInfo() {
 
 
   useEffect(() => {
-    fetch(`http://localhost:4000/v1/courses/${courseName}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('user')).token}`
-      }
-    }).then(res => res.json())
-      .then(data => {
-        console.log(data);
-        setCourseData(data)
-        setComments(data.comments)
-        setSessions(data.sessions)
-        setCreatedAt(data.createdAt)
-        setUpdatedAt(data.updatedAt)
-        setCategory(data.categoryID)
-      })
+
+    const localData = JSON.parse(localStorage.getItem('user'))
+
+      fetch(`http://localhost:4000/v1/courses/${courseName}`, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${localData == null ? null : localData.token}`
+        }
+      }).then(res => res.json())
+        .then(data => {
+          console.log(data);
+          setCourseData(data)
+          setComments(data.comments)
+          setSessions(data.sessions)
+          setCreatedAt(data.createdAt)
+          setUpdatedAt(data.updatedAt)
+          setCategory(data.categoryID)
+        })
   }, [courseName])
 
   return (
@@ -179,6 +182,7 @@ export default function CourseInfo() {
                 {/* Teacher end */}
 
               </div>
+
               <Comments comments={comments} />
             </div>
             <div className="col-4">
