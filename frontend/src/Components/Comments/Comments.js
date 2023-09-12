@@ -1,12 +1,53 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import Pagination from '../Pagination/Pagination';
 import './Comments.css'
 import AuthContext from '../../Context/authContext';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-export default function CommentsTextArea({ comments }) {
+export default function CommentsTextArea({ comments, courseName }) {
 
     const authContext = useContext(AuthContext)
+
+    const [inputValue, setInputValue] = useState('')
+
+    const setCommentHandler = () => {
+        const localData = JSON.parse(localStorage.getItem('user'))
+
+        console.log(localData.token);
+        console.log(courseName);
+        fetch(`http://localhost:4000/v1/comments`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localData.token}`
+            },
+            body: JSON.stringify({
+                body: inputValue,
+                courseShortName: `${courseName}`,
+                score: 5
+            })
+        }).then(res => res.json())
+            .then(data => {
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت ثبت شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1200,
+                    willClose: () => {
+                        window.location.reload()
+                    }
+                })
+            })
+    }
+
+    const textAreaChange = (e) => {
+        setInputValue(e.target.value)
+    }
 
     return (
         <div class="comments">
@@ -89,14 +130,14 @@ export default function CommentsTextArea({ comments }) {
                             </div>
                             <div class="comments__respond-content">
                                 <div class="comments__respond-title">دیدگاه شما *</div>
-                                <textarea class="comments__score-input-respond"></textarea>
+                                <textarea class="comments__score-input-respond" onChange={(e) => textAreaChange(e)}>{inputValue}</textarea>
                             </div>
-                            <button type="submit" class="comments__respond-btn">
+                            <button type="submit" class="comments__respond-btn" onClick={setCommentHandler}>
                                 ارسال
                             </button>
                         </div>
                     </>
-                ) : <div className="alert alert-warning">برای ثبت کامنت ابتدا <Link to={'/login'} style={{color:'blue'}}>وارد</Link> شوید</div>
+                ) : <div className="alert alert-warning">برای ثبت کامنت ابتدا <Link to={'/login'} style={{ color: 'blue' }}>وارد</Link> شوید</div>
             }
 
 

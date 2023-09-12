@@ -183,7 +183,7 @@ export default function CourseInfo() {
 
               </div>
 
-              <Comments comments={comments} />
+              <Comments comments={comments} courseName={courseName}/>
             </div>
             <div className="col-4">
               <div class="courses-info">
