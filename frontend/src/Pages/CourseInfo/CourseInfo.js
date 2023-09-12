@@ -8,6 +8,7 @@ import SectionHeader from '../../Components/SectionHeader/SectionHeader'
 import CommentSection from '../../Components/CommentSection/CommentSection'
 import AccordionCourse from '../../Components/AccordionCourse/AccordionCourse'
 import { useParams } from 'react-router'
+import { Link } from 'react-router-dom'
 
 
 export default function CourseInfo() {
@@ -19,6 +20,7 @@ export default function CourseInfo() {
   const [sessions, setSessions] = useState([])
   const [createdAt, setCreatedAt] = useState([])
   const [updatedAt, setUpdatedAt] = useState([])
+  const [category, setCategory] = useState({})
 
 
   useEffect(() => {
@@ -35,9 +37,9 @@ export default function CourseInfo() {
         setSessions(data.sessions)
         setCreatedAt(data.createdAt)
         setUpdatedAt(data.updatedAt)
+        setCategory(data.categoryID)
       })
-  }, [])
-
+  }, [courseName])
 
   return (
     <>
@@ -46,16 +48,17 @@ export default function CourseInfo() {
       <BreadCrumb
         links={[
           { id: 1, title: 'خانه', to: '/' },
-          { id: 2, title: '', to: '/category/frontend' },
-          { id: 3, title: 'دوره متخصص جاوا اسکریپت', to: '/course-info/javascript' },
+          { id: 2, title: `${category.title}`, to: `/category/${category.name}` },
+          { id: 3, title: `${courseData.name}`, to: `/course-info/${courseData.shortName}` },
         ]}
       />
       <section class="course-info">
         <div class="container">
           <div class="row">
             <div class="col-6">
-              <a href="#" class="course-info__link">
-              </a>
+              <Link to={`/category/${category.name}`} class="course-info__link">
+                {category.title}
+              </Link>
               <h1 class="course-info__title">
                 {courseData.name}
               </h1>
@@ -176,7 +179,7 @@ export default function CourseInfo() {
                 {/* Teacher end */}
 
               </div>
-              <Comments comments={comments}/>
+              <Comments comments={comments} />
             </div>
             <div className="col-4">
               <div class="courses-info">
