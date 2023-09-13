@@ -3,7 +3,7 @@ import './CourseBox.css'
 import { Skeleton } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-export default function CourseBox({ name, cover, shortname , creator }) {
+export default function CourseBox({ name, cover, shortname , creator , price}) {
     const [courseImg, setCourseImg] = useState(false)
 
     const onImgLoaded = () => setCourseImg(true)
@@ -17,7 +17,7 @@ export default function CourseBox({ name, cover, shortname , creator }) {
                     }
                 </a>
                 <div class="course-box__main">
-                    <a href="#" class="course-box__title">{name}</a>
+                    <Link to={`/course-info/${shortname}`} class="course-box__title">{name}</Link>
 
                     <div class="course-box__rating-teacher">
                         <div class="course-box__teacher">
@@ -38,7 +38,7 @@ export default function CourseBox({ name, cover, shortname , creator }) {
                             <i class="fas fa-users course-box__users-icon"></i>
                             <span class="course-box__users-text">500</span>
                         </div>
-                        <span class="course-box__price">1,000,000</span>
+                        <span class="course-box__price">{price >= 1 ? price.toLocaleString() : 'رایگان'}</span>
                     </div>
                 </div>
 
