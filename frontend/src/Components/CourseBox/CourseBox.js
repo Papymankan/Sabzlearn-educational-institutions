@@ -3,26 +3,29 @@ import './CourseBox.css'
 import { Skeleton } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-export default function CourseBox({ name, cover, shortname , creator , price}) {
-    const [courseImg, setCourseImg] = useState(false)
+export default function CourseBox({ name, cover, shortname, creator, price }) {
 
-    const onImgLoaded = () => setCourseImg(true)
     return (
         <div class="col-4">
             <div class="course-box">
                 <a href="#">
-                    <img src={`/images/courses/${cover}`} alt="Course img" class="course-box__img" onLoad={onImgLoaded} />
                     {
-                        !courseImg && (<Skeleton variant="rectangular" width={"100%"} height={200} />)
+                        cover ? (
+                            <img src={`/images/courses/${cover}`} class="course-box__img" />
+                        ) : (<Skeleton variant="rectangular" width={"100%"} height={200} />)
                     }
                 </a>
                 <div class="course-box__main">
-                    <Link to={`/course-info/${shortname}`} class="course-box__title">{name}</Link>
+                    <Link to={`/course-info/${shortname}`} class="course-box__title">{name ? name : (
+                        <Skeleton variant="rectangular" width={"40%"} height={30} />
+                    )}</Link>
 
                     <div class="course-box__rating-teacher">
                         <div class="course-box__teacher">
                             <i class="fas fa-chalkboard-teacher course-box__teacher-icon"></i>
-                            <a href="#" class="course-box__teacher-link">{creator}</a>
+                            <a href="#" class="course-box__teacher-link">{creator ? creator : (
+                        <Skeleton variant="rectangular" width={"80px"} height={20} />
+                    )}</a>
                         </div>
                         <div class="course-box__rating">
                             <img src="/images/svgs/star.svg" alt="rating" class="course-box__star" />

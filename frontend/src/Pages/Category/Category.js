@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { useParams } from 'react-router'
 import CourseBox from '../../Components/CourseBox/CourseBox'
 import Footer from '../../Components/Footer/Footer'
 import NavBar from '../../Components/Header/NavBar/NavBar'
@@ -7,10 +8,19 @@ import Pagination from '../../Components/Pagination/Pagination'
 import './Category.css'
 
 export default function Category() {
+
+  const { categoryName } = useParams()
+
+  const [courses, setCourses] = useState([])
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/v1/courses/category/${categoryName}`)
+      .then(res => res.json())
+      .then(data => setCourses(data))
+  }, [categoryName])
+
   return (
     <>
-      <TopBar />
-      <NavBar />
       <section class="courses">
         <div class="container">
           <div class="courses-top-bar">
@@ -51,16 +61,19 @@ export default function Category() {
           <div class="courses-content">
             <div class="container">
               <div className="row">
-                <CourseBox />
-                <CourseBox />
-                <CourseBox />
+                {
+                  courses.length >= 1 ?
+                  courses.map(course => {
+                    return <CourseBox name={course.name} cover={course.cover} price={course.price} creator={course.creator} shortname={course.shortName}/>
+                  }) : <div className="alert alert-info">فعلا برای این بخش دوره ای در نظر گرفته نشده است</div>
+                }
               </div>
             </div>
           </div>
-          <Pagination/>
+          <Pagination />
         </div>
       </section>
-      <Footer/>
+      <Footer />
     </>
   )
 }
