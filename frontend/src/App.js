@@ -1,6 +1,6 @@
 import './App.css';
 import routes from './routes';
-import { useRoutes } from 'react-router-dom'
+import { useLocation, useRoutes } from 'react-router-dom'
 import AuthContext from './Context/authContext';
 import { useCallback, useEffect, useState } from 'react';
 import TopBar from './Components/Header/TopBar/TopBar';
@@ -42,6 +42,12 @@ function App() {
         })
     }
   }, [login])
+
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <div className="App">
