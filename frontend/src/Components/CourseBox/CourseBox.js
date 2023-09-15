@@ -24,15 +24,25 @@ export default function CourseBox({ name, cover, shortname, creator, price }) {
                         <div class="course-box__teacher">
                             <i class="fas fa-chalkboard-teacher course-box__teacher-icon"></i>
                             <a href="#" class="course-box__teacher-link">{creator ? creator : (
-                        <Skeleton variant="rectangular" width={"80px"} height={20} />
-                    )}</a>
+                                <Skeleton variant="rectangular" width={"80px"} height={20} />
+                            )}</a>
                         </div>
                         <div class="course-box__rating">
-                            <img src="/images/svgs/star.svg" alt="rating" class="course-box__star" />
-                            <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
-                            <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
-                            <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
-                            <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
+                            {
+                                name ? (
+                                    <>
+                                        <img src="/images/svgs/star.svg" alt="rating" class="course-box__star" />
+                                        <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
+                                        <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
+                                        <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
+                                        <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
+                                    </>
+                                ) : (
+                                    <Skeleton variant="rectangular" width={"40%"} height={30} />
+                                )
+                            }
+
+
                         </div>
                     </div>
 
