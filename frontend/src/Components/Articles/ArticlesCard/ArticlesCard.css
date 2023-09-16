@@ -12,6 +12,7 @@
   .article-card__img {
     border-radius: 1rem 1rem 0 0;
     width: 100%;
+    height: 350px;
   }
   .article-card__link-img{
     display: block;

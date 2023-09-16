@@ -34,7 +34,6 @@ export default function CourseInfo() {
         }
       }).then(res => res.json())
         .then(data => {
-          console.log(data);
           setCourseData(data)
           setComments(data.comments)
           setSessions(data.sessions)
@@ -46,8 +45,6 @@ export default function CourseInfo() {
 
   return (
     <>
-      {/* <TopBar />
-      <NavBar /> */}
       <BreadCrumb
         links={[
           { id: 1, title: 'خانه', to: '/' },

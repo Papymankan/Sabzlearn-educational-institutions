@@ -90,9 +90,6 @@ export default function CommentsTextArea({ comments, courseName }) {
                     ))
                 }
 
-                {comments.length ? (
-                    <Pagination />
-                ) : null}
             </div>) : <div className="alert alert-warning">کامنتی ثبت نشده است</div>
             }
             {
