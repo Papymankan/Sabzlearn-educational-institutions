@@ -9,12 +9,15 @@ import './Courses.css'
 
 export default function Courses() {
     const [courses , setCourses] = useState([])
+    const [showCourses , setShowCourses] = useState([])
+
 
     useEffect(() => {
         fetch('http://localhost:4000/v1/courses')
         .then(res=> res.json())
         .then(data => setCourses(data))
     }, [])
+
 
     return (
         <>
@@ -28,18 +31,21 @@ export default function Courses() {
                         <div class="container">
                             <div class="row">
                                 {
-                                    courses ? (
-                                        courses.map(course => (<CourseBox cover={course.cover} creator={course.creator} name={course.name} price={course.price} shortname={course.shortName} />))
+                                    showCourses.length >= 1 ? (
+                                        showCourses.map(course => (<CourseBox cover={course.cover} creator={course.creator} name={course.name} price={course.price} shortname={course.shortName} />))
                                     ) : (<CourseBox/>)
-                                }
-                                
-
+                                }                             
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <Pagination />
+            <Pagination 
+            courses={courses}
+            coursesCount={5}
+            pathname={'courses'}
+            setShowCourses={setShowCourses}
+            />
             <Footer />
         </>
     )
