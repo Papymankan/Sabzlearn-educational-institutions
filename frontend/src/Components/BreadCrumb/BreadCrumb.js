@@ -1,3 +1,4 @@
+import { Skeleton } from '@mui/material'
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './BreadCrumb.css'
@@ -11,8 +12,11 @@ export default function BreadCrumb({ links }) {
                         <i class="fas fa-home breadcrumb__home-icon"></i>
                     </div>
                     <ul class="breadcrumb__list">
-                        {links.map(link => (
-                            <li class="breadcrumb__item">
+                        {links.map(link => {
+                            if(link.title == 'undefined'){
+                                <Skeleton width={'50px'} height='30px' variant='rectangular' />
+                            }else{
+                                 return <li class="breadcrumb__item">
                                 <Link to={link.to} class="breadcrumb__link">
                                     {link.title}
                                     {
@@ -22,7 +26,10 @@ export default function BreadCrumb({ links }) {
                                     }
                                 </Link>
                             </li>
-                        ))
+                            }
+                           
+                        }
+                        )
                         }
                     </ul>
                 </div>

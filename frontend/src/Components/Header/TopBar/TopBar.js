@@ -14,7 +14,6 @@ export default function TopBar() {
         fetch('http://localhost:4000/v1/menus/topbar')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 setTopBarLinks(data)
             })
     }, [])
