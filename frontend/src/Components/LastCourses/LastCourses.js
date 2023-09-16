@@ -19,7 +19,7 @@ export default function LastCourses() {
     return (
         <div className="courses">
             <div className="container">
-                <SectionHeader main_title="جدیدترین دوره ها" primary_title="سکوی پرتاب شما به سمت موفقیت" btn_title="تمامی دوره ها" btnHref={'/courses'} />
+                <SectionHeader main_title="جدیدترین دوره ها" primary_title="سکوی پرتاب شما به سمت موفقیت" btn_title="تمامی دوره ها" btnHref={'/courses/1'} />
                 <div class="courses-content">
                     <div class="container">
                         <div class="row">

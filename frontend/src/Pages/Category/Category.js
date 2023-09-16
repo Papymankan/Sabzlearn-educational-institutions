@@ -12,11 +12,14 @@ export default function Category() {
   const { categoryName } = useParams()
 
   const [courses, setCourses] = useState([])
+  const [showCourses, setShowCourses] = useState([])
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/courses/category/${categoryName}`)
       .then(res => res.json())
-      .then(data => setCourses(data))
+      .then(data => {
+        setCourses(data)
+      })
   }, [categoryName])
 
   return (
@@ -68,19 +71,23 @@ export default function Category() {
             <div class="container">
               <div className="row">
                 {
-                  courses.length >= 1 ?
-                    courses.map(course => {
+                  showCourses.length >= 1 ?
+                    showCourses.map(course => {
                       return <CourseBox name={course.name} cover={course.cover} price={course.price} creator={course.creator} shortname={course.shortName} />
                     }) : <div className="alert alert-info">فعلا برای این بخش دوره ای در نظر گرفته نشده است</div>
                 }
               </div>
             </div>
           </div>
-          {
-            courses.length >= 1 ? (
-              <Pagination />
-            ) : null
-          }
+
+              <Pagination
+                courses={courses}
+                coursesCount={5}
+                pathname={`category/${categoryName}`}
+                setShowCourses={setShowCourses}
+              />
+
+          
         </div>
       </section>
       <Footer />
