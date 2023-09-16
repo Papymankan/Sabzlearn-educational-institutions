@@ -1,16 +1,28 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './ArticleInfo.css'
 import BreadCrumb from '../../Components/BreadCrumb/BreadCrumb'
 import NavBar from '../../Components/Header/NavBar/NavBar'
 import TopBar from '../../Components/Header/TopBar/TopBar'
 import Footer from '../../Components/Footer/Footer'
 import CommentSection from '../../Components/CommentSection/CommentSection'
+import { useParams } from 'react-router'
 
 export default function ArticleInfo() {
+
+  const { articleName } = useParams()
+  const [articleInfo, setArticleInfo] = useState({})
+
+  useEffect(() => {
+    fetch(`http://localhost:4000/v1/articles/${articleName}`)
+      .then(res => res.json())
+      .then(data => {
+        setArticleInfo(data)
+        console.log(data);
+      })
+  }, [articleName])
+
   return (
     <>
-      <TopBar />
-      <NavBar />
       <BreadCrumb links={[
         { id: 1, title: 'خانه', to: '/' },
         { id: 2, title: 'آموزش برنامه نویسی فرانت اند', to: '/category/frontend' },
@@ -23,7 +35,7 @@ export default function ArticleInfo() {
             <div className="col-8">
               <div class="article">
                 <h1 class="article__title">
-                  معرفی بهترین سایت آموزش جاوا اسکریپت [ تجربه محور ] + آموزش رایگان
+                  {articleInfo.title}
                 </h1>
                 <div class="article__header">
                   <div class="article-header__category article-header__item">
@@ -141,7 +153,7 @@ export default function ArticleInfo() {
                   </div>
                 </div>
               </div>
-              <CommentSection/>
+              <CommentSection />
             </div>
             <div className="col-4">
 
