@@ -38,7 +38,7 @@ export default function CourseBox({ name, cover, shortname, creator, price }) {
                                         <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
                                     </>
                                 ) : (
-                                    <Skeleton variant="rectangular" width={"40%"} height={30} />
+                                    <Skeleton variant="rectangular" width={"90px"} height={20} />
                                 )
                             }
 

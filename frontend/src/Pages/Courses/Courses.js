@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import BreadCrumb from '../../Components/BreadCrumb/BreadCrumb'
 import Footer from '../../Components/Footer/Footer'
 import NavBar from '../../Components/Header/NavBar/NavBar'
@@ -8,10 +8,16 @@ import CourseBox from '../../Components/CourseBox/CourseBox'
 import './Courses.css'
 
 export default function Courses() {
+    const [courses , setCourses] = useState([])
+
+    useEffect(() => {
+        fetch('http://localhost:4000/v1/courses')
+        .then(res=> res.json())
+        .then(data => setCourses(data))
+    }, [])
+
     return (
         <>
-            <TopBar />
-            <NavBar />
             <BreadCrumb links={[
                 { id: 1, to: '/', title: "خانه" },
                 { id: 2, to: '/courses', title: 'تمامی دوره ها' }
@@ -21,14 +27,13 @@ export default function Courses() {
                     <div class="courses-content">
                         <div class="container">
                             <div class="row">
-                                <CourseBox />
-                                <CourseBox />
-                                <CourseBox />
-                                <CourseBox />
-                                <CourseBox />
-                                <CourseBox />
-                                <CourseBox />
-                                <CourseBox />
+                                {
+                                    courses ? (
+                                        courses.map(course => (<CourseBox cover={course.cover} creator={course.creator} name={course.name} price={course.price} shortname={course.shortName} />))
+                                    ) : (<CourseBox/>)
+                                }
+                                
+
                             </div>
                         </div>
                     </div>
