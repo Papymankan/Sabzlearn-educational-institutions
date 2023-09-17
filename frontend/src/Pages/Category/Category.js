@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import CourseBox from '../../Components/CourseBox/CourseBox'
 import Footer from '../../Components/Footer/Footer'
 import NavBar from '../../Components/Header/NavBar/NavBar'
@@ -9,18 +9,63 @@ import './Category.css'
 
 export default function Category() {
 
+  const Navigate = useNavigate()
+
   const { categoryName } = useParams()
 
   const [courses, setCourses] = useState([])
   const [showCourses, setShowCourses] = useState([])
+  const [order, setOrder] = useState('default')
+  const [orderedCourses, setOrderedCourses] = useState([])
+  const [dropDownTitle, setDropDownTitle] = useState('پیش فرض')
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/courses/category/${categoryName}`)
       .then(res => res.json())
       .then(data => {
         setCourses(data)
+        setOrderedCourses(data)
       })
   }, [categoryName])
+
+  const orderChange = (status) => {
+    setOrder(status)
+    Navigate(`/category/${categoryName}/1`)
+  }
+
+  useEffect(() => {
+    switch (order) {
+      case 'free': {
+        const freeCourses = courses.filter(course => course.price == 0)
+        setOrderedCourses(freeCourses)
+        setDropDownTitle('دوره های رایگان')
+        break
+      }
+      case 'noFree': {
+        const noFreeCourses = courses.filter(course => course.price != 0)
+        setDropDownTitle('دوره های غیر رایگان')
+        setOrderedCourses(noFreeCourses)
+        break
+      }
+      case 'last': {
+        setDropDownTitle('جدید ترین')
+        setOrderedCourses(courses)
+        break
+      }
+      case 'first': {
+        setDropDownTitle('قدیمی ترین')
+        const reversed = courses.slice().reverse()
+        console.log(reversed);
+        setOrderedCourses(reversed)
+        break
+      }
+      default: {
+        setOrderedCourses(courses)
+        setDropDownTitle('پیش فرض')
+        break
+      }
+    }
+  }, [order])
 
   return (
     <>
@@ -41,16 +86,21 @@ export default function Category() {
 
                   <div class="courses-top-bar__selection">
                     <span class="courses-top-bar__selection-title">
-                      مرتب سازی پیش فرض
+                      {dropDownTitle}
                       <i class="fas fa-angle-down courses-top-bar__selection-icon"></i>
                     </span>
                     <ul class="courses-top-bar__selection-list">
-                      <li class="courses-top-bar__selection-item courses-top-bar__selection-item--active">مرتب سازی پیش فرض</li>
-                      <li class="courses-top-bar__selection-item">مربت سازی بر اساس محبوبیت</li>
-                      <li class="courses-top-bar__selection-item">مربت سازی بر اساس امتیاز</li>
-                      <li class="courses-top-bar__selection-item">مربت سازی بر اساس آخرین</li>
-                      <li class="courses-top-bar__selection-item">مربت سازی بر اساس ارزان ترین</li>
-                      <li class="courses-top-bar__selection-item">مربت سازی بر اساس گران ترین</li>
+
+                      <li className={order == 'default' ? 'courses-top-bar__selection-item courses-top-bar__selection-item--active' : 'courses-top-bar__selection-item'} onClick={() => orderChange('default')}> پیش فرض</li>
+
+                      <li className={order == 'free' ? 'courses-top-bar__selection-item courses-top-bar__selection-item--active' : 'courses-top-bar__selection-item'} onClick={() => orderChange('free')}>  دوره های رایگان</li>
+
+                      <li className={order == 'noFree' ? 'courses-top-bar__selection-item courses-top-bar__selection-item--active' : 'courses-top-bar__selection-item'} onClick={() => orderChange('noFree')}>  دوره های غیر رایگان</li>
+
+                      <li className={order == 'last' ? 'courses-top-bar__selection-item courses-top-bar__selection-item--active' : 'courses-top-bar__selection-item'} onClick={() => orderChange('last')}>  جدید ترین</li>
+
+                      <li className={order == 'first' ? 'courses-top-bar__selection-item courses-top-bar__selection-item--active' : 'courses-top-bar__selection-item'} onClick={() => orderChange('first')}>  قدیمی ترین</li>
+
                     </ul>
                   </div>
                 </div>
@@ -80,14 +130,14 @@ export default function Category() {
             </div>
           </div>
 
-              <Pagination
-                courses={courses}
-                coursesCount={5}
-                pathname={`category/${categoryName}`}
-                setShowCourses={setShowCourses}
-              />
+          <Pagination
+            courses={orderedCourses}
+            coursesCount={5}
+            pathname={`category/${categoryName}`}
+            setShowCourses={setShowCourses}
+          />
 
-          
+
         </div>
       </section>
       <Footer />

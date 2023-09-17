@@ -5,7 +5,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import './Presell.css'
 
-export default function Presell() {
+export default function Presell() { 
 
     const [courses, setCourses] = useState([])
     useEffect(() => {

@@ -54,12 +54,14 @@
 .courses-top-bar__selection-title {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 3.8rem;
     border-radius: 0.3rem;
     padding: 0.8rem 2rem;
     border: 1px solid #e5e5e5;
     color: #7d7e7f;
     transition: all 400ms ease;
+    width: 200px;
 }
 
 .courses-top-bar__selection-title:hover {
