@@ -19,7 +19,7 @@ export default function Articles() {
     return (
         <section class="articles">
             <div class="container">
-                <SectionHeader btn_title={"تمامی مقاله ها"} primary_title="پیش به سوی ارتقای دانش" main_title={"جدیدترین مقاله ها"} />
+                <SectionHeader btn_title={"تمامی مقاله ها"} primary_title="پیش به سوی ارتقای دانش" main_title={"جدیدترین مقاله ها"} btnHref={'/articles/1'} />
                 <div class="articles__content">
                     <div class="row">
                         {
