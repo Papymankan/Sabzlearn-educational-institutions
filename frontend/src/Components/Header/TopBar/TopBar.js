@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react'
+import React, { memo, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './TopBar.css'
 
-export default function TopBar() {
+export default memo(function TopBar() {
     const [topBarLinks, setTopBarLinks] = useState([])
 
     const getRandomLinks = (links, ranNum) => {
@@ -57,3 +57,4 @@ export default function TopBar() {
         </div>
     )
 }
+)

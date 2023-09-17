@@ -48,7 +48,7 @@ export default function CourseInfo() {
       <BreadCrumb
         links={[
           { id: 1, title: 'خانه', to: '/' },
-          { id: 2, title: `${category.title}`, to: `/category/${category.name}` },
+          { id: 2, title: `${category.title}`, to: `/category/${category.name}/1` },
           { id: 3, title: `${courseData.name}`, to: `/course-info/${courseData.shortName}` },
         ]}
       />

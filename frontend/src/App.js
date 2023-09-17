@@ -20,12 +20,12 @@ function App() {
     localStorage.removeItem('user')
   }, [])
 
-  const login = useCallback((userInfo, token) => {
+  const login = (userInfo, token) => {
     setToken(token)
     setIsloggedIn(true)
     setUserInfos(userInfo)
     localStorage.setItem('user', JSON.stringify({ token }))
-  }, [])
+  }
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('user'))
