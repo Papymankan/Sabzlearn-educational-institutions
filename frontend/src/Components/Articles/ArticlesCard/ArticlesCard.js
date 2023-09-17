@@ -7,14 +7,14 @@ export default function ArticlesCard({ cover, title, shortName , description}) {
     <div class="col-4">
       <div class="article-card">
         <div class="article-card__header">
-          <a href="#" class="article-card__link-img">
+          <Link to={`/articleInfo/${shortName}`} class="article-card__link-img">
             <img src={`/images/blog/${cover}`} class="article-card__img" alt="Article Cover" />
-          </a>
+          </Link>
         </div>
         <div class="article-card__content">
-          <a href="#" class="article-card__link">
+          <Link to={`/articleInfo/${shortName}`} class="article-card__link">
             {title}
-          </a>
+          </Link>
           <p class="article-card__text">
             {description}
           </p>
