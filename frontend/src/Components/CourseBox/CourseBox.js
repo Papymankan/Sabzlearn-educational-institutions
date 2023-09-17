@@ -3,18 +3,18 @@ import './CourseBox.css'
 import { Skeleton } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-export default function CourseBox({ name, cover, shortname, creator, price }) {
-
+export default function CourseBox({ name, cover, shortname, creator, price , isSlider}) {
+    
     return (
-        <div class="col-4">
+        <div className={isSlider ? 'col-12' : 'col-4'}>
             <div class="course-box">
-                <a href="#">
+                <Link to={`/course-info/${shortname}`}>
                     {
                         cover ? (
                             <img src={`/images/courses/${cover}`} class="course-box__img" />
                         ) : (<Skeleton variant="rectangular" width={"100%"} height={200} />)
                     }
-                </a>
+                </Link>
                 <div class="course-box__main">
                     <Link to={`/course-info/${shortname}`} class="course-box__title">{name ? name : (
                         <Skeleton variant="rectangular" width={"40%"} height={30} />
