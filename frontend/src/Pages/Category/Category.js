@@ -12,12 +12,14 @@ export default function Category() {
   const Navigate = useNavigate()
 
   const { categoryName } = useParams()
+  const { page } = useParams()
 
   const [courses, setCourses] = useState([])
   const [showCourses, setShowCourses] = useState([])
   const [order, setOrder] = useState('default')
   const [orderedCourses, setOrderedCourses] = useState([])
   const [dropDownTitle, setDropDownTitle] = useState('پیش فرض')
+  const [inputValue, setInputValue] = useState('')
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/courses/category/${categoryName}`)
@@ -32,6 +34,16 @@ export default function Category() {
     setOrder(status)
     Navigate(`/category/${categoryName}/1`)
   }
+
+  const inputOnChange = (e) => {
+    if(page != 1){
+      Navigate(`/category/${categoryName}/1`)
+    }
+    setInputValue(e.target.value)
+    const searchCourses = courses.filter(course => course.name.includes(e.target.value))
+    setOrderedCourses(searchCourses)
+  }
+
 
   useEffect(() => {
     switch (order) {
@@ -107,7 +119,7 @@ export default function Category() {
 
                 <div class="courses-top-bar__left">
                   <form action="#" class="courses-top-bar__form">
-                    <input type="text" class="courses-top-bar__input" placeholder="جستجوی دوره ..." />
+                    <input type="text" class="courses-top-bar__input" placeholder="جستجوی دوره ..." onChange={(e) => inputOnChange(e)} value={inputValue} />
                     <i class="fas fa-search courses-top-bar__search-icon"></i>
                   </form>
                 </div>
