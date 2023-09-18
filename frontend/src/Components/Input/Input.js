@@ -5,6 +5,7 @@ import './Input.css'
 const inputReducer = (state , action) => {
     switch (action.type){
       case ('CHANGE') : {
+        console.log(state , action);
         return {...state , value:action.value , isValid: Validator(action.value , action.validation)}
       }
       default : {

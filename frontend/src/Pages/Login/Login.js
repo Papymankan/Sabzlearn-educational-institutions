@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from 'react-router-dom'
 import Footer from "../../Components/Footer/Footer";
-import TopBar from "../../Components/Header/TopBar/TopBar";
-import NavBar from "../../Components/Header/NavBar/NavBar";
 import "./Login.css";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
