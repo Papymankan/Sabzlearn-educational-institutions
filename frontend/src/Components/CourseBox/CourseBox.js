@@ -42,7 +42,6 @@ export default function CourseBox({ name, cover, shortname, creator, price , isS
                                 )
                             }
 
-
                         </div>
                     </div>
 

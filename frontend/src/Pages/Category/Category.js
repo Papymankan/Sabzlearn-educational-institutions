@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import CourseBox from '../../Components/CourseBox/CourseBox'
+import RowCourseBox from '../../Components/CourseBox/RowCourseBox/RowCourseBox'
 import Footer from '../../Components/Footer/Footer'
 import NavBar from '../../Components/Header/NavBar/NavBar'
 import TopBar from '../../Components/Header/TopBar/TopBar'
@@ -20,6 +21,7 @@ export default function Category() {
   const [orderedCourses, setOrderedCourses] = useState([])
   const [dropDownTitle, setDropDownTitle] = useState('پیش فرض')
   const [inputValue, setInputValue] = useState('')
+  const [courseShow, setCourseShow] = useState('box')
 
   useEffect(() => {
     fetch(`http://localhost:4000/v1/courses/category/${categoryName}`)
@@ -36,7 +38,7 @@ export default function Category() {
   }
 
   const inputOnChange = (e) => {
-    if(page != 1){
+    if (page != 1) {
       Navigate(`/category/${categoryName}/1`)
     }
     setInputValue(e.target.value)
@@ -89,10 +91,10 @@ export default function Category() {
               <div class="courses-top-bar">
 
                 <div class="courses-top-bar__right">
-                  <div class="courses-top-bar__row-btn courses-top-bar__icon--active">
+                  <div class={`courses-top-bar__row-btn ${courseShow == 'box' && 'courses-top-bar__icon--active'}`} onClick={() => setCourseShow('box')}>
                     <i class="fas fa-border-all courses-top-bar__icon"></i>
                   </div>
-                  <div class="courses-top-bar__column-btn">
+                  <div class={`courses-top-bar__column-btn ${courseShow == 'row' && 'courses-top-bar__icon--active'}`} onClick={() => setCourseShow('row')}>
                     <i class="fas fa-align-left courses-top-bar__icon"></i>
                   </div>
 
@@ -133,10 +135,16 @@ export default function Category() {
             <div class="container">
               <div className="row">
                 {
-                  showCourses.length >= 1 ?
-                    showCourses.map(course => {
-                      return <CourseBox name={course.name} cover={course.cover} price={course.price} creator={course.creator} shortname={course.shortName} />
-                    }) : <div className="alert alert-info">فعلا برای این بخش دوره ای در نظر گرفته نشده است</div>
+                  showCourses.length >= 1 ? (
+                    courseShow == 'box' ? (
+                      showCourses.map(course => {
+                        return <CourseBox name={course.name} cover={course.cover} price={course.price} creator={course.creator} shortname={course.shortName} />
+                      })
+                    ) : (showCourses.map(course => {
+                      return <RowCourseBox name={course.name} cover={course.cover} price={course.price} creator={course.creator} shortname={course.shortName} description={course.description} />
+                    }))
+                  ) : <div className="alert alert-info">فعلا برای این بخش دوره ای در نظر گرفته نشده است</div>
+
                 }
               </div>
             </div>
