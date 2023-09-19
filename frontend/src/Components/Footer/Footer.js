@@ -2,8 +2,62 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './Footer.css'
 import FooterItem from './FooterItem/FooterItem'
+import { emailValidator } from '../../Validators/rules'
+import { useForm } from '../../hooks/useForm'
+import Input from '../Input/Input'
+import Swal from 'sweetalert2'
+
+import { useNavigate } from 'react-router'
+
 
 export default function Footer() {
+    const navigate = useNavigate()
+
+    const [formState, onInputHandler] = useForm({
+        email: {
+            value: '',
+            isValid: false
+        },
+    }, false)
+
+    const addNewEmail = (event) => {
+        event.preventDefault()
+        const newEmail = {
+            email: formState.inputs.email.value,
+          };
+        fetch('http://localhost:4000/v1/newsletters' , {
+          method:'POST',
+          headers:{
+            'Content-Type' : 'application/json'
+          },
+          body: JSON.stringify(newEmail)
+        }).then(res => {
+            if(res.ok){
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت ثبت شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                      Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                    willClose: () => {
+                      navigate('/', { replace: true })
+                    }
+                  })
+            }else{
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت ثبت نشد</p>',
+                    icon: 'error',
+                    padding: '20px',
+                    width: '400px',
+                    confirmButtonText: 'تلاش دوباره'
+                  })
+            }
+        })
+    }
+
     return (
         <>
             <footer class="footer">
@@ -83,6 +137,30 @@ export default function Footer() {
                                     </div>
 
                                 </div>
+                                <div class="col-12">
+                                    <span class="footer-widgets__title">اشتراک در خبرنامه</span>
+                                    <span class="footer-widgets__text text-center d-block">
+                                        جهت اطلاع از آخرین اخبار و تخفیف های سایت مشترک شوید!
+                                    </span>
+                                    <form action="#" class="footer-widgets__form">
+                                        <Input
+                                            element="input"
+                                            id="email"
+                                            type="text"
+                                            classname="footer-widgets__input"
+                                            placeholder="ایمیل خود را وارد کنید."
+                                            onInputHandler={onInputHandler}
+                                            validation={[emailValidator()]}
+                                        />
+                                        <button
+                                            type="submit"
+                                            class="footer-widgets__btn"
+                                            onClick={addNewEmail}
+                                        >
+                                            عضویت
+                                        </button>
+                                    </form>
+                                </div>
                             </FooterItem>
 
                         </div>
@@ -93,7 +171,7 @@ export default function Footer() {
                         کلیه حقوق برای آکادمی آموزش برنامه نویسی سبز لرن محفوظ است.
                     </span>
                 </div>
-            </footer>
+            </footer >
         </>
     )
 }
