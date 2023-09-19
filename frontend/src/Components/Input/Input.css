@@ -4,3 +4,13 @@
 .error{
     border: 2px solid red !important;
 }
+.number::-webkit-outer-spin-button,
+.number::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+.number[type=number] {
+  -moz-appearance: textfield;
+}

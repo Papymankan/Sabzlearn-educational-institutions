@@ -5,9 +5,15 @@ import { useForm } from '../../hooks/useForm'
 import Button from '../../Components/Button/Button'
 import { requiredValidator, minValidator, maxValidator, emailValidator } from "../../Validators/rules";
 import Input from '../../Components/Input/Input'
+import Swal from 'sweetalert2'
+import { useNavigate } from 'react-router'
+
 
 
 export default function Contact() {
+
+    const navigate = useNavigate()
+
 
     const [formState, onInputHandler] = useForm(
         {
@@ -31,9 +37,51 @@ export default function Contact() {
         false
     );
 
-    const addNewContact = () => {
-        console.log("درخواست شما برای مدیران سایت ارسال شد");
-      };
+    const addNewContact = (event) => {
+        event.preventDefault()
+
+        const newContact = {
+            name: formState.inputs.name.value,
+            email: formState.inputs.email.value,
+            phone: formState.inputs.phone.value,
+            body: formState.inputs.body.value
+        }
+
+        fetch('http://localhost:4000/v1/contact', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newContact)
+        }).then(res => {
+            if(res.ok){
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت ارسال شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                      Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                    willClose: () => {
+                      navigate('/', { replace: true })
+                      window.location.reload()
+                    }
+                  })
+            }else{
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">پیام با موفقیت ارسال نشد</p>',
+                    icon: 'error',
+                    padding: '20px',
+                    width: '400px',
+                    confirmButtonText: 'تلاش دوباره'
+                  })
+            }
+            return res.json()
+        })
+        .then(data => console.log(data))
+    };
 
     return (
         <>
@@ -73,8 +121,8 @@ export default function Contact() {
                                 onInputHandler={onInputHandler}
                                 element="input"
                                 id="phone"
-                                classname="login-form__password-input"
-                                type="text"
+                                classname="login-form__password-input number"
+                                type="number"
                                 placeholder="شماره تماس"
                                 validation={[requiredValidator(), minValidator(10), maxValidator(11)]}
                             />
@@ -92,11 +140,11 @@ export default function Contact() {
                         </div>
                         <Button
                             classname={`login-form__btn ${formState.isFormValid === true
-                                    ? "login-form__btn-success"
-                                    : "login-form__btn-error"
+                                ? "login-form__btn-success"
+                                : "login-form__btn-error"
                                 }`}
                             type="submit"
-                            onClick={addNewContact}
+                            onclick={addNewContact}
                             disabled={!formState.isFormValid}
                         >
                             <span className="login-form__btn-text">ارسال</span>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import './Footer.css'
 import FooterItem from './FooterItem/FooterItem'
 
@@ -17,68 +18,73 @@ export default function Footer() {
                             </FooterItem>
 
                             <FooterItem title={"آخرین مطالب"}>
-                            <div class="footer-widgets__links">
-                                        <a href="#" class="footer-widgets__link">
-                                            نحوه نصب کتابخانه در پایتون | آموزش نصب کتابخانه پایتون
-                                        </a>
-                                        <a href="#" class="footer-widgets__link">
-                                            چگونه پایتون را آپدیت کنیم؟ | آموزش صفر تا صد آپدیت کردن پایتون
-                                        </a>
-                                        <a href="#" class="footer-widgets__link">
-                                            آموزش نصب پایتون ( Python ) در در مک، ویندوز و لینوکس | گام به گام و تصویری
-                                        </a>
-                                        <a href="#" class="footer-widgets__link">
-                                            بهترین فریم ورک های فرانت اند | 16 فریم ورک Front end بررسی معایب و مزایا
-                                        </a>
-                                        <a href="#" class="footer-widgets__link">
-                                            معرفی بهترین سایت آموزش جاوا اسکریپت [ تجربه محور ] + آموزش رایگان
-                                        </a>
-                                    </div>
+                                <div class="footer-widgets__links">
+                                    <a href="#" class="footer-widgets__link">
+                                        نحوه نصب کتابخانه در پایتون | آموزش نصب کتابخانه پایتون
+                                    </a>
+                                    <a href="#" class="footer-widgets__link">
+                                        چگونه پایتون را آپدیت کنیم؟ | آموزش صفر تا صد آپدیت کردن پایتون
+                                    </a>
+                                    <a href="#" class="footer-widgets__link">
+                                        آموزش نصب پایتون ( Python ) در در مک، ویندوز و لینوکس | گام به گام و تصویری
+                                    </a>
+                                    <a href="#" class="footer-widgets__link">
+                                        بهترین فریم ورک های فرانت اند | 16 فریم ورک Front end بررسی معایب و مزایا
+                                    </a>
+                                    <a href="#" class="footer-widgets__link">
+                                        معرفی بهترین سایت آموزش جاوا اسکریپت [ تجربه محور ] + آموزش رایگان
+                                    </a>
+                                </div>
                             </FooterItem>
 
                             <FooterItem title={"دسترسی سریع"}>
-                            <div class="row">
-                                        <div class="col-6">
-                                            <a href="#" class="footer-widgets__link">
-                                                آموزش HTML
-                                            </a>
-                                        </div>
-
-                                        <div class="col-6">
-                                            <a href="#" class="footer-widgets__link">
-                                                آموزش CSS
-                                            </a>
-                                        </div>
-
-                                        <div class="col-6">
-
-                                            <a href="#" class="footer-widgets__link">
-                                                آموزش جاوا اسکریپت
-                                            </a>
-                                        </div>
-                                        <div class="col-6">
-
-                                            <a href="#" class="footer-widgets__link">
-                                                آموزش بوت استرپ
-                                            </a>
-                                        </div>
-                                        <div class="col-6">
-
-                                            <a href="#" class="footer-widgets__link">
-                                                آموزش ریکت
-                                            </a>
-                                        </div>
-
-                                        <div class="col-6">
-
-                                            <a href="#" class="footer-widgets__link">
-                                                آموزش پایتون
-                                            </a>
-                                        </div>
-
+                                <div class="row">
+                                    <div class="col-6">
+                                        <Link to={'/contact'} class="footer-widgets__link">
+                                            ارتباط با ما
+                                        </Link>
                                     </div>
+                                    <div class="col-6">
+                                        <a href="#" class="footer-widgets__link">
+                                            آموزش HTML
+                                        </a>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <a href="#" class="footer-widgets__link">
+                                            آموزش CSS
+                                        </a>
+                                    </div>
+
+                                    <div class="col-6">
+
+                                        <a href="#" class="footer-widgets__link">
+                                            آموزش جاوا اسکریپت
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+
+                                        <a href="#" class="footer-widgets__link">
+                                            آموزش بوت استرپ
+                                        </a>
+                                    </div>
+                                    <div class="col-6">
+
+                                        <a href="#" class="footer-widgets__link">
+                                            آموزش ریکت
+                                        </a>
+                                    </div>
+
+                                    <div class="col-6">
+
+                                        <a href="#" class="footer-widgets__link">
+                                            آموزش پایتون
+                                        </a>
+                                    </div>
+
+                                </div>
                             </FooterItem>
-                            
+
                         </div>
                     </div>
                 </div>
