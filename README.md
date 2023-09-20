@@ -4,11 +4,14 @@
 [Sabzlearn](https://sabzlearn.ir) is an Online programming institutions\
 
 ## Tools
-<img width="48" height="48" src="https://img.icons8.com/color/48/html-5--v1.png" alt="html-5--v1"/>
+<div style="display:flex ;">
+  <img width="48" height="48" src="https://img.icons8.com/color/48/html-5--v1.png" alt="html-5--v1" />
 <img width="48" height="48" src="https://img.icons8.com/plasticine/48/css3.png" alt="css3"/>
 <img width="48" height="48" src="https://img.icons8.com/color/48/javascript--v1.png" alt="javascript--v1"/>
 <img width="48" height="48" src="https://img.icons8.com/officel/48/react.png" alt="react"/>
 <img width="48" height="48" src="https://img.icons8.com/color/48/bootstrap.png" alt="bootstrap"/>
+</div>
+
 
 ## Features
 
