@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Typewriter from 'typewriter-effect';
 import CountUp from 'react-countup';
 import './Landing.css'
+import { useNavigate } from 'react-router';
 
 export default function Landing() {
+    const [searchValue, setSearchValue] = useState('')
+    const navigate = useNavigate()
+    const goToSearch = () => {
+        if(searchValue){
+            navigate(`/search/${searchValue}`)
+        }
+    }
     return (
         <section class="landing">
             <div class="container">
@@ -28,8 +36,8 @@ export default function Landing() {
                 <h2 class="landing__subtitle">با آکادمی سبزلرن، برنامه نویسی رو با خیال راحت یاد بگیر و پیشرفت کن.
                 </h2>
                 <div class="landing__searchbar">
-                    <input type="text" class="landing__searchbar-input" placeholder="چه چیزی دوست داری یاد بگیری ..." />
-                    <button class="landing__searchbar-btn" type="submit">
+                    <input type="text" class="landing__searchbar-input" placeholder="چه چیزی دوست داری یاد بگیری ..." value={searchValue} onChange={(event) => setSearchValue(event.target.value)} />
+                    <button class="landing__searchbar-btn" type="submit" onClick={goToSearch}>
                         <i class="fas fa-search landing__searchbar-icon"></i>
                     </button>
                 </div>
