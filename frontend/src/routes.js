@@ -8,6 +8,8 @@ import Register from './Pages/Register/Register'
 import AllArticles from './Pages/AllArticles/AllArticles'
 import Contact from './Pages/Contact/Contact'
 import Search from './Pages/Search/Search'
+import AdminPanel from './Pages/AdminPanel/AdminPanel'
+import AdminUsers from './Pages/AdminPanel/AdminUsers/AdminUsers'
 
 
 const routes = [
@@ -20,7 +22,11 @@ const routes = [
     { path: '/register', element: <Register /> },
     { path: '/articles/:page', element: <AllArticles /> },
     { path: '/contact', element: <Contact /> },
-    { path: '/search/:value', element: <Search/> } 
+    { path: '/search/:value', element: <Search/> } ,
+
+    { path: '/admin-panel/*', element: <AdminPanel/> , children : [
+        { path: 'users', element: <AdminUsers/>} , 
+    ] } 
 ]
 
 export default routes
