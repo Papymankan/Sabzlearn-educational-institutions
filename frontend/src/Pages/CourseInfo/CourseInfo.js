@@ -9,6 +9,8 @@ import CommentSection from '../../Components/CommentSection/CommentSection'
 import AccordionCourse from '../../Components/AccordionCourse/AccordionCourse'
 import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
+import NavBar from '../../Components/Header/NavBar/NavBar'
+import TopBar from '../../Components/Header/TopBar/TopBar'
 
 
 export default function CourseInfo() {
@@ -27,24 +29,26 @@ export default function CourseInfo() {
 
     const localData = JSON.parse(localStorage.getItem('user'))
 
-      fetch(`http://localhost:4000/v1/courses/${courseName}`, {
-        method: 'GET',
-        headers: {
-          'Authorization': `Bearer ${localData == null ? null : localData.token}`
-        }
-      }).then(res => res.json())
-        .then(data => {
-          setCourseData(data)
-          setComments(data.comments)
-          setSessions(data.sessions)
-          setCreatedAt(data.createdAt)
-          setUpdatedAt(data.updatedAt)
-          setCategory(data.categoryID)
-        })
+    fetch(`http://localhost:4000/v1/courses/${courseName}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localData == null ? null : localData.token}`
+      }
+    }).then(res => res.json())
+      .then(data => {
+        setCourseData(data)
+        setComments(data.comments)
+        setSessions(data.sessions)
+        setCreatedAt(data.createdAt)
+        setUpdatedAt(data.updatedAt)
+        setCategory(data.categoryID)
+      })
   }, [courseName])
 
   return (
     <>
+      <TopBar />
+      <NavBar />
       <BreadCrumb
         links={[
           { id: 1, title: 'خانه', to: '/' },
@@ -180,7 +184,7 @@ export default function CourseInfo() {
 
               </div>
 
-              <Comments comments={comments} courseName={courseName}/>
+              <Comments comments={comments} courseName={courseName} />
             </div>
             <div className="col-4">
               <div class="courses-info">

@@ -58,8 +58,7 @@ function App() {
         login,
         logout
       }}>
-        <TopBar/>
-        <NavBar/>
+
         {router}
       </AuthContext.Provider>
     </div>

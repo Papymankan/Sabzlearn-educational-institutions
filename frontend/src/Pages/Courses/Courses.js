@@ -8,19 +8,21 @@ import CourseBox from '../../Components/CourseBox/CourseBox'
 import './Courses.css'
 
 export default function Courses() {
-    const [courses , setCourses] = useState([])
-    const [showCourses , setShowCourses] = useState([])
+    const [courses, setCourses] = useState([])
+    const [showCourses, setShowCourses] = useState([])
 
 
     useEffect(() => {
         fetch('http://localhost:4000/v1/courses')
-        .then(res=> res.json())
-        .then(data => setCourses(data))
+            .then(res => res.json())
+            .then(data => setCourses(data))
     }, [])
 
 
     return (
         <>
+            <TopBar />
+            <NavBar />
             <BreadCrumb links={[
                 { id: 1, to: '/', title: "خانه" },
                 { id: 2, to: '/courses', title: 'تمامی دوره ها' }
@@ -33,18 +35,18 @@ export default function Courses() {
                                 {
                                     showCourses.length >= 1 ? (
                                         showCourses.map(course => (<CourseBox cover={course.cover} creator={course.creator} name={course.name} price={course.price} shortname={course.shortName} />))
-                                    ) : (<CourseBox/>)
-                                }                             
+                                    ) : (<CourseBox />)
+                                }
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
-            <Pagination 
-            courses={courses}
-            coursesCount={5}
-            pathname={'courses'}
-            setShowCourses={setShowCourses}
+            <Pagination
+                courses={courses}
+                coursesCount={5}
+                pathname={'courses'}
+                setShowCourses={setShowCourses}
             />
             <Footer />
         </>

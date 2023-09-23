@@ -23,6 +23,8 @@ export default function ArticleInfo() {
 
   return (
     <>
+      <TopBar />
+      <NavBar />
       <BreadCrumb links={[
         { id: 1, title: 'خانه', to: '/' },
         { id: 2, title: 'آموزش برنامه نویسی فرانت اند', to: '/category/frontend' },

@@ -83,6 +83,8 @@ export default function Category() {
 
   return (
     <>
+      <TopBar />
+      <NavBar />
       <section class="courses">
         <div class="container">
 

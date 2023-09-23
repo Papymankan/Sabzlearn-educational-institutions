@@ -4,6 +4,8 @@ import Footer from "../../Components/Footer/Footer";
 import "./Login.css";
 import Input from "../../Components/Input/Input";
 import Button from "../../Components/Button/Button";
+import NavBar from '../../Components/Header/NavBar/NavBar'
+import TopBar from '../../Components/Header/TopBar/TopBar'
 import { requiredValidator, minValidator, maxValidator, emailValidator } from "../../Validators/rules";
 import { useForm } from "../../hooks/useForm";
 import AuthContext from "../../Context/authContext";
@@ -78,8 +80,8 @@ export default function Login() {
 
   return (
     <>
-      {/* <TopBar />
-      <NavBar /> */}
+        <TopBar/>
+        <NavBar/>
 
       <section class="login-register">
         <div class="login">

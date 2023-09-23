@@ -7,6 +7,8 @@ import { requiredValidator, minValidator, maxValidator, emailValidator } from ".
 import Input from '../../Components/Input/Input'
 import Swal from 'sweetalert2'
 import { useNavigate } from 'react-router'
+import NavBar from '../../Components/Header/NavBar/NavBar'
+import TopBar from '../../Components/Header/TopBar/TopBar'
 
 
 
@@ -54,37 +56,39 @@ export default function Contact() {
             },
             body: JSON.stringify(newContact)
         }).then(res => {
-            if(res.ok){
+            if (res.ok) {
                 Swal.fire({
                     title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت ارسال شد</p>',
                     icon: 'success',
                     padding: '20px',
                     didOpen: () => {
-                      Swal.showLoading()
+                        Swal.showLoading()
                     },
                     width: '380px',
                     timer: 1500,
                     willClose: () => {
-                      navigate('/', { replace: true })
-                      window.location.reload()
+                        navigate('/', { replace: true })
+                        window.location.reload()
                     }
-                  })
-            }else{
+                })
+            } else {
                 Swal.fire({
                     title: '<p style="font-size: 30px ; margin-bottom: 10px;">پیام با موفقیت ارسال نشد</p>',
                     icon: 'error',
                     padding: '20px',
                     width: '400px',
                     confirmButtonText: 'تلاش دوباره'
-                  })
+                })
             }
             return res.json()
         })
-        .then(data => console.log(data))
+            .then(data => console.log(data))
     };
 
     return (
         <>
+            <TopBar />
+            <NavBar />
             <section className="login-register">
                 <div className="login register-form">
                     <span className="login__title">ارتباط با ما</span>

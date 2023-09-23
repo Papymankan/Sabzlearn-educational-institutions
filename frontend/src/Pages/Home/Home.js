@@ -13,6 +13,8 @@ import Landing from '../../Components/Header/Landing/Landing';
 export default function Home() {
   return (
     <>
+      <TopBar/>
+      <NavBar/>
       <Landing/>
       <LastCourses/>
       <AboutUs/>

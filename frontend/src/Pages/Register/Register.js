@@ -67,8 +67,8 @@ export default function Register() {
   }
   return (
     <>
-      {/* <TopBar />
-      <NavBar /> */}
+        <TopBar/>
+        <NavBar/>
 
       <section class="login-register">
         <div class="login register-form">

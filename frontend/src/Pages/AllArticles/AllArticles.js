@@ -3,6 +3,8 @@ import ArticlesCard from '../../Components/Articles/ArticlesCard/ArticlesCard'
 import Footer from '../../Components/Footer/Footer'
 import BreadCrumb from '../../Components/BreadCrumb/BreadCrumb'
 import Pagination from '../../Components/Pagination/Pagination'
+import NavBar from '../../Components/Header/NavBar/NavBar'
+import TopBar from '../../Components/Header/TopBar/TopBar'
 
 export default function AllArticles() {
 
@@ -20,6 +22,8 @@ export default function AllArticles() {
 
     return (
         <>
+            <TopBar />
+            <NavBar />
             <BreadCrumb links={[
                 { id: 1, to: '/', title: "خانه" },
                 { id: 2, to: '/articles/1', title: 'تمامی مقاله ها' }
@@ -32,7 +36,7 @@ export default function AllArticles() {
                                 {
                                     showArticles.length >= 1 ? (
                                         showArticles.map(article => (<ArticlesCard cover={article.cover} description={article.description} shortName={article.shortName} title={article.title} />))
-                                    ): <div className='alert alert-info'>فعلا مفاله ای در نظز گرفته نشده</div>
+                                    ) : <div className='alert alert-info'>فعلا مفاله ای در نظز گرفته نشده</div>
                                 }
                             </div>
                         </div>

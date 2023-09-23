@@ -3,6 +3,8 @@ import { useParams } from 'react-router'
 import ArticlesCard from '../../Components/Articles/ArticlesCard/ArticlesCard'
 import CourseBox from '../../Components/CourseBox/CourseBox'
 import Footer from '../../Components/Footer/Footer'
+import NavBar from '../../Components/Header/NavBar/NavBar'
+import TopBar from '../../Components/Header/TopBar/TopBar'
 import SectionHeader from '../../Components/SectionHeader/SectionHeader'
 
 export default function Search() {
@@ -28,6 +30,8 @@ export default function Search() {
 
     return (
         <>
+            <TopBar />
+            <NavBar />
             <section class="courses">
                 <div class="container">
                     <SectionHeader main_title="نتایج جستجو برای دوره ها " />
@@ -39,7 +43,7 @@ export default function Search() {
                                         : (
                                             <>
                                                 {
-                                                    courses.map(course => (<CourseBox cover={course.cover}  name={course.name} price={course.price} shortname={course.shortName} />))
+                                                    courses.map(course => (<CourseBox cover={course.cover} name={course.name} price={course.price} shortname={course.shortName} />))
                                                 }
                                             </>
                                         )
