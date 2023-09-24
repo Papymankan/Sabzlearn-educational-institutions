@@ -1,5 +1,6 @@
 import React from "react";
 import './AdminSideBar.css'
+import { Link } from 'react-router-dom'
 
 export default function AdminSideBar() {
   return (
@@ -18,39 +19,41 @@ export default function AdminSideBar() {
       <div class="sidebar-menu">
         <ul>
           <li class="active-menu">
-            <a href="#">
+            <Link to={'/admin-panel'}>
               <span>صفحه اصلی</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={'/admin-panel/courses'}>
               <span>دوره ها</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={'/admin-panel/menus'}>
               <span>منو ها</span>
-            </a>
+            </Link>
+
           </li>
           <li>
-            <a href="#">
+            <Link to={'/admin-panel/articles'}>
               <span>مقاله ها</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={'/admin-panel/users'}>
               <span>کاربران</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={'/admin-panel/offs'}>
               <span>کدهای تخفیف</span>
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#">
+            <Link to={'/admin-panel/categories'}>
               <span>دسته‌بندی‌ها</span>
-            </a>
+            </Link>
+
           </li>
         </ul>
       </div>
