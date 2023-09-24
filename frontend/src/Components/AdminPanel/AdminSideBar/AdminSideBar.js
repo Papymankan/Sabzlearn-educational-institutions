@@ -3,7 +3,7 @@ import './AdminSideBar.css'
 
 export default function AdminSideBar() {
   return (
-    <div id="sidebar" class="col-2">
+    <div id="sidebar" className="col-2">
       <div class="sidebar-header">
         <div class="sidebar-logo">
           <a href="#">
