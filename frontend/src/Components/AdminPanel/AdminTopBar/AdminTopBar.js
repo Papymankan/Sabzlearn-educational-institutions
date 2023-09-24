@@ -1,6 +1,11 @@
-import React from 'react'
-
+import React, { useContext, useEffect, useState } from 'react'
+import AuthContext from '../../../Context/authContext'
 export default function AdminTopBar() {
+    const authContext = useContext(AuthContext)
+    const [adminInfo, setAdminInfo] = useState({})
+    useEffect(() => {
+        setAdminInfo(authContext.userInfos)
+    }, [authContext])
     return (
         <div class="container-fluid">
             <div class="container">
@@ -51,11 +56,11 @@ export default function AdminTopBar() {
                         <div class="home-profile">
                             <div class="home-profile-image">
                                 <a href="#">
-                                    <img src="/images/info/teacher.jfif" alt="" />
+                                    <img src={adminInfo.profile} alt="" />
                                 </a>
                             </div>
                             <div class="home-profile-name">
-                                <a href="#">محمدامین سعیدی راد</a>
+                                <a href="#">{adminInfo.name}</a>
                             </div>
                             <div class="home-profile-icon">
                                 <i class="fas fa-angle-down"></i>

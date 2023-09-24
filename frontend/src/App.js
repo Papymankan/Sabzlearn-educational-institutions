@@ -20,12 +20,12 @@ function App() {
     localStorage.removeItem('user')
   }, [])
 
-  const login = (userInfo, token) => {
+  const login = useCallback((userInfo, token) => {
     setToken(token)
     setIsloggedIn(true)
     setUserInfos(userInfo)
     localStorage.setItem('user', JSON.stringify({ token }))
-  }
+  }, [])
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('user'))
@@ -48,7 +48,7 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-
+  console.log('App');
   return (
     <div className="App">
       <AuthContext.Provider value={{
