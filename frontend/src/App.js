@@ -36,6 +36,7 @@ function App() {
         }
       }).then(res => res.json())
         .then(data => {
+          console.log(data);
           setIsloggedIn(true)
           setToken(localData.token)
           setUserInfos(data)

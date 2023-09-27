@@ -2,53 +2,44 @@ import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../../Context/authContext'
 export default function AdminTopBar() {
     const authContext = useContext(AuthContext)
+
     const [adminInfo, setAdminInfo] = useState({})
+    const [adminNotif, setAdminNotif] = useState([])
+    const [notifShow, setNotifShow] = useState(true)
+
     useEffect(() => {
         setAdminInfo(authContext.userInfos)
+        setAdminNotif(authContext.userInfos.notifications)
     }, [authContext])
+
+
     return (
         <div class="container-fluid">
             <div class="container">
-                <div class="home-header">
+                <div className={`home-header ${notifShow && 'active-modal-notfication'}`}>
                     <div class="home-right">
                         <div class="home-searchbar">
                             <input type="text" class="search-bar" placeholder="جستجو..." />
                         </div>
                         <div class="home-notification">
-                            <button type="button">
+                            <button type="button" onMouseEnter={()=> setNotifShow(true)}>
                                 <i class="far fa-bell"></i>
                             </button>
                         </div>
-                        <div class="home-notification-modal">
-                            <ul class="home-notification-modal-list">
-                                <li class="home-notification-modal-item">
-                                    <span class="home-notification-modal-text">پیغام ها</span>
-                                    <label class="switch">
-                                        <input type="checkbox" checked />
-                                        <span class="slider round"></span>
-                                    </label>
-                                </li>
-                                <li class="home-notification-modal-item">
-                                    <span class="home-notification-modal-text">پیغام ها</span>
-                                    <label class="switch">
-                                        <input type="checkbox" checked />
-                                        <span class="slider round"></span>
-                                    </label>
-                                </li>
-                                <li class="home-notification-modal-item">
-                                    <span class="home-notification-modal-text">پیغام ها</span>
-                                    <label class="switch">
-                                        <input type="checkbox" checked />
-                                        <span class="slider round"></span>
-                                    </label>
-                                </li>
-                                <li class="home-notification-modal-item">
-                                    <span class="home-notification-modal-text">پیغام ها</span>
-                                    <label class="switch">
-                                        <input type="checkbox" checked />
-                                        <span class="slider round"></span>
-                                    </label>
-                                </li>
+                        <div class="home-notification-modal" onMouseEnter={()=> setNotifShow(true)} onMouseLeave={()=> setNotifShow(false)}>
+                            <ul class="home-notification-modal-list"  >
+                                {
+                                    adminNotif && adminNotif.map(notif => (
+                                        <li class="home-notification-modal-item">
+                                            <span class="home-notification-modal-text">{notif.msg}</span>
+                                            <label class="switch">
+                                                <input type="checkbox" checked />
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </li>
+                                    ))
+                                }
+
                             </ul>
                         </div>
                     </div>
