@@ -8,15 +8,15 @@ export default function AdminTopBar() {
     useEffect(() => {
         const localData = JSON.parse(localStorage.getItem('user'))
         if (localData) {
-          fetch('http://localhost:4000/v1/auth/me', {
-            headers: {
-              'Authorization': `Bearer ${localData.token}`
-            }
-          }).then(res => res.json())
-            .then(data => {
-              setAdminNotif(data.notifications)
-              setAdminInfo(data)
-            })
+            fetch('http://localhost:4000/v1/auth/me', {
+                headers: {
+                    'Authorization': `Bearer ${localData.token}`
+                }
+            }).then(res => res.json())
+                .then(data => {
+                    setAdminNotif(data.notifications)
+                    setAdminInfo(data)
+                })
         }
     }, [seeNotif])
 
@@ -47,8 +47,13 @@ export default function AdminTopBar() {
                         </div>
                         <div class="home-notification-modal" onMouseEnter={() => setNotifShow(true)} onMouseLeave={() => setNotifShow(false)}>
                             <ul class="home-notification-modal-list"  >
+
                                 {
-                                    adminNotif && adminNotif.map(notif => (
+                                    adminNotif.length == 0 ? (
+                                    <li class="home-notification-modal-item">
+                                        پیغامی وجود ندارد
+                                    </li>) : (
+                                        adminNotif && adminNotif.map(notif => (
                                         <li class="home-notification-modal-item">
                                             <span class="home-notification-modal-text">{notif.msg}</span>
                                             <label class="switch">
@@ -56,7 +61,9 @@ export default function AdminTopBar() {
                                             </label>
                                         </li>
                                     ))
+                                    )
                                 }
+
 
                             </ul>
                         </div>
