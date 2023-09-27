@@ -22,19 +22,18 @@ export default function AdminTopBar() {
                             <input type="text" class="search-bar" placeholder="جستجو..." />
                         </div>
                         <div class="home-notification">
-                            <button type="button" onMouseEnter={()=> setNotifShow(true)}>
+                            <button type="button" onMouseEnter={() => setNotifShow(true)}>
                                 <i class="far fa-bell"></i>
                             </button>
                         </div>
-                        <div class="home-notification-modal" onMouseEnter={()=> setNotifShow(true)} onMouseLeave={()=> setNotifShow(false)}>
+                        <div class="home-notification-modal" onMouseEnter={() => setNotifShow(true)} onMouseLeave={() => setNotifShow(false)}>
                             <ul class="home-notification-modal-list"  >
                                 {
                                     adminNotif && adminNotif.map(notif => (
                                         <li class="home-notification-modal-item">
                                             <span class="home-notification-modal-text">{notif.msg}</span>
                                             <label class="switch">
-                                                <input type="checkbox" checked />
-                                                <span class="slider round"></span>
+                                                <a href="#">دیدم</a>
                                             </label>
                                         </li>
                                     ))
