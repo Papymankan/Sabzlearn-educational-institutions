@@ -1,17 +1,36 @@
 import React, { useContext, useEffect, useState } from 'react'
-import AuthContext from '../../../Context/authContext'
 export default function AdminTopBar() {
-    const authContext = useContext(AuthContext)
 
     const [adminInfo, setAdminInfo] = useState({})
     const [adminNotif, setAdminNotif] = useState([])
-    const [notifShow, setNotifShow] = useState(true)
+    const [notifShow, setNotifShow] = useState(false)
 
     useEffect(() => {
-        setAdminInfo(authContext.userInfos)
-        setAdminNotif(authContext.userInfos.notifications)
-    }, [authContext])
+        const localData = JSON.parse(localStorage.getItem('user'))
+        if (localData) {
+          fetch('http://localhost:4000/v1/auth/me', {
+            headers: {
+              'Authorization': `Bearer ${localData.token}`
+            }
+          }).then(res => res.json())
+            .then(data => {
+              setAdminNotif(data.notifications)
+              setAdminInfo(data)
+            })
+        }
+    }, [seeNotif])
 
+    function seeNotif(id) {
+        const localData = JSON.parse(localStorage.getItem('user'))
+
+        fetch(`http://localhost:4000/v1/notifications/see/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localData.token}`
+            }
+        }).then(res => res.json())
+            .then(data => console.log(data))
+    }
 
     return (
         <div class="container-fluid">
@@ -33,7 +52,7 @@ export default function AdminTopBar() {
                                         <li class="home-notification-modal-item">
                                             <span class="home-notification-modal-text">{notif.msg}</span>
                                             <label class="switch">
-                                                <a href="#">دیدم</a>
+                                                <a href="javascript:void(0)" onClick={() => seeNotif(notif._id)}>دیدم</a>
                                             </label>
                                         </li>
                                     ))
