@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react'
+import { Badge } from '@mui/material'
 export default function AdminTopBar() {
 
     const [adminInfo, setAdminInfo] = useState({})
@@ -42,7 +43,9 @@ export default function AdminTopBar() {
                         </div>
                         <div class="home-notification">
                             <button type="button" onMouseEnter={() => setNotifShow(true)}>
-                                <i class="far fa-bell"></i>
+                                <Badge badgeContent={adminNotif.length} color="secondary">
+                                    <i class="far fa-bell"></i>
+                                </Badge>
                             </button>
                         </div>
                         <div class="home-notification-modal" onMouseEnter={() => setNotifShow(true)} onMouseLeave={() => setNotifShow(false)}>
@@ -50,17 +53,17 @@ export default function AdminTopBar() {
 
                                 {
                                     adminNotif.length == 0 ? (
-                                    <li class="home-notification-modal-item">
-                                        پیغامی وجود ندارد
-                                    </li>) : (
-                                        adminNotif && adminNotif.map(notif => (
                                         <li class="home-notification-modal-item">
-                                            <span class="home-notification-modal-text">{notif.msg}</span>
-                                            <label class="switch">
-                                                <a href="javascript:void(0)" onClick={() => seeNotif(notif._id)}>دیدم</a>
-                                            </label>
-                                        </li>
-                                    ))
+                                            پیغامی وجود ندارد
+                                        </li>) : (
+                                        adminNotif && adminNotif.map(notif => (
+                                            <li class="home-notification-modal-item">
+                                                <span class="home-notification-modal-text">{notif.msg}</span>
+                                                <label class="switch">
+                                                    <a href="javascript:void(0)" onClick={() => seeNotif(notif._id)}>دیدم</a>
+                                                </label>
+                                            </li>
+                                        ))
                                     )
                                 }
 

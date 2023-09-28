@@ -3,9 +3,6 @@ import routes from './routes';
 import { useLocation, useRoutes } from 'react-router-dom'
 import AuthContext from './Context/authContext';
 import { useCallback, useEffect, useState } from 'react';
-import TopBar from './Components/Header/TopBar/TopBar';
-import NavBar from './Components/Header/NavBar/NavBar';
-
 
 function App() {
   const router = useRoutes(routes)
@@ -17,6 +14,7 @@ function App() {
   const logout = useCallback(() => {
     setToken(null)
     setUserInfos({})
+    setIsloggedIn(false)
     localStorage.removeItem('user')
   }, [])
 
