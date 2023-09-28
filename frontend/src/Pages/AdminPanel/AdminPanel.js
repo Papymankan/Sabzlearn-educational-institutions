@@ -13,7 +13,9 @@ export default function AdminPanel() {
         <AdminSideBar />
         <div className="col-10" id='home'>
           <AdminTopBar />
-          <Outlet />
+          <div class="container-fluid" id="home-content">
+            <Outlet />
+          </div>
         </div>
       </div>
     </>

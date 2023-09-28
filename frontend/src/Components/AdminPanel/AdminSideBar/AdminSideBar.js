@@ -25,7 +25,6 @@ export default function AdminSideBar() {
       timer: 1500,
       willClose: () => {
         navigate('/', { replace: true })
-        // window.location.reload()
       }
     })
   }
