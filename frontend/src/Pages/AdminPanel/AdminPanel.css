@@ -114,7 +114,7 @@
   #sidebar {
     background-color: #17203f;
     height: 100vh;
-    /* position: fixed; */
+    position: fixed;
     right: 0;
   }
   #sidebar .sidebar-header {

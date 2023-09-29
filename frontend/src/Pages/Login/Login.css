@@ -186,6 +186,10 @@
 }
 
 .swal2-confirm {
-  width: 150px;
+  width: 100px;
+  font-size: 16px !important;
+}
+.swal2-cancel {
+  width: 100px;
   font-size: 16px !important;
 }
