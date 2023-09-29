@@ -19,6 +19,7 @@ function App() {
   }, [])
 
   const login = useCallback((userInfo, token) => {
+    console.log('login');
     setToken(token)
     setIsloggedIn(true)
     setUserInfos(userInfo)
@@ -26,6 +27,7 @@ function App() {
   }, [])
 
   useEffect(() => {
+    console.log('App');
     const localData = JSON.parse(localStorage.getItem('user'))
     if (localData) {
       fetch('http://localhost:4000/v1/auth/me', {
@@ -46,7 +48,6 @@ function App() {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
-  console.log('App');
   return (
     <div className="App">
       <AuthContext.Provider value={{

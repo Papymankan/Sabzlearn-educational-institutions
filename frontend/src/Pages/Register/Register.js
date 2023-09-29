@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Footer from "../../Components/Footer/Footer";
 import TopBar from "../../Components/Header/TopBar/TopBar";
 import NavBar from "../../Components/Header/NavBar/NavBar";
@@ -15,6 +15,7 @@ import { requiredValidator, minValidator, maxValidator, emailValidator } from ".
 export default function Register() {
 
   const authContext = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const [formState, onInputHandler] = useForm(
     {
@@ -23,6 +24,10 @@ export default function Register() {
         isValid: false
       },
       username: {
+        value: '',
+        isValid: false
+      },
+      phone: {
         value: '',
         isValid: false
       },
@@ -42,16 +47,16 @@ export default function Register() {
   )
 
   const RegisterNewUser = () => {
-    // console.log('register');
-
+    
     const newUser = {
       name: formState.inputs.name.value,
       username: formState.inputs.username.value,
-      phone: 0,
+      phone: Number(formState.inputs.phone.value),
       email: formState.inputs.email.value,
       password: formState.inputs.password.value,
       confirmPassword: formState.inputs.confirmPassword.value
     }
+    console.log(newUser);
 
     fetch(`http://localhost:4000/v1/auth/register`, {
       method: "POST",
@@ -62,6 +67,7 @@ export default function Register() {
     }).then(res => res.json())
       .then(data => {
         authContext.login(data.user, data.accessToken)
+        navigate('/')
       })
 
   }
@@ -112,6 +118,22 @@ export default function Register() {
                 onInputHandler={onInputHandler}
               />
               <i class="login-form__username-icon fa fa-user"></i>
+            </div>
+            <div class="login-form__username">
+              <Input
+                classname="login-form__username-input number"
+                id="phone"
+                type="number"
+                placeholder="شماره تماس"
+                element='input'
+                validation={[
+                  requiredValidator(),
+                  minValidator(10),
+                  maxValidator(12)
+                ]}
+                onInputHandler={onInputHandler}
+              />
+              <i class="login-form__username-icon fa fa-phone"></i>
             </div>
             <div class="login-form__password">
               <Input
