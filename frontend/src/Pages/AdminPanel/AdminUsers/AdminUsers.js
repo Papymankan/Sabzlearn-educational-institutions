@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
 
 export default function AdminUsers() {
-
+  const [users, setUsers] = useState([])
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('user'))
     fetch('http://localhost:4000/v1/users', {
@@ -11,7 +11,10 @@ export default function AdminUsers() {
       }
     })
       .then(res => res.json())
-      .then(data => console.log(data))
+      .then(data => {
+        console.log(data)
+        setUsers(data)
+      })
   }, [])
 
   return (
@@ -21,34 +24,41 @@ export default function AdminUsers() {
           <thead>
             <tr>
               <th>شناسه</th>
-              <th>نام</th>
-              <th>نام خانوادگی</th>
-              <th>شماره</th>
+              <th>نام و نام خانوادگی</th>
+              <th>نام کاربری</th>
               <th>ایمیل</th>
-              <th>رمز عبور</th>
               <th>ویرایش</th>
               <th>حذف</th>
+              <th>بن</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>34223</td>
-              <td>علی</td>
-              <td>سعیدی</td>
-              <td>09123443243</td>
-              <td>ali@gmail.com</td>
-              <td>ehsan1323</td>
-              <td>
-                <button type="button" class="btn btn-primary edit-btn">
+            {
+              users.map((user, index) => (
+                <tr>
+                  <td>{index + 1}</td>
+                  <td>{user.name}</td>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <button type="button" class="btn btn-primary edit-btn">
+                      ویرایش
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger delete-btn">
+                      حذف
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-danger delete-btn">
+                      بن
+                    </button>
+                  </td>
+                </tr>
+              ))
+            }
 
-                </button>
-              </td>
-              <td>
-                <button type="button" class="btn btn-danger delete-btn">
-                  حذف
-                </button>
-              </td>
-            </tr>
           </tbody>
         </table>
       </DataTable>
