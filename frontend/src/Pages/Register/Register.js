@@ -11,6 +11,7 @@ import AuthContext from "../../Context/authContext";
 
 
 import { requiredValidator, minValidator, maxValidator, emailValidator } from "../../Validators/rules";
+import Swal from "sweetalert2";
 
 export default function Register() {
 
@@ -47,11 +48,11 @@ export default function Register() {
   )
 
   const RegisterNewUser = () => {
-    
+
     const newUser = {
       name: formState.inputs.name.value,
       username: formState.inputs.username.value,
-      phone: Number(formState.inputs.phone.value),
+      phone: formState.inputs.phone.value,
       email: formState.inputs.email.value,
       password: formState.inputs.password.value,
       confirmPassword: formState.inputs.confirmPassword.value
@@ -64,17 +65,33 @@ export default function Register() {
         "Content-type": "application/json"
       },
       body: JSON.stringify(newUser)
-    }).then(res => res.json())
+    }).then(res => {
+      if (res.ok) {
+        return res.json()
+      } else {
+        if (res.status == 403) {
+          Swal.fire({
+            title: '<p style="font-size: 30px ; margin-bottom: 10px;">این شماره تماس بن شده است</p>',
+            icon: 'error',
+            padding: '20px',
+            width: '400px',
+            confirmButtonText: 'تلاش دوباره'
+          })
+        }
+      }
+    })
       .then(data => {
-        authContext.login(data.user, data.accessToken)
+        if(data){
+          authContext.login(data.user, data.accessToken)
         navigate('/')
+        }
+        
       })
-
   }
   return (
     <>
-        <TopBar/>
-        <NavBar/>
+      <TopBar />
+      <NavBar />
 
       <section class="login-register">
         <div class="login register-form">
@@ -121,9 +138,9 @@ export default function Register() {
             </div>
             <div class="login-form__username">
               <Input
-                classname="login-form__username-input number"
+                classname="login-form__username-input"
                 id="phone"
-                type="number"
+                type="text"
                 placeholder="شماره تماس"
                 element='input'
                 validation={[
