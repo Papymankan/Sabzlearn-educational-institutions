@@ -143,6 +143,18 @@ export default function AdminUsers() {
       body: JSON.stringify(newUser)
     }).then(res => {
       console.log(res);
+      if(res.ok){
+        Swal.fire({
+          title: '<p style="font-size: 30px ; margin-bottom: 10px;">کاربر جدید اضافه شد</p>',
+          icon: 'success',
+          padding: '20px',
+          didOpen: () => {
+            Swal.showLoading()
+          },
+          width: '380px',
+          timer: 1500,
+        })
+      }
       res.json()
     }).then(result => {
       console.log(result);
