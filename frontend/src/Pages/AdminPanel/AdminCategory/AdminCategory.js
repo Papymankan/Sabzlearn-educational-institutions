@@ -10,6 +10,10 @@ import Swal from 'sweetalert2'
 export default function AdminCategory() {
     const [categories, setCategories] = useState([])
 
+    useEffect(() => {
+        fetchCats()
+    }, [])
+
     const [formState, onInputHandler] = useForm({
         title: {
             value: '',
@@ -21,49 +25,82 @@ export default function AdminCategory() {
         },
     }, false)
 
-    const fetchCats = ()=>{
-                fetch('http://localhost:4000/v1/category').then(res => res.json()).then(data => {
+    const fetchCats = () => {
+        fetch('http://localhost:4000/v1/category').then(res => res.json()).then(data => {
             setCategories(data)
             console.log(data);
         })
     }
 
-    useEffect(() => {
-        fetchCats()
-    }, [])
 
     const createCategory = (e) => {
         e.preventDefault();
         const localData = JSON.parse(localStorage.getItem('user'))
         const newCat = {
-            title : formState.inputs.title.value,
-            name : formState.inputs.shortname.value
+            title: formState.inputs.title.value,
+            name: formState.inputs.shortname.value
         }
 
-        fetch('http://localhost:4000/v1/category' , {
-            method:'POST',
+        fetch('http://localhost:4000/v1/category', {
+            method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localData.token}`,
-                'Content-Type' : 'application/json'
-              },
+                'Content-Type': 'application/json'
+            },
             body: JSON.stringify(newCat)
         }).then(res => {
             console.log(res)
-            if(res.ok){
+            if (res.ok) {
                 Swal.fire({
-                  title: '<p style="font-size: 30px ; margin-bottom: 10px;">دسته جدید اضافه شد</p>',
-                  icon: 'success',
-                  padding: '20px',
-                  didOpen: () => {
-                    Swal.showLoading()
-                  },
-                  width: '380px',
-                  timer: 1500,
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">دسته جدید اضافه شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
                 })
-              }
+            }
             fetchCats()
         })
     }
+
+    const delCat = (id)=>{
+        const localData = JSON.parse(localStorage.getItem('user'))
+        Swal.fire({
+            title: '<p style="font-size: 30px ; margin-bottom: 10px;">آیا از حذف مطمئن هستید؟</p>',
+            icon: 'warning',
+            padding: '30px 0',
+            width: '400px',
+            showCancelButton: true,
+            cancelButtonText: 'نه',
+            confirmButtonText: 'بله'
+        }).then(res => {
+            if (res.isConfirmed) {
+                fetch(`http://localhost:4000/v1/category/${id}` , {
+                    method:'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localData.token}`,
+                    }
+                }).then(res => {
+                    if(res.ok){
+                        Swal.fire({
+                            title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت حذف شد</p>',
+                            icon: 'success',
+                            padding: '20px',
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                            width: '380px',
+                            timer: 1500,
+                        })
+                    }
+                    fetchCats()
+                })
+            }
+          })
+        }
 
     return (
         <>
@@ -149,7 +186,7 @@ export default function AdminCategory() {
                                         </button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger delete-btn" >
+                                        <button type="button" class="btn btn-danger delete-btn" onClick={()=>delCat(category._id)}>
                                             حذف
                                         </button>
                                     </td>
