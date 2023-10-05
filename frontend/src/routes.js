@@ -10,6 +10,7 @@ import Contact from './Pages/Contact/Contact'
 import Search from './Pages/Search/Search'
 import AdminPanel from './Pages/AdminPanel/AdminPanel'
 import AdminUsers from './Pages/AdminPanel/AdminUsers/AdminUsers'
+import AdminCourses from './Pages/AdminPanel/AdminCourses/AdminCourses'
 
 
 const routes = [
@@ -26,6 +27,7 @@ const routes = [
 
     { path: '/admin-panel/*', element: <AdminPanel/> , children : [
         { path: 'users', element: <AdminUsers/>} , 
+        { path: 'courses', element: <AdminCourses/>} , 
     ] } 
 ]
 
