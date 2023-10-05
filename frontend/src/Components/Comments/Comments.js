@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Pagination from '../Pagination/Pagination';
 import './Comments.css'
 import AuthContext from '../../Context/authContext';
@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export default function CommentsTextArea({ comments, courseName }) {
+    // const [Comments , setComments] = useState([])
+
+    // useEffect(()=>{
+    //     setComments(comments)
+    // } , [])
 
     const authContext = useContext(AuthContext)
 
@@ -57,7 +62,7 @@ export default function CommentsTextArea({ comments, courseName }) {
                 </div>
                 <span class="comments__header-title">نظرات</span>
             </div>
-            {comments.length >= 1 ? (<div class="comments__content">
+            {comments.length != 0 ? (<div class="comments__content">
                 {
                     comments.map(comment => (
                         <div class="comments__item">
