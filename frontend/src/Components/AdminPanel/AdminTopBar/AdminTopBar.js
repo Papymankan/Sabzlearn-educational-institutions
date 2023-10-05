@@ -5,7 +5,7 @@ export default function AdminTopBar() {
     const [adminNotif, setAdminNotif] = useState([])
     const [notifShow, setNotifShow] = useState(false)
 
-    const seeNotif = useCallback((id) => {
+    const seeNotif = (id) => {
         const localData = JSON.parse(localStorage.getItem('user'))
 
         fetch(`http://localhost:4000/v1/notifications/see/${id}`, {
@@ -14,11 +14,16 @@ export default function AdminTopBar() {
                 'Authorization': `Bearer ${localData.token}`
             }
         }).then(res => res.json())
-            .then(data => console.log(data))
-    }, [])
+            .then(data => {
+                fetchNotifs()
+            })
+    }
 
     useEffect(() => {
-        console.log('dddd');
+        fetchNotifs()
+    }, [])
+
+    const fetchNotifs = ()=>{
         const localData = JSON.parse(localStorage.getItem('user'))
         if (localData) {
             fetch('http://localhost:4000/v1/auth/me', {
@@ -31,7 +36,7 @@ export default function AdminTopBar() {
                     setAdminInfo(data)
                 })
         }
-    }, [seeNotif])
+    }
 
 
     return (
