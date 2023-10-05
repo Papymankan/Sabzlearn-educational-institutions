@@ -268,7 +268,7 @@ export default function AdminUsers() {
           <div class="col-12">
             <div class="bottom-form">
               <div class="submit-btn">
-                <input type="submit" value="افزودن" onClick={registerNewUser} />
+                <input type="submit" value="افزودن" onClick={registerNewUser} disabled={!formState.isFormValid} />
               </div>
             </div>
           </div>

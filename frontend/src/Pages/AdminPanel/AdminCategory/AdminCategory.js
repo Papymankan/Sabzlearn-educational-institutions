@@ -5,27 +5,65 @@ import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
 import Input from '../../../Components/Input/Input'
 import { useForm } from '../../../hooks/useForm'
 import { emailValidator, maxValidator, minValidator, requiredValidator } from '../../../Validators/rules'
+import Swal from 'sweetalert2'
 
 export default function AdminCategory() {
     const [categories, setCategories] = useState([])
 
-    const [formState , onInputHandler] = useForm ( {
-        title : {
-            value : '',
-            isValid : false
+    const [formState, onInputHandler] = useForm({
+        title: {
+            value: '',
+            isValid: false
         },
-        shortname : {
-            value : '',
-            isValid : false
+        shortname: {
+            value: '',
+            isValid: false
         },
-    } , false)
+    }, false)
 
-    useEffect(() => {
-        fetch('http://localhost:4000/v1/category').then(res => res.json()).then(data => {
+    const fetchCats = ()=>{
+                fetch('http://localhost:4000/v1/category').then(res => res.json()).then(data => {
             setCategories(data)
             console.log(data);
         })
+    }
+
+    useEffect(() => {
+        fetchCats()
     }, [])
+
+    const createCategory = (e) => {
+        e.preventDefault();
+        const localData = JSON.parse(localStorage.getItem('user'))
+        const newCat = {
+            title : formState.inputs.title.value,
+            name : formState.inputs.shortname.value
+        }
+
+        fetch('http://localhost:4000/v1/category' , {
+            method:'POST',
+            headers: {
+                'Authorization': `Bearer ${localData.token}`,
+                'Content-Type' : 'application/json'
+              },
+            body: JSON.stringify(newCat)
+        }).then(res => {
+            console.log(res)
+            if(res.ok){
+                Swal.fire({
+                  title: '<p style="font-size: 30px ; margin-bottom: 10px;">دسته جدید اضافه شد</p>',
+                  icon: 'success',
+                  padding: '20px',
+                  didOpen: () => {
+                    Swal.showLoading()
+                  },
+                  width: '380px',
+                  timer: 1500,
+                })
+              }
+            fetchCats()
+        })
+    }
 
     return (
         <>
@@ -46,9 +84,9 @@ export default function AdminCategory() {
                                     placeholder="لطفا عنوان را وارد کنید..."
                                     validation={[
                                         requiredValidator(),
-                                        minValidator(8),
+                                        minValidator(3),
                                         maxValidator(20),
-                                      ]}                                />
+                                    ]} />
                                 <span class="error-message text-danger"></span>
                             </div>
                         </div>
@@ -63,9 +101,9 @@ export default function AdminCategory() {
                                     placeholder="لطفا اسم کوتاه را وارد کنید..."
                                     validation={[
                                         requiredValidator(),
-                                        minValidator(8),
+                                        minValidator(4),
                                         maxValidator(20),
-                                      ]}
+                                    ]}
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -76,6 +114,8 @@ export default function AdminCategory() {
                                     <input
                                         type="submit"
                                         value="افزودن"
+                                        disabled={!formState.isFormValid}
+                                        onClick={createCategory}
                                     />
                                 </div>
                             </div>

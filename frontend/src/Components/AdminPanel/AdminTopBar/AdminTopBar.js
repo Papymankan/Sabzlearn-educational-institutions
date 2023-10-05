@@ -1,12 +1,24 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useCallback, useContext, useEffect, useState } from 'react'
 import { Badge } from '@mui/material'
 export default function AdminTopBar() {
-
     const [adminInfo, setAdminInfo] = useState({})
     const [adminNotif, setAdminNotif] = useState([])
     const [notifShow, setNotifShow] = useState(false)
 
+    const seeNotif = useCallback((id) => {
+        const localData = JSON.parse(localStorage.getItem('user'))
+
+        fetch(`http://localhost:4000/v1/notifications/see/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${localData.token}`
+            }
+        }).then(res => res.json())
+            .then(data => console.log(data))
+    }, [])
+
     useEffect(() => {
+        console.log('dddd');
         const localData = JSON.parse(localStorage.getItem('user'))
         if (localData) {
             fetch('http://localhost:4000/v1/auth/me', {
@@ -21,17 +33,6 @@ export default function AdminTopBar() {
         }
     }, [seeNotif])
 
-    function seeNotif(id) {
-        const localData = JSON.parse(localStorage.getItem('user'))
-
-        fetch(`http://localhost:4000/v1/notifications/see/${id}`, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${localData.token}`
-            }
-        }).then(res => res.json())
-            .then(data => console.log(data))
-    }
 
     return (
         <div class="container-fluid">
