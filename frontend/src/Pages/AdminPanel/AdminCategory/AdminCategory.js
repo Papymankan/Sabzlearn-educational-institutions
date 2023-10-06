@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import './AdminCategory.css'
-import { Link } from 'react-router-dom'
+import { json, Link } from 'react-router-dom'
 import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
 import Input from '../../../Components/Input/Input'
 import { useForm } from '../../../hooks/useForm'
@@ -66,7 +66,7 @@ export default function AdminCategory() {
         })
     }
 
-    const delCat = (id)=>{
+    const delCat = (id) => {
         const localData = JSON.parse(localStorage.getItem('user'))
         Swal.fire({
             title: '<p style="font-size: 30px ; margin-bottom: 10px;">آیا از حذف مطمئن هستید؟</p>',
@@ -78,13 +78,13 @@ export default function AdminCategory() {
             confirmButtonText: 'بله'
         }).then(res => {
             if (res.isConfirmed) {
-                fetch(`http://localhost:4000/v1/category/${id}` , {
-                    method:'DELETE',
+                fetch(`http://localhost:4000/v1/category/${id}`, {
+                    method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${localData.token}`,
                     }
                 }).then(res => {
-                    if(res.ok){
+                    if (res.ok) {
                         Swal.fire({
                             title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت حذف شد</p>',
                             icon: 'success',
@@ -99,8 +99,59 @@ export default function AdminCategory() {
                     fetchCats()
                 })
             }
-          })
-        }
+        })
+    }
+
+    const editCat = (id) => {
+        Swal.fire({
+            title: '<p style="font-size: 30px ; margin-bottom: 10px;">عنوان و اسم کوتاه جدید</p>',
+            // input:'text',
+            html:
+                '<input id="swal-input1" class="swal2-input" placeholder="عنوان">' +
+                '<input id="swal-input2" class="swal2-input" placeholder="اسم کوتاه انگلیسی">',
+            padding: '10px',
+            width: '380px',
+            preConfirm: () => {
+                return [
+                    document.getElementById('swal-input1').value,
+                    document.getElementById('swal-input2').value
+                ]
+            },
+            confirmButtonText: 'تایید',
+        }).then(res => {
+            if (res.isConfirmed) {
+                if (res.value[0] && res.value[1]) {
+                    const localData = JSON.parse(localStorage.getItem('user'))
+                    fetch(`http://localhost:4000/v1/category/${id}`, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${localData.token}`,
+                        },
+                        body: JSON.stringify({
+                            title: res.value[0],
+                            name: res.value[1]
+                        })
+                    }).then(result => {
+                        console.log(result);
+                        if (result.ok) {
+                            Swal.fire({
+                                title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت اپدیت شد</p>',
+                                icon: 'success',
+                                padding: '20px',
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                                width: '380px',
+                                timer: 1500,
+                            })
+                            fetchCats()
+                        }
+                    })
+                }
+            }
+        })
+    }
 
     return (
         <>
@@ -181,12 +232,12 @@ export default function AdminCategory() {
                                         </Link>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary edit-btn">
+                                        <button type="button" class="btn btn-primary edit-btn" onClick={() => editCat(category._id)}>
                                             ویرایش
                                         </button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-danger delete-btn" onClick={()=>delCat(category._id)}>
+                                        <button type="button" class="btn btn-danger delete-btn" onClick={() => delCat(category._id)}>
                                             حذف
                                         </button>
                                     </td>

@@ -741,4 +741,10 @@
     display: block !important;
   }
   /*# sourceMappingURL=main.css.map */
-  
+
+  .swal2-input{
+    /* height: 3.625em !important; */
+    font-size: 16px;
+    padding: .2em .75em !important;
+    font-size: 18px;
+  }
