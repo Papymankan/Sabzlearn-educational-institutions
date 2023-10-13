@@ -6,8 +6,10 @@ import Swal from 'sweetalert2'
 export default function AdminCourses() {
 
     const [courses, setCourses] = useState([])
+    const [categories, setCategories] = useState([])
+    const [catId, setCatId] = useState('')
 
-    const fetchCourses = ()=>{
+    const fetchCourses = () => {
         const localData = JSON.parse(localStorage.getItem('user'))
         fetch('http://localhost:4000/v1/courses', {
             headers: {
@@ -22,6 +24,15 @@ export default function AdminCourses() {
 
     useEffect(() => {
         fetchCourses()
+    }, [])
+
+    useEffect(() => {
+        fetch('http://localhost:4000/v1/category')
+        .then(res => res.json())
+        .then(data => {
+            setCategories(data)
+            console.log(data);
+        })
     }, [])
 
     const deleteCourse = (id) => {
@@ -42,7 +53,7 @@ export default function AdminCourses() {
                         'Authorization': `Bearer ${localData.token}`
                     }
                 }).then(res => {
-                    if(res.ok){
+                    if (res.ok) {
                         Swal.fire({
                             title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت حذف شد</p>',
                             icon: 'success',
@@ -63,8 +74,147 @@ export default function AdminCourses() {
 
     }
 
+    const catChange = (e)=>{
+        setCatId(e.target.value)
+    }
+
     return (
         <>
+
+
+            <div class="container-fluid" id="home-content">
+                <div class="container">
+                    <div class="home-title">
+                        <span>افزودن محصول جدید</span>
+                    </div>
+                    <form class="form">
+                        <div class="col-6">
+                            <div class="name input">
+                                <label class="input-title">نام محصول</label>
+                                <input
+                                    type="text"
+                                    isValid="false"
+                                    placeholder="لطفا نام محصول را وارد کنید..."
+                                />
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="price input">
+                                <label class="input-title">قیمت محصول</label>
+                                <input
+                                    type="text"
+                                    isValid="false"
+                                    placeholder="لطفا قیمت محصول را وارد کنید..."
+                                />
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="number input">
+                                <label class="input-title">تعداد محصول</label>
+                                <input
+                                    type="text"
+                                    isValid="false"
+                                    placeholder="لطفا تعداد محصول را وارد کنید..."
+                                />
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="price input">
+                                <label class="input-title">قیمت محصول</label>
+                                <input
+                                    type="text"
+                                    isValid="false"
+                                    placeholder="لطفا قیمت محصول را وارد کنید..."
+                                />
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="number input">
+                                <label class="input-title">دسته‌بندی دوره</label>
+                                <select  onChange={(e)=>catChange(e)}>
+                                    {
+                                        categories.map(cat => (
+                                            <option value={cat._id}>{cat.title}</option>
+                                        ))
+                                    }
+                                </select>
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="file">
+                                <label class="input-title">عکس محصول</label>
+                                <input type="file" id="file" />
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="bottom-form">
+                                <div class="condition">
+                                    <label class="input-title">موجودی</label>
+                                    <div class="radios">
+                                        <div class="available">
+                                            <label>
+                                                <span>موجود</span>
+                                                <input
+                                                    type="radio"
+                                                    value="avalibe"
+                                                    name="condition"
+                                                    checked
+                                                />
+                                            </label>
+                                        </div>
+                                        <div class="unavailable">
+                                            <label>
+                                                <span>ناموجود</span>
+                                                <input
+                                                    type="radio"
+                                                    value="unavailable"
+                                                    name="condition"
+                                                />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="submit-btn">
+                                    <input type="submit" value="افزودن" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="presell">
+                                <label class="input-title">وضعیت دوره</label>
+                                <div class="radios">
+                                    <div class="presell-true">
+                                        <label>
+                                            <span>پیش فروش</span>
+                                            <input
+                                                type="radio"
+                                                value="presell"
+                                                name="presell"
+                                                checked
+                                            />
+                                        </label>
+                                    </div>
+                                    <div class="presell-false">
+                                        <label>
+                                            <span>در حال برگزاری</span>
+                                            <input type="radio" value="onperforming" name="presell" />
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+
+
             <DataTable title={'دوره ها'}>
                 <table class="table">
                     <thead>
