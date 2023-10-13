@@ -1,16 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Pagination from '../Pagination/Pagination';
 import './Comments.css'
 import AuthContext from '../../Context/authContext';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
 export default function CommentsTextArea({ comments, courseName }) {
-    // const [Comments , setComments] = useState([])
 
-    // useEffect(()=>{
-    //     setComments(comments)
-    // } , [])
+    console.log(courseName);
+    console.log(comments);
 
     const authContext = useContext(AuthContext)
 
@@ -62,41 +59,44 @@ export default function CommentsTextArea({ comments, courseName }) {
                 </div>
                 <span class="comments__header-title">نظرات</span>
             </div>
-            {comments.length != 0 ? (<div class="comments__content">
-                {
-                    comments.map(comment => (
-                        <div class="comments__item">
-                            <div class="comments__question">
-                                <div class="comments__question-header">
-                                    <div class="comments__question-header-right">
-                                        <span class="comments__question-name comment-name">
-                                            {comment.creator.name}
-                                        </span>
-                                        <span class="comments__question-status comment-status">
-                                            {comment.creator.role == 'ADMIN' ? 'ادمین' : 'خریدار محصول'}
-                                        </span>
-                                        <span class="comments__question-date comment-date">
-                                            {comment.creator.createdAt.slice(0, 10)}
-                                        </span>
-                                    </div>
-                                    <div class="comments__question-header-left">
-                                        <a class="comments__question-header-link comment-link" href="#">
-                                            پاسخ
-                                        </a>
+            <div class="comments__content">
+                {comments.length == 0 ? (<div className="alert alert-warning">کامنتی ثبت نشده است</div>) : (
+                    <>
+                        {
+                            comments.map(comment => (
+                                <div class="comments__item">
+                                    <div class="comments__question">
+                                        <div class="comments__question-header">
+                                            <div class="comments__question-header-right">
+                                                <span class="comments__question-name comment-name">
+                                                    {comment.creator ? comment.creator.name : 'ناشناس'}
+                                                </span>
+                                                <span class="comments__question-status comment-status">
+                                                    {comment.creator ? (comment.creator.role == 'ADMIN' ? 'ادمین' : 'خریدار محصول') : 'ناشناس'}
+                                                </span>
+                                                <span class="comments__question-date comment-date">
+                                                    {comment.creator ? comment.creator.createdAt.slice(0, 10) : 'ناشناس'}
+                                                </span>
+                                            </div>
+                                            <div class="comments__question-header-left">
+                                                <a class="comments__question-header-link comment-link" href="#">
+                                                    پاسخ
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="comments__question-text">
+                                            <p class="comments__question-paragraph comment-paragraph">
+                                                {comment.body}
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="comments__question-text">
-                                    <p class="comments__question-paragraph comment-paragraph">
-                                        {comment.body}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                }
+                            ))
+                        }
+                    </>
+                )}
 
-            </div>) : <div className="alert alert-warning">کامنتی ثبت نشده است</div>
-            }
+            </div>
             {
                 authContext.isloggedIn ? (
                     <>
