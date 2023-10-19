@@ -109,7 +109,40 @@ export default function AdminCourses() {
 
     const addNewCourse = (event)=>{
         event.preventDefault()
-        console.log(formState , catId , CourseStatus);
+        let formData = new FormData()
+        formData.append('name' , formState.inputs.name.value)
+        formData.append('description' , formState.inputs.description.value)
+        formData.append('shortName' , formState.inputs.shortName.value)
+        formData.append('price' , formState.inputs.price.value)
+        formData.append('support' , formState.inputs.support.value)
+        formData.append('categoryID' , catId)
+        formData.append('status' , CourseStatus)
+        formData.append('cover' , CourseCover)
+
+        const localData = JSON.parse(localStorage.getItem('user'))
+        fetch('http://localhost:4000/v1/courses' , {
+            method:'POST',
+            headers: {
+                'Authorization': `Bearer ${localData.token}`
+              },
+            body: formData  
+        }).then(res => {
+            if(res.ok){
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت اضافه شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                      Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                    willClose: () => {
+                        fetchCourses()
+                    }
+                  })
+            }
+        })
     }
 
     return (

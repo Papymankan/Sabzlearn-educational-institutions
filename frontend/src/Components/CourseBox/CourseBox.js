@@ -11,7 +11,7 @@ export default function CourseBox({ name, cover, shortname, creator, price , isS
                 <Link to={`/course-info/${shortname}`}>
                     {
                         cover ? (
-                            <img src={`/images/courses/${cover}`} class="course-box__img" />
+                            <img src={`http://localhost:4000/courses/covers/${cover}`} class="course-box__img" />
                         ) : (<Skeleton variant="rectangular" width={"100%"} height={200} />)
                     }
                 </Link>
