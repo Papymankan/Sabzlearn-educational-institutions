@@ -13,7 +13,7 @@ export default function RowCourseBox({ name, description, price, creator, cover,
                             href="#"
                         >
                             <img
-                                src={`/images/courses/${cover}`}
+                                src={`http://localhost:4000/courses/covers/${cover}`}
                                 class="course__box-right-img"
                             />
                         </Link>

@@ -84,7 +84,7 @@ export default function CourseInfo() {
             </div>
 
             <div class="col-6">
-              <video src="" poster={`/images/courses/${courseData.cover}`} class="course-info__video" controls></video>
+              <video src="" poster={`http://localhost:4000/courses/covers/${courseData.cover}`} class="course-info__video" controls></video>
             </div>
           </div>
         </div>
@@ -98,7 +98,7 @@ export default function CourseInfo() {
                 {/* Course Detail Boxes start */}
                 <div class="course-boxes">
                   <div className="row">
-                    <CourseInfoBox icon="fa-graduation-cap" title="وضعیت دوره:" status={courseData.isComplete ? 'تمام شده' : 'در حال برگزاری'} />
+                    <CourseInfoBox icon="fa-graduation-cap" title="وضعیت دوره:" status={courseData.status == 'start' ? 'در حال برگزاری' : 'پیش فروش'} />
                     <CourseInfoBox icon="fa-clock" title="شروع دوره" status={createdAt.slice(0, 10)} />
                     <CourseInfoBox icon="fa-calendar-alt" title="آخرین بروزرسانی:" status={updatedAt.slice(0, 10)} />
                     <CourseInfoBox icon="fa-user-alt" title="روش پشتیبانی" status={courseData.support} />

@@ -333,7 +333,7 @@ export default function AdminCourses() {
                                         </Link>
                                     </td>
                                     <td>{course.price == 0 ? 'رایگان' : course.price.toLocaleString()}</td>
-                                    <td>{course.isComplete == 0 ? 'تکمیل شده' : 'در حال برگزاری'}</td>
+                                    <td>{course.status == 'start' ? 'در حال برگزاری' : 'پیش فروش'}</td>
                                     <td>{course.creator}</td>
                                     <td>{course.categoryID.title}</td>
                                     <td>
