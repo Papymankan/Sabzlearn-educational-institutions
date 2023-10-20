@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2'
 import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
 
 export default function AdminContact() {
@@ -15,6 +16,16 @@ export default function AdminContact() {
     useEffect(() => {
         fetchContacts()
     }, [])
+
+    const showContact = (body)=>{
+        Swal.fire({
+            title: `<p style="font-size: 18px ; margin-bottom: 10px;">${body}</p>`,
+            // icon: 'warning',
+            padding: '30px 0',
+            width: '400px',
+            confirmButtonText: 'بستن'
+        })
+    }
 
     return (
         <>
@@ -41,7 +52,7 @@ export default function AdminContact() {
                                         <td>{contact.email}</td>
                                         <td>{contact.phone}</td>
                                         <td>
-                                            <button type="button" class="btn btn-primary edit-btn">
+                                            <button type="button" class="btn btn-primary edit-btn" onClick={()=>showContact(contact.body)}>
                                                 مشاهده
                                             </button>
                                         </td>
