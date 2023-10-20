@@ -71,6 +71,11 @@ export default function AdminSideBar() {
             </Link>
           </li>
           <li>
+            <Link to={'/admin-panel/contact'}>
+              <span>ارتباط</span>
+            </Link>
+          </li>
+          <li>
             <Link to={'/admin-panel/offs'}>
               <span>کدهای تخفیف</span>
             </Link>
