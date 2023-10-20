@@ -754,6 +754,19 @@
   #statusRadio{
     display: flex;
   }
+  #statusRadio>div{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+  }
   .presell-true{
     margin-left: 20px;
+  }
+  .radioInput{
+    width: fit-content !important;
+    margin-right: 10px;
+  }
+  .radioInput:focus{
+    outline: none;
+    box-shadow: none !important;
   }

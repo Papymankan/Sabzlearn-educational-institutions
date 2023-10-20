@@ -278,14 +278,17 @@ export default function AdminCourses() {
                                                 type="radio"
                                                 value="presell"
                                                 name="presell"
-                                                checked onInput={event => setCourseStatus(event.target.value)}
+                                                className='radioInput'
+                                                checked onInput={event => setCourseStatus(event.target.value)
+                                                
+                                                }
                                             />
                                     </div>
                                     <div class="presell-false">
-                                        <label>
                                             <span>در حال برگزاری</span>
-                                            <input type="radio" value="start" name="presell"  onInput={event => setCourseStatus(event.target.value)}/>
-                                        </label>
+                                            <input type="radio" value="start" name="presell"  onInput={event => setCourseStatus(event.target.value)}
+                                            className='radioInput'
+                                            />
                                     </div>
                                 </div>
                             </div>
