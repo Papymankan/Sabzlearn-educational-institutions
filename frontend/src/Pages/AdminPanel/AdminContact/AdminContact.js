@@ -125,7 +125,7 @@ export default function AdminContact() {
 
     return (
         <>
-            <DataTable title={'دوره ها'}>
+            <DataTable title={'ارتباط ها'}>
                 <table class="table">
                     <thead>
                         <tr>
