@@ -2,8 +2,32 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
+import Input from '../../../Components/Input/Input'
+import { useForm } from '../../../hooks/useForm'
+import { emailValidator, maxValidator, minValidator, requiredValidator } from '../../../Validators/rules'
 
 export default function AdminArticles() {
+    const [formState, onInputHandler] = useForm(
+        {
+            title: {
+                value: "",
+                isValid: false,
+            },
+            shortName: {
+                value: "",
+                isValid: false,
+            },
+            description: {
+                value: "",
+                isValid: false,
+            },
+        },
+        false
+    );
+
+    const [categories, setCategories] = useState([]);
+    const [articleCategory, setArticleCategory] = useState("");
+    const [articleCover, setArticleCover] = useState({});
 
     const [articles, setArticles] = useState([])
 
@@ -17,7 +41,16 @@ export default function AdminArticles() {
         fetchArticles()
     }, [])
 
-    const DeleteArticle = (id)=>{
+    useEffect(() => {
+        fetch('http://localhost:4000/v1/category')
+            .then(res => res.json())
+            .then(data => {
+                setCategories(data)
+                console.log(data);
+            })
+    }, [])
+
+    const DeleteArticle = (id) => {
         Swal.fire({
             title: '<p style="font-size: 30px ; margin-bottom: 10px;">آیا از حذف مطمئن هستید؟</p>',
             icon: 'warning',
@@ -29,13 +62,13 @@ export default function AdminArticles() {
         }).then(res => {
             if (res.isConfirmed) {
                 const localData = JSON.parse(localStorage.getItem('user'))
-                fetch(`http://localhost:4000/v1/articles/${id}` , {
-                    method:'DELETE',
+                fetch(`http://localhost:4000/v1/articles/${id}`, {
+                    method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${localData.token}`,
                     },
                 }).then(res => {
-                    if(res.ok){
+                    if (res.ok) {
                         Swal.fire({
                             title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت حذف شد</p>',
                             icon: 'success',
@@ -57,6 +90,105 @@ export default function AdminArticles() {
     return (
 
         <>
+
+
+
+            <div class="container-fluid" id="home-content">
+                <div class="container">
+                    <div class="home-title">
+                        <span>افزودن مقاله جدید</span>
+                    </div>
+                    <form class="form">
+                        <div class="col-6">
+                            <div class="name input">
+                                <label class="input-title" style={{ display: "block" }}>
+                                    عنوان
+                                </label>
+                                <Input
+                                    element="input"
+                                    type="text"
+                                    id="title"
+                                    onInputHandler={onInputHandler}
+                                    validation={[minValidator(8)]}
+                                />
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="name input">
+                                <label class="input-title" style={{ display: "block" }}>
+                                    لینک
+                                </label>
+                                <Input
+                                    element="input"
+                                    type="text"
+                                    id="shortName"
+                                    onInputHandler={onInputHandler}
+                                    validation={[minValidator(5)]}
+                                />
+
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="name input">
+                                <label class="input-title" style={{ display: "block" }}>
+                                    چکیده
+                                </label>
+                                {/* <textarea style={{ width: "100%", height: "200px" }}></textarea> */}
+
+                                <Input
+                                    element="textarea"
+                                    type="text"
+                                    id="description"
+                                    onInputHandler={onInputHandler}
+                                    validation={[minValidator(5)]}
+                                    classname="article-textarea"
+                                />
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="name input">
+                                <label class="input-title" style={{ display: "block" }}>
+                                    کاور
+                                </label>
+                                <input
+                                    type="file"
+                                    onChange={(event) => {
+                                        setArticleCover(event.target.files[0]);
+                                    }}
+                                />
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="name input">
+                                <label class="input-title" style={{ display: "block" }}>
+                                    دسته بندی
+                                </label>
+                                <select
+                                    onChange={(event) => setArticleCategory(event.target.value)}
+                                >
+                                    <option value='none' disabled selected hidden >انتخاب دسته‌بندی</option>
+                                    {categories.map((category) => (
+                                        <option value={category._id}>{category.title}</option>
+                                    ))}
+                                </select>
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="bottom-form">
+                                <div class="submit-btn">
+                                    <input type="submit" value="افزودن" disabled={!formState.isFormValid || articleCategory == ''}/>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
             <DataTable title={'مقاله ها'}>
                 <table class="table">
                     <thead>

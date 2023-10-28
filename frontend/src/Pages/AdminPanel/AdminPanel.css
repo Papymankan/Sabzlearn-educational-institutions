@@ -770,3 +770,7 @@
     outline: none;
     box-shadow: none !important;
   }
+  .article-textarea{
+    width: 100%;
+     height: 100px
+  }
