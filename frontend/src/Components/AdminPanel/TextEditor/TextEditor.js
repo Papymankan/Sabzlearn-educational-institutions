@@ -6,7 +6,7 @@ export default function TextEditor({setBody}) {
     return (
         <CKEditor
             editor={ClassicEditor}
-            data="<p>Hello from CKEditor&nbsp;5!</p>"
+            data=""
             onChange={(event, editor) => {
                 const data = editor.getData();
                 console.log(data);

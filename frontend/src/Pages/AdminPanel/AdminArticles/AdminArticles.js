@@ -87,6 +87,44 @@ export default function AdminArticles() {
         })
     }
 
+    const createArticle = (event)=>{
+        event.preventDefault()
+        console.log('create');
+        let formData = new FormData()
+
+        formData.append('title' , formState.inputs.title.value)
+        formData.append('shortName' , formState.inputs.shortName.value)
+        formData.append('description' , formState.inputs.description.value)
+        formData.append('categoryID' , articleCategory)
+        formData.append('cover' , articleCover)
+        formData.append('body' , articleBody)
+
+        const localData = JSON.parse(localStorage.getItem('user'))
+        fetch('http://localhost:4000/v1/articles' , {
+            method:'POST',
+            headers: {
+                'Authorization': `Bearer ${localData.token}`
+              },
+            body: formData  
+        }).then(res => {
+            if(res.ok){
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت اضافه شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                      Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                    willClose: () => {
+                        fetchArticles()
+                    }
+                  })
+            }
+        })
+
+    }
 
     return (
 
@@ -191,7 +229,7 @@ export default function AdminArticles() {
                         <div class="col-12">
                             <div class="bottom-form">
                                 <div class="submit-btn">
-                                    <input type="submit" value="افزودن" disabled={!formState.isFormValid || articleCategory == ''} />
+                                    <input type="submit" value="افزودن" disabled={!formState.isFormValid || articleCategory == '' || articleBody == ''} onClick={createArticle}/>
                                 </div>
                             </div>
                         </div>
