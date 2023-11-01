@@ -5,6 +5,7 @@ import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
 import Input from '../../../Components/Input/Input'
 import { useForm } from '../../../hooks/useForm'
 import { emailValidator, maxValidator, minValidator, requiredValidator } from '../../../Validators/rules'
+import TextEditor from '../../../Components/AdminPanel/TextEditor/TextEditor'
 
 export default function AdminArticles() {
     const [formState, onInputHandler] = useForm(
@@ -28,8 +29,8 @@ export default function AdminArticles() {
     const [categories, setCategories] = useState([]);
     const [articleCategory, setArticleCategory] = useState("");
     const [articleCover, setArticleCover] = useState({});
-
     const [articles, setArticles] = useState([])
+    const [articleBody, setArticleBody] = useState('')
 
     const fetchArticles = () => {
         fetch('http://localhost:4000/v1/articles')
@@ -162,6 +163,15 @@ export default function AdminArticles() {
                                 <span class="error-message text-danger"></span>
                             </div>
                         </div>
+                        <div class="col-12">
+                            <div class="name input">
+                                <label class="input-title" style={{ display: "block" }}>
+                                    کاور
+                                </label>
+                                <TextEditor setBody={setArticleBody}/>
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
                         <div class="col-6">
                             <div class="name input">
                                 <label class="input-title" style={{ display: "block" }}>
@@ -181,7 +191,7 @@ export default function AdminArticles() {
                         <div class="col-12">
                             <div class="bottom-form">
                                 <div class="submit-btn">
-                                    <input type="submit" value="افزودن" disabled={!formState.isFormValid || articleCategory == ''}/>
+                                    <input type="submit" value="افزودن" disabled={!formState.isFormValid || articleCategory == ''} />
                                 </div>
                             </div>
                         </div>
