@@ -55,6 +55,11 @@ export default function AdminSideBar() {
             </Link>
           </li>
           <li>
+            <Link to={'/admin-panel/sessions'}>
+              <span>جلسات</span>
+            </Link>
+          </li>
+          <li>
             <Link to={'/admin-panel/menus'}>
               <span>منو ها</span>
             </Link>
