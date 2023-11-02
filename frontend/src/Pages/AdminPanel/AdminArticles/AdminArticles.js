@@ -35,7 +35,9 @@ export default function AdminArticles() {
     const fetchArticles = () => {
         fetch('http://localhost:4000/v1/articles')
             .then(res => res.json())
-            .then(data => setArticles(data))
+            .then(data => {
+                console.log(data);
+                setArticles(data)})
     }
 
     useEffect(() => {
