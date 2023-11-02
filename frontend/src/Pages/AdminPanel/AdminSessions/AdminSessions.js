@@ -7,6 +7,7 @@ export default function AdminSessions() {
 
     const [courses, setCourses] = useState([])
     const [SessionCourse, setSessionCourse] = useState('')
+    const [SessionFile, setSessionFile] = useState({})
     const [formState, onInputHandler] = useForm(
         {
           title: {
@@ -78,7 +79,18 @@ export default function AdminSessions() {
                             <span class="error-message text-danger"></span>
                         </div>
                     </div>
-
+                    <div class="col-6">
+                        <div class="price input">
+                            <label class="input-title">آپلود جلسه</label>
+                            <input
+                                    type="file"
+                                    onChange={(event) => {
+                                        setSessionFile(event.target.files[0]);
+                                    }}
+                                />
+                            <span class="error-message text-danger"></span>
+                        </div>
+                    </div>
                     <div class="col-12">
                         <div class="bottom-form">
                             <div class="submit-btn">

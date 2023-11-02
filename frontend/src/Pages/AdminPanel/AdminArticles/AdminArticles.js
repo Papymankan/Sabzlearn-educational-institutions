@@ -206,7 +206,7 @@ export default function AdminArticles() {
                         <div class="col-12">
                             <div class="name input">
                                 <label class="input-title" style={{ display: "block" }}>
-                                    کاور
+                                    مقاله
                                 </label>
                                 <TextEditor setBody={setArticleBody}/>
                                 <span class="error-message text-danger"></span>
