@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { emailValidator, maxValidator, minValidator, requiredValidator } from '../../../Validators/rules'
 import Input from '../../../Components/Input/Input'
 import { useForm } from '../../../hooks/useForm'
+import Swal from 'sweetalert2'
 
 export default function AdminSessions() {
 
@@ -10,25 +11,62 @@ export default function AdminSessions() {
     const [SessionFile, setSessionFile] = useState({})
     const [formState, onInputHandler] = useForm(
         {
-          title: {
-            value: "",
-            isValid: false,
-          },
-          time: {
-            value: "",
-            isValid: false,
-          },
+            title: {
+                value: "",
+                isValid: false,
+            },
+            time: {
+                value: "",
+                isValid: false,
+            },
         },
         false
-      );
+    );
 
-    useEffect(()=>{
+    useEffect(() => {
         fetch('http://localhost:4000/v1/courses', {
         }).then(res => res.json())
             .then(data => {
                 setCourses(data)
             })
-    } , [])
+    }, [])
+
+    const addNewSession = (event) => {
+        console.log('upload');
+        event.preventDefault()
+
+        let formData = new FormData()
+
+        formData.append('title' , formState.inputs.title.value)
+        formData.append('time' , Number(formState.inputs.time.value))
+        formData.append('free' , 0)
+        formData.append('video' , SessionFile)
+
+        const localData = JSON.parse(localStorage.getItem('user'))
+        fetch(`http://localhost:4000/v1/courses/${SessionCourse}/sessions` , {
+            method:'POST',
+            headers: {
+                'Authorization': `Bearer ${localData.token}`
+              },
+            body:formData
+        }).then(res => {
+            if(res.ok){
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت اضافه شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                      Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                    willClose: () => {
+                    }
+                  })
+            }
+        })
+
+    }
 
     return (
         <div class="container-fluid" id="home-content">
@@ -83,23 +121,23 @@ export default function AdminSessions() {
                         <div class="price input">
                             <label class="input-title">آپلود جلسه</label>
                             <input
-                                    type="file"
-                                    onChange={(event) => {
-                                        setSessionFile(event.target.files[0]);
-                                    }}
-                                />
+                                type="file"
+                                onChange={(event) => {
+                                    setSessionFile(event.target.files[0]);
+                                }}
+                            />
                             <span class="error-message text-danger"></span>
                         </div>
                     </div>
                     <div class="col-12">
                         <div class="bottom-form">
                             <div class="submit-btn">
-                                <input type="submit" value="افزودن" />
+                                <input type="submit" value="افزودن" onClick={addNewSession} disabled={!formState.isFormValid || SessionCourse == ''}/>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
         </div>
-        )
+    )
 }
