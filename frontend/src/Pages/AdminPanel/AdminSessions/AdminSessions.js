@@ -12,6 +12,7 @@ export default function AdminSessions() {
     const [SessionCourse, setSessionCourse] = useState('')
     const [SessionFile, setSessionFile] = useState({})
     const [sessions, setSessions] = useState([])
+    const [isFree , setIsFree] = useState(0)
     const [formState, onInputHandler] = useForm(
         {
             title: {
@@ -50,7 +51,7 @@ export default function AdminSessions() {
 
         formData.append('title', formState.inputs.title.value)
         formData.append('time', Number(formState.inputs.time.value))
-        formData.append('free', 0)
+        formData.append('free', isFree)
         formData.append('video', SessionFile)
 
         const localData = JSON.parse(localStorage.getItem('user'))
@@ -170,6 +171,37 @@ export default function AdminSessions() {
                         </div>
                         <div class="col-6">
                             <div class="price input">
+                                <label class="input-title" style={{ display: "block" }}>
+                                    رایگان
+                                </label>
+                                <div class="col-6">
+                                    <div class="radios" id='statusRadio'>
+                                        <div class="presell-true">
+                                            <span>بله</span>
+                                            <input
+                                                type="radio"
+                                                value="1"
+                                                name='isFree'
+                                                className='radioInput'
+                                                onInput={event => setIsFree(event.target.value)}
+                                                />
+                                        </div>
+                                        <div class="presell-false">
+                                            <span>خیر</span>
+                                            <input type="radio" value="0"
+                                                checked
+                                                className='radioInput'
+                                                name='isFree'
+                                                onInput={event => setIsFree(event.target.value)}
+                                            />
+                                        </div>
+                                    </div>
+                                </div>
+                                <span class="error-message text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="price input">
                                 <label class="input-title">آپلود جلسه</label>
                                 <input
                                     type="file"
@@ -197,6 +229,7 @@ export default function AdminSessions() {
                             <th>شناسه</th>
                             <th>عنوان</th>
                             <th>دوره</th>
+                            <th>وضعیت</th>
                             <th>تایم</th>
                             <th>حذف</th>
                         </tr>
@@ -208,6 +241,7 @@ export default function AdminSessions() {
                                     <td>{index + 1}</td>
                                     <td>{session.title}</td>
                                     <td>{session.course.name}</td>
+                                    <td>{session.free ? 'رایگان' : 'غیر رایگان'}</td>
                                     <td>{session.time}</td>
                                     <td>
                                         <button type="button" class="btn btn-danger delete-btn" onClick={() => deleteSession(session._id)}>
