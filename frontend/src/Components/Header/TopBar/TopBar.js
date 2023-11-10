@@ -2,8 +2,9 @@ import React, { memo, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import './TopBar.css'
 
-export default memo(function TopBar() {
+export default memo(function TopBar({}) {
     const [topBarLinks, setTopBarLinks] = useState([])
+    const [info, setInfo] = useState({})
 
     const getRandomLinks = (links, ranNum) => {
         const shuffled = [...links].sort(() => 0.5 - Math.random())
@@ -16,6 +17,14 @@ export default memo(function TopBar() {
             .then(data => {
                 setTopBarLinks(data)
             })
+    }, [])
+
+    useEffect(() => {
+        fetch('http://localhost:4000/v1/infos/index')
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                setInfo(data)})
     }, [])
 
     return (
@@ -41,13 +50,13 @@ export default memo(function TopBar() {
                     <div class="top-bar__left">
                         <div class="top-bar__email">
                             <a href="#" class="top-bar__email-text top-bar__link">
-                                sabzlearn@gmail.com
+                                {info.email}
                             </a>
                             <i class="fas fa-envelope top-bar__email-icon"></i>
                         </div>
                         <div class="top-bar__phone">
                             <a href="#" class="top-bar__phone-text top-bar__link">
-                                09921558293
+                                {info.phone}
                             </a>
                             <i class="fas fa-phone top-bar__phone-icon"></i>
                         </div>
