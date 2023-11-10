@@ -157,6 +157,7 @@ export default function AdminSessions() {
                         <tr>
                             <th>شناسه</th>
                             <th>عنوان</th>
+                            <th>دوره</th>
                             <th>تایم</th>
                             <th>حذف</th>
                         </tr>
@@ -166,9 +167,8 @@ export default function AdminSessions() {
                             sessions.map((session, index) => (
                                 <tr>
                                     <td>{index + 1}</td>
-                                    <td>
-                                        {session.title}
-                                    </td>
+                                    <td>{session.title}</td>
+                                    <td>{session.course.name}</td>
                                     <td>{session.time}</td>
                                     <td>
                                         <button type="button" class="btn btn-danger delete-btn">
