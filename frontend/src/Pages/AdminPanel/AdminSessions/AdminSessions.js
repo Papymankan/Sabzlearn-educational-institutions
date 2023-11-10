@@ -72,11 +72,50 @@ export default function AdminSessions() {
                     width: '380px',
                     timer: 1500,
                     willClose: () => {
+                        fetchSessions()
                     }
                 })
             }
         })
 
+    }
+
+    const deleteSession = (id) => {
+        const localData = JSON.parse(localStorage.getItem('user'))
+        Swal.fire({
+            title: '<p style="font-size: 30px ; margin-bottom: 10px;">آیا از حذف مطمئن هستید؟</p>',
+            icon: 'warning',
+            padding: '30px 0',
+            width: '400px',
+            showCancelButton: true,
+            cancelButtonText: 'نه',
+            confirmButtonText: 'بله'
+        }).then(res => {
+            if (res.isConfirmed) {
+                fetch(`http://localhost:4000/v1/courses/sessions/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localData.token}`
+                    }
+                }).then(res => {
+                    if (res.ok) {
+                        Swal.fire({
+                            title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت حذف شد</p>',
+                            icon: 'success',
+                            padding: '20px',
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                            width: '380px',
+                            timer: 1500,
+                        })
+                    }
+                    fetchSessions()
+                })
+            }
+
+
+        })
     }
 
     return (
@@ -171,7 +210,7 @@ export default function AdminSessions() {
                                     <td>{session.course.name}</td>
                                     <td>{session.time}</td>
                                     <td>
-                                        <button type="button" class="btn btn-danger delete-btn">
+                                        <button type="button" class="btn btn-danger delete-btn" onClick={() => deleteSession(session._id)}>
                                             حذف
                                         </button>
                                     </td>
