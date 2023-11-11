@@ -23,6 +23,7 @@ export default function CourseInfo() {
   const [createdAt, setCreatedAt] = useState([])
   const [updatedAt, setUpdatedAt] = useState([])
   const [category, setCategory] = useState({})
+  const [IsRegistered, setIsRegistered] = useState(false)
 
 
   useEffect(() => {
@@ -43,6 +44,7 @@ export default function CourseInfo() {
         setCreatedAt(data.createdAt)
         setUpdatedAt(data.updatedAt)
         setCategory(data.categoryID)
+        // setIsRegistered(data.isUserRegisteredToThisCourse)
       })
   }, [courseName])
 
@@ -156,7 +158,7 @@ export default function CourseInfo() {
                     <a href="#" class="introduction__btns-item">دانلود همگانی ویدیوها</a>
                     <a href="#" class="introduction__btns-item">دانلود همگانی پیوست‌ها</a>
                   </div>
-                  <AccordionCourse sessions={sessions} />
+                  <AccordionCourse sessions={sessions} IsRegistered={courseData.isUserRegisteredToThisCourse}/>
                 </div>
                 {/* Introduction end */}
 

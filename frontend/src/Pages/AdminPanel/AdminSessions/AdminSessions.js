@@ -12,7 +12,7 @@ export default function AdminSessions() {
     const [SessionCourse, setSessionCourse] = useState('')
     const [SessionFile, setSessionFile] = useState({})
     const [sessions, setSessions] = useState([])
-    const [isFree , setIsFree] = useState(0)
+    const [isFree, setIsFree] = useState(0)
     const [formState, onInputHandler] = useForm(
         {
             title: {
@@ -184,7 +184,7 @@ export default function AdminSessions() {
                                                 name='isFree'
                                                 className='radioInput'
                                                 onInput={event => setIsFree(event.target.value)}
-                                                />
+                                            />
                                         </div>
                                         <div class="presell-false">
                                             <span>خیر</span>
