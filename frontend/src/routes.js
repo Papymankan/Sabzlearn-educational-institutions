@@ -15,6 +15,7 @@ import AdminCategory from './Pages/AdminPanel/AdminCategory/AdminCategory'
 import AdminContact from './Pages/AdminPanel/AdminContact/AdminContact'
 import AdminArticles from './Pages/AdminPanel/AdminArticles/AdminArticles'
 import AdminSessions from './Pages/AdminPanel/AdminSessions/AdminSessions'
+import Session from './Pages/Session/Session'
 
 
 const routes = [
@@ -28,6 +29,7 @@ const routes = [
     { path: '/articles/:page', element: <AllArticles /> },
     { path: '/contact', element: <Contact /> },
     { path: '/search/:value', element: <Search/> } ,
+    { path: '/:courseName/:sessionID', element: <Session/> } ,
 
     { path: '/admin-panel/*', element: <AdminPanel/> , children : [
         { path: 'users', element: <AdminUsers/>} , 
