@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import Footer from '../../Components/Footer/Footer'
 import NavBar from '../../Components/Header/NavBar/NavBar'
 import TopBar from '../../Components/Header/TopBar/TopBar'
@@ -7,9 +7,21 @@ import './Session.css'
 
 export default function Session() {
 
-  useEffect(()=>{
-    fetch()
-  } , [])
+  const { courseName, sessionID } = useParams()
+  const [session, setSession] = useState({})
+  const [sessions, setSessions] = useState([])
+
+  useEffect(() => {
+    const localData = JSON.parse(localStorage.getItem('user'))
+    fetch(`http://localhost:4000/v1/courses/${courseName}/${sessionID}`, {
+      headers: {
+        'Authorization': `Bearer ${localData.token}`
+      }
+    }).then(res => res.json()).then(data => {
+      setSession(data.session)
+      setSessions(data.sessions)
+    })
+  }, [])
 
   return (
     <>
@@ -28,17 +40,17 @@ export default function Session() {
             <div class="sidebar-topics">
               <div class="sidebar-topics__item">
                 <ul class="sidebar-topics__list">
-                  {/* {
+                  {
                     sessions.map(session => (
                       <Link to={`/${courseName}/${session._id}`}>
                         <li class="sidebar-topics__list-item">
                           <div class="sidebar-topics__list-right">
                             <i class="sidebar-topics__list-item-icon fa fa-play-circle"></i>
-                            <a class="sidebar-topics__list-item-link" href="#">
+                            <span class="sidebar-topics__list-item-link">
                               {
                                 session.title
                               }
-                            </a>
+                            </span>
                           </div>
                           <div class="sidebar-topics__list-left">
                             <span class="sidebar-topics__list-item-time">
@@ -48,7 +60,7 @@ export default function Session() {
                         </li>
                       </Link>
                     ))
-                  } */}
+                  }
 
                 </ul>
               </div>
@@ -60,12 +72,13 @@ export default function Session() {
             <div class="episode-haeder">
               <div class="episode-header__right">
                 <a class="episode-header__right-back-link" href="#">
-                  <i class="episode-header__right-back-icon fa fa-angle-right"></i>
                   <div class="episode-header__right-home">
-                    <Link class="episode-header__right-home-link">
+                  <i class="episode-header__right-back-icon fa fa-angle-right"></i>
+                    <Link class="episode-header__right-home-link" to={`/course-info/${courseName}`}>
                       به دوره خانه بروید
+                      {' '}
+                      <i class="episode-header__right-home-icon fa fa-home"></i>
                     </Link>
-                    <i class="episode-header__right-home-icon fa fa-home"></i>
                   </div>
                 </a>
               </div>
@@ -73,13 +86,14 @@ export default function Session() {
                 <i class="episode-header__left-icon fa fa-play-circle"></i>
                 <span class="episode-header__left-text">
                   {" "}
-                  سوالات متداول در مورد جاوااسکریپت و دوره
+                  {session.title}
                 </span>
               </div>
             </div>
             <div class="episode-content">
               <video
                 class="episode-content__video"
+                src={`http://localhost:4000/courses/covers/${session.video}`}
                 controls
               ></video>
               <a class="episode-content__video-link" href="#">

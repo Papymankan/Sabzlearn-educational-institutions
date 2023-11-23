@@ -285,8 +285,8 @@ body {
     padding: 2rem 0 4rem 0;
 }
 .episode-content__video {
-    max-width: 80%;
-    margin: 4rem 0;
+    width: 80%;
+    margin: 1rem 0;
 }
 .episode-content__video-link {
     color: var(--white-color);
