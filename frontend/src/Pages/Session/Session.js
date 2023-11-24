@@ -21,7 +21,7 @@ export default function Session() {
       setSession(data.session)
       setSessions(data.sessions)
     })
-  }, [])
+  }, [sessionID])
 
   return (
     <>
