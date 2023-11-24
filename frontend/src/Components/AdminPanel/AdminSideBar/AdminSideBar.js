@@ -66,6 +66,12 @@ export default function AdminSideBar() {
 
           </li>
           <li>
+            <Link to={'/admin-panel/comments'}>
+              <span>کامنت ها</span>
+            </Link>
+
+          </li>
+          <li>
             <Link to={'/admin-panel/articles'}>
               <span>مقاله ها</span>
             </Link>
