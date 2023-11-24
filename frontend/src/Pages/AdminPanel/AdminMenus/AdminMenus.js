@@ -10,19 +10,19 @@ import { minValidator } from '../../../Validators/rules'
 export default function AdminMenus() {
 
     const [menus, setMenus] = useState([])
-    const [parentMenu , setParentMenu] = useState('')
+    const [parentMenu, setParentMenu] = useState('mainMenu')
 
     const [formState, onInputHandler] = useForm({
-        title : {
-            value:'',
-            isValid:''
+        title: {
+            value: '',
+            isValid: ''
         },
-        href : {
-            value:'',
-            isValid:''
+        href: {
+            value: '',
+            isValid: ''
         },
     })
-
+    
     const fetchMenus = () => {
         fetch('http://localhost:4000/v1/menus/all').then(res => res.json()).then(data => setMenus(data))
     }
@@ -69,7 +69,40 @@ export default function AdminMenus() {
 
 
     }
+    const CreateMenu = (e) => {
+        e.preventDefault()
+        const localData = JSON.parse(localStorage.getItem('user'))
 
+        let newMenu = {
+            title: formState.inputs.title.value,
+            href: formState.inputs.href.value,
+            parent: parentMenu == 'mainMenu' ? undefined : parentMenu
+        }
+
+        fetch('http://localhost:4000/v1/menus', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localData.token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newMenu)
+        }).then(res => {
+            res.json()
+            if (res.ok) {
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت اضافه شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                })
+                fetchMenus()
+            }
+        })
+    }
     return (
         <>
             <div class="container">
@@ -108,10 +141,10 @@ export default function AdminMenus() {
                             <label class="input-title">زیر منو</label>
                             <select
                                 class="select"
-                                style={{display : 'block'}}
+                                style={{ display: 'block' }}
                                 onChange={(event) => setParentMenu(event.target.value)}
                             >
-                                <option value="none" disabled hidden selected>منوی اصلی را انتخاب کنید</option>
+                                <option value="mainMenu" selected>منوی اصلی</option>
                                 {menus.map((menu) => (
                                     <>
                                         {!Boolean(menu.parent) && (
@@ -126,7 +159,7 @@ export default function AdminMenus() {
                     <div class="col-12">
                         <div class="bottom-form">
                             <div class="submit-btn">
-                                <input type="submit" value="افزودن" disabled={!formState.isFormValid || parentMenu == ''} />
+                                <input type="submit" value="افزودن" disabled={!formState.isFormValid || parentMenu == ''} onClick={CreateMenu} />
                             </div>
                         </div>
                     </div>
