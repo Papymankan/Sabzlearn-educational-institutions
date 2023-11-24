@@ -182,7 +182,6 @@ export default function AdminCourses() {
                                     onInputHandler={onInputHandler}
                                     element="input"
                                     id='price'
-
                                     placeholder="لطفا قیمت دوره را وارد کنید..."
                                     validation={[
                                         requiredValidator(),

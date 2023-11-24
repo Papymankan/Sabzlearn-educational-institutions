@@ -2,13 +2,28 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
+import Input from '../../../Components/Input/Input'
+import { useForm } from '../../../hooks/useForm'
+import { minValidator } from '../../../Validators/rules'
 
 
 export default function AdminMenus() {
 
     const [menus, setMenus] = useState([])
+    const [parentMenu , setParentMenu] = useState('')
 
-    const fetchMenus= ()=>{
+    const [formState, onInputHandler] = useForm({
+        title : {
+            value:'',
+            isValid:''
+        },
+        href : {
+            value:'',
+            isValid:''
+        },
+    })
+
+    const fetchMenus = () => {
         fetch('http://localhost:4000/v1/menus/all').then(res => res.json()).then(data => setMenus(data))
     }
 
@@ -34,7 +49,7 @@ export default function AdminMenus() {
                         'Authorization': `Bearer ${localData.token}`
                     }
                 }).then(res => {
-                    if(res.ok){
+                    if (res.ok) {
                         Swal.fire({
                             title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت حذف شد</p>',
                             icon: 'success',
@@ -57,6 +72,67 @@ export default function AdminMenus() {
 
     return (
         <>
+            <div class="container">
+                <div class="home-title">
+                    <span>افزودن کاربر جدید</span>
+                </div>
+                <form class="form">
+                    <div class="col-6">
+                        <div class="name input">
+                            <label class="input-title">عنوان</label>
+                            <Input
+                                element="input"
+                                onInputHandler={onInputHandler}
+                                id="title"
+                                placeholder="لطفا عنوان را وارد کنید..."
+                                validation={[minValidator(5)]}
+                            />
+                            <span class="error-message text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="name input">
+                            <label class="input-title">روت</label>
+                            <Input
+                                element="input"
+                                onInputHandler={onInputHandler}
+                                id="href"
+                                validation={[minValidator(5)]}
+                                placeholder="لطفا عنوان را وارد کنید..."
+                            />
+                            <span class="error-message text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="name input">
+                            <label class="input-title">زیر منو</label>
+                            <select
+                                class="select"
+                                style={{display : 'block'}}
+                                onChange={(event) => setParentMenu(event.target.value)}
+                            >
+                                <option value="none" disabled hidden selected>منوی اصلی را انتخاب کنید</option>
+                                {menus.map((menu) => (
+                                    <>
+                                        {!Boolean(menu.parent) && (
+                                            <option value={menu._id}>{menu.title}</option>
+                                        )}
+                                    </>
+                                ))}
+                            </select>
+                            <span class="error-message text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="bottom-form">
+                            <div class="submit-btn">
+                                <input type="submit" value="افزودن" disabled={!formState.isFormValid || parentMenu == ''} />
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
             <DataTable title={'منو ها'}>
                 <table class="table">
                     <thead>
