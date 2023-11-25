@@ -50,6 +50,16 @@ export default function AdminComments() {
         })
     }
 
+    const ShowComment = (text) => {
+        Swal.fire({
+            title: `<p style="font-size: 18px ; margin-bottom: 10px;">${text}</p>`,
+            // icon: 'warning',
+            padding: '30px 0',
+            width: '400px',
+            confirmButtonText: 'بستن'
+        })
+    }
+
     return (
         <>
             <DataTable title={'کامنت ها'}>
@@ -73,7 +83,7 @@ export default function AdminComments() {
                                     <td>{comment.creator.name}</td>
                                     <td>{comment.course}</td>
                                     <td>
-                                        <button type="button" class="btn btn-primary delete-btn">
+                                        <button type="button" class="btn btn-primary delete-btn" onClick={() => ShowComment(comment.body)}>
                                             مشاهده
                                         </button>
                                     </td>
