@@ -125,8 +125,8 @@ export default function AdminComments() {
                                         </button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary delete-btn">
-                                            ویرایش
+                                        <button type="button" class="btn btn-primary delete-btn" disabled={comment.answer}>
+                                            {comment.answer ? 'پاسخ داده شد' : 'پاسخ'}
                                         </button>
                                     </td>
                                     <td>
