@@ -77,8 +77,8 @@ export default function AdminComments() {
                     headers: {
                         'Authorization': `Bearer ${localData.token}`,
                     }
-                }).then(res=>{
-                    if(res.ok){
+                }).then(res => {
+                    if (res.ok) {
                         Swal.fire({
                             title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت بن شد</p>',
                             icon: 'success',
@@ -95,6 +95,56 @@ export default function AdminComments() {
             }
         })
 
+    }
+
+    const AnswerComment = (id)=>{
+        Swal.fire({
+            title: '<p style="font-size: 30px ; margin-bottom: 10px;">پاسخ را وارد کنید</p>',
+            html:
+                '<textArea id="swal-input1" class="swal2-input" placeholder="پاسخ">',
+            padding: '5px',
+            width: '380px',
+            preConfirm: () => {
+                return [
+                    document.getElementById('swal-input1').value,
+                ]
+            },
+            confirmButtonText: 'تایید',
+        }).then(res=>{
+            console.log(res);
+            if (res.isConfirmed && res.value[0]) {
+
+                let answer = {
+                    'body':res.value[0]
+                }
+                const localData = JSON.parse(localStorage.getItem('user'))
+                fetch(`http://localhost:4000/v1/comments/answer/${id}`,{
+                    method:'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localData.token}`,
+                        'Content-Type':'application/json'
+                    },
+                    body : JSON.stringify(answer)
+                }).then(res => {
+                    console.log(res)
+                    if(res.ok){
+                        Swal.fire({
+                            title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت پاسخ داده شد</p>',
+                            icon: 'success',
+                            padding: '20px',
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                            width: '380px',
+                            timer: 1500,
+                        })
+                        fetchComments()
+                    }
+                })
+            }else if(!res.isDismissed && !res.value[0]){
+                alert('پاسخ را وارد کنید')
+            }
+        })
     }
 
     return (
@@ -125,7 +175,7 @@ export default function AdminComments() {
                                         </button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary delete-btn" disabled={comment.answer}>
+                                        <button type="button" class="btn btn-primary delete-btn" disabled={comment.answer} onClick={() => AnswerComment(comment._id)}>
                                             {comment.answer ? 'پاسخ داده شد' : 'پاسخ'}
                                         </button>
                                     </td>
