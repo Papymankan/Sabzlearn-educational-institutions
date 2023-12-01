@@ -88,6 +88,35 @@ export default function CommentsTextArea({ comments, courseName }) {
                                             <p class="comments__question-paragraph comment-paragraph">
                                                 {comment.body}
                                             </p>
+                                            {comment.answerContent && (
+                                                <div class="comments__item" style={{'marginTop':'20px'}}>
+                                                    <div class="comments__question">
+                                                        <div class="comments__question-header">
+                                                            <div class="comments__question-header-right">
+                                                                <span class="comments__question-name comment-name">
+                                                                    {comment.answerContent.creator ? comment.answerContent.creator.name : 'ناشناس'}
+                                                                </span>
+                                                                <span class="comments__question-status comment-status">
+                                                                    {comment.answerContent.creator ? (comment.answerContent.creator.role == 'ADMIN' ? 'ادمین' : 'خریدار محصول') : 'ناشناس'}
+                                                                </span>
+                                                                <span class="comments__question-date comment-date">
+                                                                    {comment.answerContent.creator ? comment.answerContent.creator.createdAt.slice(0, 10) : 'ناشناس'}
+                                                                </span>
+                                                            </div>
+                                                            <div class="comments__question-header-left">
+                                                                <a class="comments__question-header-link comment-link" href="#">
+                                                                    پاسخ
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                        <div class="comments__question-text">
+                                                            <p class="comments__question-paragraph comment-paragraph">
+                                                                {comment.answerContent.body}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     </div>
                                 </div>
