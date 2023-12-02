@@ -182,6 +182,42 @@ export default function AdminComments() {
         })
     }
 
+    const RejectComment = (id) => {
+        Swal.fire({
+            title: '<p style="font-size: 30px ; margin-bottom: 10px;">آیا از لغو تایید مطمئن هستید؟</p>',
+            padding: '30px 0',
+            width: '400px',
+            showCancelButton: true,
+            cancelButtonText: 'نه',
+            confirmButtonText: 'بله'
+        }).then(res => {
+            if (res.isConfirmed) {
+                const localData = JSON.parse(localStorage.getItem('user'))
+                fetch(`http://localhost:4000/v1/comments/reject/${id}`, {
+                    method: 'Put',
+                    headers: {
+                        'Authorization': `Bearer ${localData.token}`,
+                    },
+                }).then(res => {
+                    if (res.ok) {
+                        Swal.fire({
+                            title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت لغو شد</p>',
+                            icon: 'success',
+                            padding: '20px',
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                            width: '380px',
+                            timer: 1500,
+                        })
+                        fetchComments()
+                    }
+                })
+            }
+        })
+    }
+
+
     return (
         <>
             <DataTable title={'کامنت ها'}>
@@ -211,9 +247,15 @@ export default function AdminComments() {
                                         </button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary delete-btn" onClick={() => AcceptComment(comment._id)} disabled={comment.answer}>
-                                            {comment.answer ? 'تایید شده' : 'تایید'}
-                                        </button>
+                                        {comment.answer ? (
+                                            <button type="button" class="btn btn-info delete-btn" onClick={() => RejectComment(comment._id)}>
+                                                لغو تایید
+                                            </button>
+                                        ) : (
+                                            <button type="button" class="btn btn-primary delete-btn" onClick={() => AcceptComment(comment._id)}>
+                                                تایید
+                                            </button>
+                                        )}
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary delete-btn" disabled={comment.answer} onClick={() => AnswerComment(comment._id)}>
