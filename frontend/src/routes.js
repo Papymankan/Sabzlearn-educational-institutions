@@ -18,6 +18,7 @@ import AdminSessions from './Pages/AdminPanel/AdminSessions/AdminSessions'
 import Session from './Pages/Session/Session'
 import AdminMenus from './Pages/AdminPanel/AdminMenus/AdminMenus'
 import AdminComments from './Pages/AdminPanel/AdminComments/AdminComments'
+import AdminOffs from './Pages/AdminPanel/AdminOffs/AdminOffs'
 
 
 const routes = [
@@ -42,6 +43,7 @@ const routes = [
         { path: 'sessions', element: <AdminSessions/>} , 
         { path: 'menus', element: <AdminMenus/>} , 
         { path: 'comments', element: <AdminComments/>} , 
+        { path: 'offs', element: <AdminOffs/>} , 
     ] } 
 ]
 
