@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import Input from "../../../Components/Input/Input";
 import { minValidator } from "../../../Validators/rules";
 import { useForm } from "../../../hooks/useForm";
+import { json } from "react-router";
+import Swal from "sweetalert2";
 
 export default function AdminOffs() {
     const [formData, onInputHandler] = useForm({
@@ -28,6 +30,40 @@ export default function AdminOffs() {
                 setCourses(data)
             })
     }, [])
+
+    const createOff = (e) => {
+        e.preventDefault()
+
+        let newOff = {
+            code: formData.inputs.code.value,
+            percent: formData.inputs.percent.value,
+            max: Number(formData.inputs.max.value),
+            course: offCourse,
+        }
+        const localData = JSON.parse(localStorage.getItem('user'))
+        fetch('http://localhost:4000/v1/offs', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localData.token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newOff)
+        }).then(res => {
+            if (res.ok) {
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت اضافه شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                })
+            }
+        })
+
+    }
 
     return (
         <>
@@ -96,7 +132,7 @@ export default function AdminOffs() {
                         <div class="col-12">
                             <div class="bottom-form">
                                 <div class="submit-btn">
-                                    <input type="submit" value="افزودن" disabled={!formData.isFormValid || offCourse == ''} />
+                                    <input type="submit" value="افزودن" disabled={!formData.isFormValid || offCourse == ''} onClick={createOff} />
                                 </div>
                             </div>
                         </div>
