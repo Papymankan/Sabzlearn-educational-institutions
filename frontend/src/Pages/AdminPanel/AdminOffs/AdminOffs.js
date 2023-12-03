@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Input from "../../../Components/Input/Input";
 import { minValidator } from "../../../Validators/rules";
 import { useForm } from "../../../hooks/useForm";
@@ -18,6 +18,17 @@ export default function AdminOffs() {
             isValid: false
         }
     }, false)
+    const [courses, setCourses] = useState([])
+    const [offCourse, setOffCourse] = useState('')
+
+    useEffect(() => {
+        fetch('http://localhost:4000/v1/courses', {
+        }).then(res => res.json())
+            .then(data => {
+                setCourses(data)
+            })
+    }, [])
+
     return (
         <>
             <div class="container-fluid" id="home-content">
@@ -60,7 +71,7 @@ export default function AdminOffs() {
                                 <Input
                                     element="input"
                                     onInputHandler={onInputHandler}
-                                    type="text"
+                                    type="number"
                                     id="max"
                                     validation={[minValidator(1)]}
                                     placeholder="لطفا تعداد را وارد کنید..."
@@ -73,9 +84,11 @@ export default function AdminOffs() {
                                 <label class="input-title" style={{ display: "block" }}>
                                     دوره
                                 </label>
-                                <select class="select">
+                                <select class="select" onChange={event => setOffCourse(event.target.value)}>
                                     <option value="none" disabled hidden selected>دوره مدنظر را انتخاب کنید</option>
-
+                                    {
+                                        courses.map(course => (<option value={course._id}>{course.name}</option>))
+                                    }
                                 </select>
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -83,7 +96,7 @@ export default function AdminOffs() {
                         <div class="col-12">
                             <div class="bottom-form">
                                 <div class="submit-btn">
-                                    <input type="submit" value="افزودن" />
+                                    <input type="submit" value="افزودن" disabled={!formData.isFormValid || offCourse == ''} />
                                 </div>
                             </div>
                         </div>
