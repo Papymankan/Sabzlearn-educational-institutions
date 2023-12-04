@@ -78,6 +78,42 @@ export default function AdminOffs() {
 
     }
 
+    const DeleteOff = (id) => {
+        const localData = JSON.parse(localStorage.getItem('user'))
+        Swal.fire({
+            title: '<p style="font-size: 30px ; margin-bottom: 10px;">آیا از حذف مطمئن هستید؟</p>',
+            icon: 'warning',
+            padding: '30px 0',
+            width: '400px',
+            showCancelButton: true,
+            cancelButtonText: 'نه',
+            confirmButtonText: 'بله'
+        }).then(res=>{
+            if (res.isConfirmed) {
+                fetch(`http://localhost:4000/v1/offs/${id}`, {
+                    method:'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${localData.token}`
+                    }
+                }).then(res=>{
+                    if(res.ok){
+                        Swal.fire({
+                            title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت حذف شد</p>',
+                            icon: 'success',
+                            padding: '20px',
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                            width: '380px',
+                            timer: 1500,
+                        })
+                    }
+                    fetchOffs()
+                })
+            }
+        })
+    }
+
     return (
         <>
             <div class="container-fluid" id="home-content">
@@ -170,14 +206,14 @@ export default function AdminOffs() {
                         {
                             allOffs.map((off, index) => (
                                 <tr>
-                                    <td style={off.max-off.uses == 0 ? {background:'red'}:{background:'rgb(95, 189, 0)'}}>{index + 1}</td>
+                                    <td style={off.max - off.uses == 0 ? { background: 'red' } : { background: 'rgb(95, 189, 0)' }}>{index + 1}</td>
                                     <td>{off.code}</td>
                                     <td>{off.percent}</td>
                                     <td>{off.creator}</td>
                                     <td>{off.max}</td>
                                     <td>{off.max - off.uses}</td>
                                     <td>
-                                        <button type="button" class="btn btn-danger delete-btn" >
+                                        <button type="button" class="btn btn-danger delete-btn" onClick={() => DeleteOff(off._id)}>
                                             حذف
                                         </button>
                                     </td>
