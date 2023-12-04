@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Input from "../../../Components/Input/Input";
 import { minValidator } from "../../../Validators/rules";
 import { useForm } from "../../../hooks/useForm";
-import { json } from "react-router";
+import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
 import Swal from "sweetalert2";
 
 export default function AdminOffs() {
@@ -20,8 +20,10 @@ export default function AdminOffs() {
             isValid: false
         }
     }, false)
+
     const [courses, setCourses] = useState([])
     const [offCourse, setOffCourse] = useState('')
+    const [allOffs, setAllOffs] = useState([])
 
     useEffect(() => {
         fetch('http://localhost:4000/v1/courses', {
@@ -29,7 +31,17 @@ export default function AdminOffs() {
             .then(data => {
                 setCourses(data)
             })
+        fetchOffs()
     }, [])
+
+    const fetchOffs = () => {
+        const localData = JSON.parse(localStorage.getItem('user'))
+        fetch('http://localhost:4000/v1/offs', {
+            headers: {
+                'Authorization': `Bearer ${localData.token}`
+            },
+        }).then(res => res.json()).then(data => setAllOffs(data))
+    }
 
     const createOff = (e) => {
         e.preventDefault()
@@ -60,6 +72,7 @@ export default function AdminOffs() {
                     width: '380px',
                     timer: 1500,
                 })
+                fetchOffs()
             }
         })
 
@@ -139,6 +152,41 @@ export default function AdminOffs() {
                     </form>
                 </div>
             </div>
+
+            <DataTable title={'تخفیف ها'}>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>شناسه</th>
+                            <th>کد</th>
+                            <th>درصد</th>
+                            <th>سازنده</th>
+                            <th>تعداد</th>
+                            <th>تعداد باقی مانده</th>
+                            <th>حذف</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            allOffs.map((off, index) => (
+                                <tr>
+                                    <td style={off.max-off.uses == 0 ? {background:'red'}:{background:'rgb(95, 189, 0)'}}>{index + 1}</td>
+                                    <td>{off.code}</td>
+                                    <td>{off.percent}</td>
+                                    <td>{off.creator}</td>
+                                    <td>{off.max}</td>
+                                    <td>{off.max - off.uses}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-danger delete-btn" >
+                                            حذف
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </DataTable>
         </>
     );
 }
