@@ -35,7 +35,7 @@ export default function AllArticles() {
                             <div class="row">
                                 {
                                     showArticles.length >= 1 ? (
-                                        showArticles.map(article => (<ArticlesCard cover={article.cover} description={article.description} shortName={article.shortName} title={article.title} />))
+                                        showArticles.filter(a => a.publish == 1).map(article => (<ArticlesCard cover={article.cover} description={article.description} shortName={article.shortName} title={article.title} />))
                                     ) : <div className='alert alert-info'>فعلا مفاله ای در نظز گرفته نشده</div>
                                 }
                             </div>

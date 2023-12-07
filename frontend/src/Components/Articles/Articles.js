@@ -23,7 +23,7 @@ export default function Articles() {
                 <div class="articles__content">
                     <div class="row">
                         {
-                            articles.length >= 1 && [...articles].sort(() => 0.5 - Math.random()).slice(0,3).map(article => (<ArticlesCard {...article} />))
+                            articles.length >= 1 && [...articles].sort(() => 0.5 - Math.random()).filter(a => a.publish == 1).slice(0,3).map(article => (<ArticlesCard {...article} />))
                         }
                     </div>
                 </div>

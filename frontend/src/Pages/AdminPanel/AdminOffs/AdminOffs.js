@@ -4,7 +4,7 @@ import { minValidator } from "../../../Validators/rules";
 import { useForm } from "../../../hooks/useForm";
 import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
 import Swal from "sweetalert2";
-
+ 
 export default function AdminOffs() {
     const [formData, onInputHandler] = useForm({
         code: {
@@ -88,15 +88,15 @@ export default function AdminOffs() {
             showCancelButton: true,
             cancelButtonText: 'نه',
             confirmButtonText: 'بله'
-        }).then(res=>{
+        }).then(res => {
             if (res.isConfirmed) {
                 fetch(`http://localhost:4000/v1/offs/${id}`, {
-                    method:'DELETE',
+                    method: 'DELETE',
                     headers: {
                         'Authorization': `Bearer ${localData.token}`
                     }
-                }).then(res=>{
-                    if(res.ok){
+                }).then(res => {
+                    if (res.ok) {
                         Swal.fire({
                             title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت حذف شد</p>',
                             icon: 'success',

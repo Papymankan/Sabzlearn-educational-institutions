@@ -37,7 +37,8 @@ export default function AdminArticles() {
             .then(res => res.json())
             .then(data => {
                 console.log(data);
-                setArticles(data)})
+                setArticles(data)
+            })
     }
 
     useEffect(() => {
@@ -89,40 +90,79 @@ export default function AdminArticles() {
         })
     }
 
-    const createArticle = (event)=>{
+    const createArticle = (event) => {
         event.preventDefault()
         console.log('create');
         let formData = new FormData()
 
-        formData.append('title' , formState.inputs.title.value)
-        formData.append('shortName' , formState.inputs.shortName.value)
-        formData.append('description' , formState.inputs.description.value)
-        formData.append('categoryID' , articleCategory)
-        formData.append('cover' , articleCover)
-        formData.append('body' , articleBody)
+        formData.append('title', formState.inputs.title.value)
+        formData.append('shortName', formState.inputs.shortName.value)
+        formData.append('description', formState.inputs.description.value)
+        formData.append('categoryID', articleCategory)
+        formData.append('cover', articleCover)
+        formData.append('body', articleBody)
 
         const localData = JSON.parse(localStorage.getItem('user'))
-        fetch('http://localhost:4000/v1/articles' , {
-            method:'POST',
+        fetch('http://localhost:4000/v1/articles', {
+            method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localData.token}`
-              },
-            body: formData  
+            },
+            body: formData
         }).then(res => {
-            if(res.ok){
+            if (res.ok) {
                 Swal.fire({
                     title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت اضافه شد</p>',
                     icon: 'success',
                     padding: '20px',
                     didOpen: () => {
-                      Swal.showLoading()
+                        Swal.showLoading()
                     },
                     width: '380px',
                     timer: 1500,
                     willClose: () => {
                         fetchArticles()
                     }
-                  })
+                })
+            }
+        })
+
+    }
+
+    const saveArticle = (event) => {
+        event.preventDefault()
+        console.log('create');
+        let formData = new FormData()
+
+        formData.append('title', formState.inputs.title.value)
+        formData.append('shortName', formState.inputs.shortName.value)
+        formData.append('description', formState.inputs.description.value)
+        formData.append('categoryID', articleCategory)
+        formData.append('cover', articleCover)
+        formData.append('body', articleBody)
+
+        const localData = JSON.parse(localStorage.getItem('user'))
+        fetch('http://localhost:4000/v1/articles/draft', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${localData.token}`
+            },
+            body: formData
+        }).then(res => {
+            if (res.ok) {
+                Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت سیو شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                    willClose: () => {
+                        fetchArticles()
+                    }
+                })
             }
         })
 
@@ -208,7 +248,7 @@ export default function AdminArticles() {
                                 <label class="input-title" style={{ display: "block" }}>
                                     مقاله
                                 </label>
-                                <TextEditor setBody={setArticleBody}/>
+                                <TextEditor setBody={setArticleBody} />
                                 <span class="error-message text-danger"></span>
                             </div>
                         </div>
@@ -231,7 +271,8 @@ export default function AdminArticles() {
                         <div class="col-12">
                             <div class="bottom-form">
                                 <div class="submit-btn">
-                                    <input type="submit" value="افزودن" disabled={!formState.isFormValid || articleCategory == '' || articleBody == ''} onClick={createArticle}/>
+                                    <input type="submit" value="افزودن" disabled={!formState.isFormValid || articleCategory == '' || articleBody == ''} onClick={createArticle} />
+                                    <input type="submit" style={{marginRight:'20px'}} value="پیش نویس" disabled={!formState.isFormValid || articleCategory == '' || articleBody == ''} onClick={saveArticle} />
                                 </div>
                             </div>
                         </div>
@@ -262,10 +303,10 @@ export default function AdminArticles() {
                                         </Link>
                                     </td>
                                     <td>
-                                        {article.title}
-                                    </td>
-                                    <td>
                                         {article.creator.name}
+                                    </td>
+                                    <td style={article.publish ? {color : 'blue'} : {color : 'red'}}>
+                                        {article.publish ? 'منتشر شده' : 'پیش نویس'}
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary edit-btn">
