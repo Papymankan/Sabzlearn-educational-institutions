@@ -8,7 +8,7 @@ import { emailValidator, maxValidator, minValidator, requiredValidator } from '.
 import TextEditor from '../../../Components/AdminPanel/TextEditor/TextEditor'
 
 export default function AdminArticles() {
-    const [formState, onInputHandler] = useForm(
+    const [formState, onInputHandler , onInputSubmit] = useForm(
         {
             title: {
                 value: "",
@@ -36,9 +36,9 @@ export default function AdminArticles() {
         fetch('http://localhost:4000/v1/articles')
             .then(res => res.json())
             .then(data => {
-                console.log(data);
                 setArticles(data)
             })
+            // console.log(formState.inputs);
     }
 
     useEffect(() => {
@@ -92,7 +92,6 @@ export default function AdminArticles() {
 
     const createArticle = (event) => {
         event.preventDefault()
-        console.log('create');
         let formData = new FormData()
 
         formData.append('title', formState.inputs.title.value)
@@ -121,7 +120,9 @@ export default function AdminArticles() {
                     width: '380px',
                     timer: 1500,
                     willClose: () => {
+                        onInputSubmit()
                         fetchArticles()
+                        setArticleCategory('')
                     }
                 })
             }
@@ -190,7 +191,9 @@ export default function AdminArticles() {
                                     type="text"
                                     id="title"
                                     onInputHandler={onInputHandler}
-                                    validation={[minValidator(8)]}
+                                    validation={[minValidator(8)]
+                                    }
+                                    state={formState.inputs}
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -206,7 +209,8 @@ export default function AdminArticles() {
                                     id="shortName"
                                     onInputHandler={onInputHandler}
                                     validation={[minValidator(5)]}
-                                />
+                                    state={formState.inputs}
+                                    />
 
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -224,8 +228,9 @@ export default function AdminArticles() {
                                     id="description"
                                     onInputHandler={onInputHandler}
                                     validation={[minValidator(5)]}
+                                    state={formState.inputs}
                                     classname="article-textarea"
-                                />
+                                    />
                                 <span class="error-message text-danger"></span>
                             </div>
                         </div>
@@ -239,7 +244,7 @@ export default function AdminArticles() {
                                     onChange={(event) => {
                                         setArticleCover(event.target.files[0]);
                                     }}
-                                />
+                                    />
                                 <span class="error-message text-danger"></span>
                             </div>
                         </div>
@@ -259,8 +264,9 @@ export default function AdminArticles() {
                                 </label>
                                 <select
                                     onChange={(event) => setArticleCategory(event.target.value)}
+                                    value={articleCategory}
                                 >
-                                    <option value='none' disabled selected hidden >انتخاب دسته‌بندی</option>
+                                    <option value='' disabled selected  >انتخاب دسته‌بندی</option>
                                     {categories.map((category) => (
                                         <option value={category._id}>{category.title}</option>
                                     ))}
@@ -272,7 +278,7 @@ export default function AdminArticles() {
                             <div class="bottom-form">
                                 <div class="submit-btn">
                                     <input type="submit" value="افزودن" disabled={!formState.isFormValid || articleCategory == '' || articleBody == ''} onClick={createArticle} />
-                                    <input type="submit" style={{marginRight:'20px'}} value="پیش نویس" disabled={!formState.isFormValid || articleCategory == '' || articleBody == ''} onClick={saveArticle} />
+                                    <input type="submit" style={{ marginRight: '20px' }} value="پیش نویس" disabled={!formState.isFormValid || articleCategory == '' || articleBody == ''} onClick={saveArticle} />
                                 </div>
                             </div>
                         </div>
@@ -305,7 +311,7 @@ export default function AdminArticles() {
                                     <td>
                                         {article.creator.name}
                                     </td>
-                                    <td style={article.publish ? {color : 'blue'} : {color : 'red'}}>
+                                    <td style={article.publish ? { color: 'blue' } : { color: 'red' }}>
                                         {article.publish ? 'منتشر شده' : 'پیش نویس'}
                                     </td>
                                     <td>

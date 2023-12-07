@@ -25,6 +25,18 @@ const formReducer = (state, action) => {
                 isFormValid: isFormValid
             }
         }
+        case "CLEAR_INPUTS": {
+            let obj = {}
+            Object.keys(state.inputs).forEach(key => {
+                obj[key] = { value: '', isValid: false }
+            })
+            let obj2 = {
+                inputs: obj,
+                isFormValid: false
+            }
+            console.log(obj2);
+            return obj2
+        }
         default: {
             return state;
         }
@@ -46,5 +58,9 @@ export const useForm = (initInputs, initFormIsValid) => {
         });
     }, [])
 
-    return [formState, onInputHandler];
+    const onInputSubmit = () => {
+        dispatch({ type: "CLEAR_INPUTS" })
+    }
+
+    return [formState, onInputHandler, onInputSubmit];
 };
