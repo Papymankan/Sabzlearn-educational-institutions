@@ -1,7 +1,7 @@
-# Sabzlearn educational institutions
+# Sabzlearn educational institutions (NEW UPDATE)
 
 ![](Capture.PNG)
-[Sabzlearn](https://sabzlearn.ir) is an Online programming institutions\
+[Sabzlearn](https://sabzlearn.ir) is an Online programming institutions
 
 ## Tools
 <div style="display:flex ;">
@@ -15,13 +15,15 @@
 
 ## Features
 
-1. Register , login, and logout using JWT
+1. Register, login, and logout using JWT
 2. Authentication and Authorization
 2. Single Page Application 
 3. Inputs Validators
 4. Pagination
-5. Dynamic menus, sub-menus
-6. Swiper.js 
+5. Dashboard Admin (new)
+6. Add, delete, and edit new courses, sessions, articles, users, etc. (NEW)
+7. Swiper.js
+8. ckeditor
 
 ## Installation
 
