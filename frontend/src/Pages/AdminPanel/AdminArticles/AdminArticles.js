@@ -169,7 +169,7 @@ export default function AdminArticles() {
 
     }
 
-    const editArticle = (shortName) => {
+    const editArticle = (shortName , id) => {
         const localData = JSON.parse(localStorage.getItem('user'))
         fetch(`http://localhost:4000/v1/articles/${shortName}`, {
             headers: {
@@ -252,6 +252,7 @@ export default function AdminArticles() {
                                 <input
                                     type="file"
                                     onChange={(event) => {
+                                        console.log(event);
                                         setArticleCover(event.target.files[0]);
                                     }}
                                 />
@@ -325,7 +326,7 @@ export default function AdminArticles() {
                                         {article.publish ? 'منتشر شده' : 'پیش نویس'}
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary edit-btn" onClick={() => editArticle(article.shortName)}>
+                                        <button type="button" class="btn btn-primary edit-btn" onClick={() => editArticle(article.shortName , article._id)}>
                                             ویرایش
                                         </button>
                                     </td>
