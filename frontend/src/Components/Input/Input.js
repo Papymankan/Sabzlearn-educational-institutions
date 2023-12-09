@@ -37,8 +37,13 @@ export default function Input(props) {
         dispatch({ type: 'CLEAR' })
       }
     }
-
   }, [props.state])
+
+  useEffect(() => {
+    if(props.Value){
+      dispatch({ type: 'CHANGE', value: props.Value, validation: props.validation })
+    }
+  }, [props.Value])
 
   const element = props.element == 'input' ? (
     <input placeholder={props.placeholder} type={props.type} className={`${props.classname} ${mainInput.isValid ? 'success' : 'error'}`} onChange={InputOnChange} value={mainInput.value} />

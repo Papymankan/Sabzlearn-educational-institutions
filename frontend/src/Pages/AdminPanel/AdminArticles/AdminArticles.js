@@ -8,7 +8,7 @@ import { emailValidator, maxValidator, minValidator, requiredValidator } from '.
 import TextEditor from '../../../Components/AdminPanel/TextEditor/TextEditor'
 
 export default function AdminArticles() {
-    const [formState, onInputHandler , onInputSubmit] = useForm(
+    const [formState, onInputHandler, onInputSubmit] = useForm(
         {
             title: {
                 value: "",
@@ -31,6 +31,7 @@ export default function AdminArticles() {
     const [articleCover, setArticleCover] = useState({});
     const [articles, setArticles] = useState([])
     const [articleBody, setArticleBody] = useState('')
+    const [EditArticle, setEditArticle] = useState({})
 
     const fetchArticles = () => {
         fetch('http://localhost:4000/v1/articles')
@@ -38,7 +39,6 @@ export default function AdminArticles() {
             .then(data => {
                 setArticles(data)
             })
-            // console.log(formState.inputs);
     }
 
     useEffect(() => {
@@ -169,12 +169,18 @@ export default function AdminArticles() {
 
     }
 
+    const editArticle = (shortName) => {
+        const localData = JSON.parse(localStorage.getItem('user'))
+        fetch(`http://localhost:4000/v1/articles/${shortName}`, {
+            headers: {
+                'Authorization': `Bearer ${localData.token}`,
+            },
+        }).then(res=>res.json()).then(data => setEditArticle(data))
+    }
+
     return (
 
         <>
-
-
-
             <div class="container-fluid" id="home-content">
                 <div class="container">
                     <div class="home-title">
@@ -194,6 +200,7 @@ export default function AdminArticles() {
                                     validation={[minValidator(8)]
                                     }
                                     state={formState.inputs}
+                                    Value={EditArticle.title}
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -210,7 +217,8 @@ export default function AdminArticles() {
                                     onInputHandler={onInputHandler}
                                     validation={[minValidator(5)]}
                                     state={formState.inputs}
-                                    />
+                                    Value={EditArticle.shortName}
+                                />
 
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -220,8 +228,6 @@ export default function AdminArticles() {
                                 <label class="input-title" style={{ display: "block" }}>
                                     چکیده
                                 </label>
-                                {/* <textarea style={{ width: "100%", height: "200px" }}></textarea> */}
-
                                 <Input
                                     element="textarea"
                                     type="text"
@@ -230,7 +236,8 @@ export default function AdminArticles() {
                                     validation={[minValidator(5)]}
                                     state={formState.inputs}
                                     classname="article-textarea"
-                                    />
+                                    Value={EditArticle.description}
+                                />
                                 <span class="error-message text-danger"></span>
                             </div>
                         </div>
@@ -244,7 +251,7 @@ export default function AdminArticles() {
                                     onChange={(event) => {
                                         setArticleCover(event.target.files[0]);
                                     }}
-                                    />
+                                />
                                 <span class="error-message text-danger"></span>
                             </div>
                         </div>
@@ -315,7 +322,7 @@ export default function AdminArticles() {
                                         {article.publish ? 'منتشر شده' : 'پیش نویس'}
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-primary edit-btn">
+                                        <button type="button" class="btn btn-primary edit-btn" onClick={() => editArticle(article.shortName)}>
                                             ویرایش
                                         </button>
                                     </td>
