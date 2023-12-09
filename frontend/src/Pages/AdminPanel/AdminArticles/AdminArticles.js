@@ -175,7 +175,10 @@ export default function AdminArticles() {
             headers: {
                 'Authorization': `Bearer ${localData.token}`,
             },
-        }).then(res=>res.json()).then(data => setEditArticle(data))
+        }).then(res=>res.json()).then(data => {
+            setEditArticle(data)
+            setArticleBody(data.body)
+        })
     }
 
     return (
@@ -260,7 +263,7 @@ export default function AdminArticles() {
                                 <label class="input-title" style={{ display: "block" }}>
                                     مقاله
                                 </label>
-                                <TextEditor setBody={setArticleBody} />
+                                <TextEditor setBody={setArticleBody} data={articleBody}/>
                                 <span class="error-message text-danger"></span>
                             </div>
                         </div>
