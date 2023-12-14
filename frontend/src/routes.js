@@ -19,6 +19,7 @@ import Session from './Pages/Session/Session'
 import AdminMenus from './Pages/AdminPanel/AdminMenus/AdminMenus'
 import AdminComments from './Pages/AdminPanel/AdminComments/AdminComments'
 import AdminOffs from './Pages/AdminPanel/AdminOffs/AdminOffs'
+import AdminMain from './Pages/AdminPanel/AdminMain/AdminMain'
 
 
 const routes = [
@@ -36,6 +37,7 @@ const routes = [
 
     { path: '/admin-panel/*', element: <AdminPanel/> , children : [
         { path: 'users', element: <AdminUsers/>} , 
+        { path: '', element: <AdminMain/>} , 
         { path: 'courses', element: <AdminCourses/>} , 
         { path: 'categories', element: <AdminCategory/>} , 
         { path: 'contact', element: <AdminContact/>} , 

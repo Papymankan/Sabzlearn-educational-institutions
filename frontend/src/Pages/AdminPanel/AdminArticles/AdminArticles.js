@@ -88,7 +88,7 @@ export default function AdminArticles() {
                 })
             }
         })
-    }
+     }
 
     const createArticle = (event) => {
         event.preventDefault()

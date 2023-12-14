@@ -30,13 +30,6 @@ export default function AdminSideBar() {
     })
   }
 
-  // const removeStyle = (e) => {
-  //   const allLi = document.querySelectorAll('li')
-  //   for (let i = 0; i < allLi.length; i++) {
-  //     allLi[i].classList.remove('active-menu')
-  //   }
-  // }
-
   return (
     <div id="sidebar" className="col-2">
       <div class="sidebar-header">
