@@ -11,6 +11,7 @@ import { useParams } from 'react-router'
 import { Link } from 'react-router-dom'
 import NavBar from '../../Components/Header/NavBar/NavBar'
 import TopBar from '../../Components/Header/TopBar/TopBar'
+import Swal from 'sweetalert2'
 
 
 export default function CourseInfo() {
@@ -47,6 +48,38 @@ export default function CourseInfo() {
         // setIsRegistered(data.isUserRegisteredToThisCourse)
       })
   }, [courseName])
+
+  const registerToCourse = () => {
+    if (!courseData.isUserRegisteredToThisCourse) {
+      if (!courseData.price) {
+        const localData = JSON.parse(localStorage.getItem('user'))
+        fetch(`http://localhost:4000/v1/courses/${courseData._id}/register`,{
+          method:'POST',
+          headers: {
+            'Authorization': `Bearer ${localData.token}`
+          },
+        })
+          .then(res => {
+            console.log(res);
+            if (res.ok) {
+              Swal.fire({
+                title: '<p style="font-size: 30px ; margin-bottom: 10px;">ثبت نام شما انجام شد</p>',
+                icon: 'success',
+                padding: '20px',
+                didOpen: () => {
+                  Swal.showLoading()
+                },
+                width: '380px',
+                timer: 1500,
+                willClose: () => {
+                  window.location.reload()
+                }
+              })
+            }
+          })
+      }
+    }
+  }
 
   return (
     <>
@@ -158,7 +191,7 @@ export default function CourseInfo() {
                     <a href="#" class="introduction__btns-item">دانلود همگانی ویدیوها</a>
                     <a href="#" class="introduction__btns-item">دانلود همگانی پیوست‌ها</a>
                   </div>
-                  <AccordionCourse sessions={sessions} IsRegistered={courseData.isUserRegisteredToThisCourse} courseName={courseName}/>
+                  <AccordionCourse sessions={sessions} IsRegistered={courseData.isUserRegisteredToThisCourse} courseName={courseName} />
                 </div>
                 {/* Introduction end */}
 
@@ -192,7 +225,7 @@ export default function CourseInfo() {
             <div className="col-4">
               <div class="courses-info">
                 <div class="course-info">
-                  <div class="course-info__register">
+                  <div class="course-info__register" onClick={registerToCourse}>
                     {
                       courseData.isUserRegisteredToThisCourse ? (
                         <span class="course-info__register-title">

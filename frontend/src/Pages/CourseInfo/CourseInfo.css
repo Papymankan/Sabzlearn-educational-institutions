@@ -314,6 +314,10 @@
   padding: 1.5rem 1rem;
   border-radius: 0.5rem;
   box-shadow: 0 2px 12px rgba(31, 189, 80, 36%);
+  cursor: pointer;
+}
+.course-info__register:hover {
+  background-color: #1b9642;
 }
 
 .course-info__register-title {

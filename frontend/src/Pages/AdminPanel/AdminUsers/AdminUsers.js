@@ -218,7 +218,6 @@ export default function AdminUsers() {
                 validation={[
                   requiredValidator(),
                   minValidator(8),
-                  maxValidator(20),
                   emailValidator(),
                 ]}
                 onInputHandler={onInputHandler}
