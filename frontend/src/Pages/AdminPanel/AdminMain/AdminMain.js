@@ -6,7 +6,7 @@ import './AdminMain.css'
 
 export default function AdminMain() {
 
-  const [infos , setInfos] = useState({})
+  const [infos, setInfos] = useState({})
 
   const fetchInfos = () => {
     const localData = JSON.parse(localStorage.getItem('user'))
@@ -17,7 +17,7 @@ export default function AdminMain() {
     }).then(res => res.json()).then(data => setInfos(data))
   }
 
-  useEffect(fetchInfos , [])
+  useEffect(fetchInfos, [])
 
   return (
     <>
@@ -30,7 +30,7 @@ export default function AdminMain() {
           </div>
           <div class="home-content-boxes">
             <div class="row">
-              {infos.infos && infos.infos.map(info=>( <AdminItems title={info.title} count={info.count} /> ))}
+              {infos.infos && infos.infos.map(info => (<AdminItems title={info.title} count={info.count} />))}
             </div>
           </div>
 
@@ -46,7 +46,13 @@ export default function AdminMain() {
                   </tr>
                 </thead>
                 <tbody>
-
+                  {infos.lastUsers && infos.lastUsers.map((user, index) => (
+                    <tr>
+                      <td>{index + 1}</td>
+                      <td>{user.name}</td>
+                      <td>{user.email}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
 
