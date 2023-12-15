@@ -52,12 +52,14 @@ export default function CourseInfo() {
   const registerToCourse = () => {
     if (!courseData.isUserRegisteredToThisCourse) {
       if (!courseData.price) {
+        let obj = { price: courseData.price }
         const localData = JSON.parse(localStorage.getItem('user'))
-        fetch(`http://localhost:4000/v1/courses/${courseData._id}/register`,{
-          method:'POST',
+        fetch(`http://localhost:4000/v1/courses/${courseData._id}/register`, {
+          method: 'POST',
           headers: {
             'Authorization': `Bearer ${localData.token}`
           },
+          body: JSON.stringify(obj)
         })
           .then(res => {
             console.log(res);
@@ -77,6 +79,46 @@ export default function CourseInfo() {
               })
             }
           })
+      } else {
+        Swal.fire({
+          title: '<p style="font-size: 30px ; margin-bottom: 10px;">آیا برای ثبت نام کد تخفیف دارید؟</p>',
+          icon: 'warning',
+          padding: '30px 0',
+          width: '400px',
+          showCancelButton: true,
+          cancelButtonText: 'نه',
+          confirmButtonText: 'بله'
+        }).then(res => {
+          if (res.dismiss == 'cancel') {
+            let obj = { price: courseData.price }
+            const localData = JSON.parse(localStorage.getItem('user'))
+            fetch(`http://localhost:4000/v1/courses/${courseData._id}/register`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${localData.token}`
+              },
+              body: JSON.stringify(obj)
+            })
+              .then(res => {
+                console.log(res);
+                if (res.ok) {
+                  Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">ثبت نام شما انجام شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                      Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                    willClose: () => {
+                      window.location.reload()
+                    }
+                  })
+                }
+              })
+          }
+        })
       }
     }
   }
@@ -119,7 +161,7 @@ export default function CourseInfo() {
             </div>
 
             <div class="col-6">
-              <video src="" poster={`http://localhost:4000/courses/covers/${courseData.cover}`} class="course-info__video" controls></video>
+              <video src="" poster={courseData.cover && `http://localhost:4000/courses/covers/${courseData.cover}`} class="course-info__video" controls></video>
             </div>
           </div>
         </div>
