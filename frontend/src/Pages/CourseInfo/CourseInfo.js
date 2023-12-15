@@ -120,34 +120,104 @@ export default function CourseInfo() {
                 }
               })
           } else if (res.isConfirmed) {
-            let obj = { price: courseData.price }
-            const localData = JSON.parse(localStorage.getItem('user'))
-            fetch(`http://localhost:4000/v1/courses/${courseData._id}/register`, {
-              method: 'POST',
-              headers: {
-                'Authorization': `Bearer ${localData.token}`,
-                'Content-Type': 'application/json'
+
+            Swal.fire({
+              title: '<p style="font-size: 30px ; margin-bottom: 10px;">کد تخفیف را وارد کنید</p>',
+              html:
+                '<textArea id="swal-input4" class="swal2-input" placeholder="کد تخفیف">',
+              padding: '5px',
+              width: '380px',
+              preConfirm: () => {
+                return [
+                  document.getElementById('swal-input4').value,
+                ]
               },
-              body: JSON.stringify(obj)
-            })
-              .then(res => {
-                console.log(res);
-                if (res.ok) {
-                  Swal.fire({
-                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">ثبت نام شما انجام شد</p>',
-                    icon: 'success',
-                    padding: '20px',
-                    didOpen: () => {
-                      Swal.showLoading()
+              showCancelButton: true,
+              confirmButtonText: 'اعمال',
+              cancelButtonText: 'لغو'
+            }).then(res => {
+              console.log(res);
+              if (res.isConfirmed && res.value[0]) {
+                console.log('click');
+                const localData = JSON.parse(localStorage.getItem('user'))
+                fetch(`http://localhost:4000/v1/offs/${res.value[0]}`, {
+                  method: 'POST',
+                  headers: {
+                    'Authorization': `Bearer ${localData.token}`,
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({ course: courseData._id })
+                }).then(res => {
+                  if (res.status == 404) {
+                    Swal.fire({
+                      title: '<p style="font-size: 30px ; margin-bottom: 10px;">کد تخفیف معتبر نیست</p>',
+                      icon: 'error',
+                      padding: '30px 0',
+                      width: '400px',
+                      didOpen: () => {
+                        Swal.showLoading()
+                      },
+                      timer: 1500,
+                    })
+                  } else if (res.status == 409) {
+                    Swal.fire({
+                      title: '<p style="font-size: 30px ; margin-bottom: 10px;">کد تخفیف منقضی شده است</p>',
+                      icon: 'error',
+                      padding: '30px 0',
+                      width: '400px',
+                      didOpen: () => {
+                        Swal.showLoading()
+                      },
+                      timer: 1500,
+                    })
+                  } else {
+                    return res.json()
+                  }
+                }).then(res => {
+                  console.log(res);
+                  let obj = { price: courseData.price - (courseData.price * res.percent / 100) }
+                  const localData = JSON.parse(localStorage.getItem('user'))
+                  fetch(`http://localhost:4000/v1/courses/${courseData._id}/register`, {
+                    method: 'POST',
+                    headers: {
+                      'Authorization': `Bearer ${localData.token}`,
+                      'Content-Type': 'application/json'
                     },
-                    width: '380px',
-                    timer: 1500,
-                    willClose: () => {
-                      window.location.reload()
-                    }
+                    body: JSON.stringify(obj)
                   })
-                }
-              })
+                    .then(res => {
+                      console.log(res);
+                      if (res.ok) {
+                        Swal.fire({
+                          title: '<p style="font-size: 30px ; margin-bottom: 10px;">ثبت نام شما انجام شد</p>',
+                          icon: 'success',
+                          padding: '20px',
+                          didOpen: () => {
+                            Swal.showLoading()
+                          },
+                          width: '380px',
+                          timer: 1500,
+                          willClose: () => {
+                            window.location.reload()
+                          }
+                        })
+                      }
+                    })
+                })
+              }
+              if (!res.value) {
+                Swal.fire({
+                  title: '<p style="font-size: 30px ; margin-bottom: 10px;">کد تخفیفی وارد نشد</p>',
+                  icon: 'error',
+                  padding: '30px 0',
+                  width: '400px',
+                  didOpen: () => {
+                    Swal.showLoading()
+                  },
+                  timer: 1500,
+                })
+              }
+            })
           }
         })
       }
