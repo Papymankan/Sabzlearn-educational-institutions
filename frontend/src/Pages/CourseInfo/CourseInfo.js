@@ -57,7 +57,8 @@ export default function CourseInfo() {
         fetch(`http://localhost:4000/v1/courses/${courseData._id}/register`, {
           method: 'POST',
           headers: {
-            'Authorization': `Bearer ${localData.token}`
+            'Authorization': `Bearer ${localData.token}`,
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(obj)
         })
@@ -95,7 +96,37 @@ export default function CourseInfo() {
             fetch(`http://localhost:4000/v1/courses/${courseData._id}/register`, {
               method: 'POST',
               headers: {
-                'Authorization': `Bearer ${localData.token}`
+                'Authorization': `Bearer ${localData.token}`,
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(obj)
+            })
+              .then(res => {
+                console.log(res);
+                if (res.ok) {
+                  Swal.fire({
+                    title: '<p style="font-size: 30px ; margin-bottom: 10px;">ثبت نام شما انجام شد</p>',
+                    icon: 'success',
+                    padding: '20px',
+                    didOpen: () => {
+                      Swal.showLoading()
+                    },
+                    width: '380px',
+                    timer: 1500,
+                    willClose: () => {
+                      window.location.reload()
+                    }
+                  })
+                }
+              })
+          } else if (res.isConfirmed) {
+            let obj = { price: courseData.price }
+            const localData = JSON.parse(localStorage.getItem('user'))
+            fetch(`http://localhost:4000/v1/courses/${courseData._id}/register`, {
+              method: 'POST',
+              headers: {
+                'Authorization': `Bearer ${localData.token}`,
+                'Content-Type': 'application/json'
               },
               body: JSON.stringify(obj)
             })
