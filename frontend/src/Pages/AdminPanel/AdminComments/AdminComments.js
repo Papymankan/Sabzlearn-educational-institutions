@@ -51,9 +51,11 @@ export default function AdminComments() {
     }
 
     const ShowComment = (text) => {
+
         Swal.fire({
-            title: `<p style="font-size: 18px ; margin-bottom: 10px;">${text}</p>`,
-            // icon: 'warning',
+            title: `
+            <p style="font-size: 18px ; margin-bottom: 10px;">${text}</p>
+            `,
             padding: '30px 0',
             width: '400px',
             confirmButtonText: 'بستن'
@@ -227,6 +229,7 @@ export default function AdminComments() {
                             <th>شناسه</th>
                             <th>ثبت کننده</th>
                             <th>دوره</th>
+                            <th>امتیاز</th>
                             <th>پیام</th>
                             <th>تایید</th>
                             <th>پاسخ و تایید</th>
@@ -241,6 +244,16 @@ export default function AdminComments() {
                                     <td>{index + 1}</td>
                                     <td>{comment.creator.name}</td>
                                     <td>{comment.course}</td>
+                                    <td>
+                                        {
+                                            Array(5 - comment.score).fill(1).map(num => <img src="/images/svgs/star.svg" alt="rating" class="course-box__star" />
+                                            )
+                                        }
+                                        {
+                                            Array(comment.score).fill(1).map(num => <img src="/images/svgs/star_fill.svg" alt="rating" class="course-box__star" />
+                                            )
+                                        }
+                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-primary delete-btn" onClick={() => ShowComment(comment.body)}>
                                             مشاهده
