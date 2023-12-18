@@ -20,6 +20,7 @@ import AdminMenus from './Pages/AdminPanel/AdminMenus/AdminMenus'
 import AdminComments from './Pages/AdminPanel/AdminComments/AdminComments'
 import AdminOffs from './Pages/AdminPanel/AdminOffs/AdminOffs'
 import AdminMain from './Pages/AdminPanel/AdminMain/AdminMain'
+import UserPanel from './Pages/UserPanel/UserPanel'
 
 
 const routes = [
@@ -46,7 +47,11 @@ const routes = [
         { path: 'menus', element: <AdminMenus/>} , 
         { path: 'comments', element: <AdminComments/>} , 
         { path: 'offs', element: <AdminOffs/>} , 
-    ] } 
+    ] } ,
+
+    { path: '/user-panel/*', element: <UserPanel/> , children : [
+        
+    ] }
 ]
 
 export default routes

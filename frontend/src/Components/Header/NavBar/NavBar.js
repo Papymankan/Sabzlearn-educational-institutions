@@ -66,9 +66,9 @@ export default function NavBar() {
 
                         {
                             authContext.isloggedIn ? (
-                                <a href="#" class="main-header__profile">
+                                <Link to={'/user-panel'} class="main-header__profile">
                                     <span class="main-header__profile-text">{authContext.userInfos.name}</span>
-                                </a>
+                                </Link>
                             ) : (
                                 <Link to={'/login'} class="main-header__profile">
                                     <span class="main-header__profile-text">ورود / ثبت نام</span>
