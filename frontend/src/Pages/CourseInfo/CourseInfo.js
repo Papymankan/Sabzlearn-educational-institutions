@@ -24,11 +24,9 @@ export default function CourseInfo() {
   const [createdAt, setCreatedAt] = useState([])
   const [updatedAt, setUpdatedAt] = useState([])
   const [category, setCategory] = useState({})
-  const [IsRegistered, setIsRegistered] = useState(false)
 
 
   useEffect(() => {
-
     const localData = JSON.parse(localStorage.getItem('user'))
 
     fetch(`http://localhost:4000/v1/courses/${courseName}`, {
@@ -38,14 +36,12 @@ export default function CourseInfo() {
       }
     }).then(res => res.json())
       .then(data => {
-        console.log(data);
         setCourseData(data)
         setComments(data.comments)
         setSessions(data.sessions)
         setCreatedAt(data.createdAt)
         setUpdatedAt(data.updatedAt)
         setCategory(data.categoryID)
-        // setIsRegistered(data.isUserRegisteredToThisCourse)
       })
   }, [courseName])
 
@@ -186,7 +182,6 @@ export default function CourseInfo() {
                     body: JSON.stringify(obj)
                   })
                     .then(res => {
-                      console.log(res);
                       if (res.ok) {
                         Swal.fire({
                           title: '<p style="font-size: 30px ; margin-bottom: 10px;">ثبت نام شما انجام شد</p>',
@@ -363,7 +358,7 @@ export default function CourseInfo() {
 
               </div>
 
-              <Comments comments={comments} courseName={courseName} />
+              <Comments comments={comments ? comments : []} courseName={courseName} />
             </div>
             <div className="col-4">
               <div class="courses-info">

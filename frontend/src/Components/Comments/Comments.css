@@ -144,7 +144,7 @@
     justify-content: space-between;
     align-items: center;
     background-color: var(--white-color);
-    padding: 0.6rem 0.8rem 0.6rem 2rem;
+    height: 42px;
     margin: 0.5rem 0;
     border-radius: 0.5rem;
     border: 1px solid #e5e5e5;
@@ -155,6 +155,12 @@
   .comments__score-input:hover {
     background-color: #1e83f0;
     color: var(--white-color);
+  }
+  .comments__score-input-text {
+    border: none;
+    background-color: rgba(255, 222, 173, 0);
+    height: 100%;
+    width: 100%;
   }
   .comments__respond-title {
     font-size: 1.5rem;

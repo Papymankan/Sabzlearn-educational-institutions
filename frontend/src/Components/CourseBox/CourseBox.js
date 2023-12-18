@@ -3,12 +3,12 @@ import './CourseBox.css'
 import { Skeleton } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-export default function CourseBox({ name, cover, shortname, creator, price , isSlider}) {
+export default function CourseBox({ name, cover, shortName, creator, price , isSlider , registers}) {
     
     return (
         <div className={isSlider ? 'col-12' : 'col-4'}>
             <div class="course-box">
-                <Link to={`/course-info/${shortname}`}>
+                <Link to={`/course-info/${shortName}`}>
                     {
                         cover ? (
                             <img src={`http://localhost:4000/courses/covers/${cover}`} class="course-box__img" />
@@ -16,7 +16,7 @@ export default function CourseBox({ name, cover, shortname, creator, price , isS
                     }
                 </Link>
                 <div class="course-box__main">
-                    <Link to={`/course-info/${shortname}`} class="course-box__title">{name ? name : (
+                    <Link to={`/course-info/${shortName}`} class="course-box__title">{name ? name : (
                         <Skeleton variant="rectangular" width={"40%"} height={30} />
                     )}</Link>
 
@@ -48,14 +48,14 @@ export default function CourseBox({ name, cover, shortname, creator, price , isS
                     <div class="course-box__status">
                         <div class="course-box__users">
                             <i class="fas fa-users course-box__users-icon"></i>
-                            <span class="course-box__users-text">500</span>
+                            <span class="course-box__users-text">{registers}</span>
                         </div>
                         <span class="course-box__price">{price >= 1 ? price.toLocaleString() : 'رایگان'}</span>
                     </div>
                 </div>
 
                 <div class="course-box__footer">
-                    <Link to={`/course-info/${shortname}`} class="course-box__footer-link">
+                    <Link to={`/course-info/${shortName}`} class="course-box__footer-link">
                         مشاهده اطلاعات
                         <i class="fas fa-arrow-left course-box__footer-icon"></i>
                     </Link>

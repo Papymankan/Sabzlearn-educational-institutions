@@ -2,7 +2,7 @@ import './App.css';
 import routes from './routes';
 import { useLocation, useRoutes } from 'react-router-dom'
 import AuthContext from './Context/authContext';
-import { useCallback, useEffect, useState } from 'react';
+import { Fragment, useCallback, useEffect, useState } from 'react';
 
 function App() {
   const router = useRoutes(routes)

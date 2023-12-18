@@ -66,6 +66,7 @@
   .course-box__users-text {
     color: #6c757d;
     font-size: 1.4rem;
+    margin-right: 5px;
   }
   
   .course-box__price {

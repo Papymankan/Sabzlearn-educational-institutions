@@ -25,7 +25,7 @@ export default function LastCourses() {
                         <div class="row">
                             {
                                 allCourses.map(course => {
-                                    return <CourseBox name={course.name} cover={course.cover} shortname={course.shortName} creator={course.creator} price={course.price}/>
+                                    return <CourseBox {...course}/>
                                 })
                             }
 
