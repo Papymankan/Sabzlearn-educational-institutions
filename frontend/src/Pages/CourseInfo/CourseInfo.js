@@ -24,11 +24,12 @@ export default function CourseInfo() {
   const [createdAt, setCreatedAt] = useState([])
   const [updatedAt, setUpdatedAt] = useState([])
   const [category, setCategory] = useState({})
+  const [related, setRelated] = useState([])
+
 
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('user'))
-
     fetch(`http://localhost:4000/v1/courses/${courseName}`, {
       method: 'GET',
       headers: {
@@ -43,6 +44,14 @@ export default function CourseInfo() {
         setUpdatedAt(data.updatedAt)
         setCategory(data.categoryID)
       })
+
+    fetch(`http://localhost:4000/v1/courses/related/${courseName}`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${localData == null ? null : localData.token}`
+      }
+    }).then(res => res.json()).then(data => setRelated(data))
+
   }, [courseName])
 
   const registerToCourse = () => {
@@ -431,43 +440,24 @@ export default function CourseInfo() {
                     کلیک کنید
                   </span>
                 </div>
-                <div class="course-info">
-                  <span class="course-info__courses-title">دوره های مرتبط</span>
-                  <ul class="course-info__courses-list">
-                    <li class="course-info__courses-list-item">
-                      <a href="#" class="course-info__courses-link">
-                        <img src="/images/courses/js_project.png" alt="Course Cover" class="course-info__courses-img" />
-                        <span class="course-info__courses-text">
-                          پروژه های تخصصی با جاوا اسکریپت
-                        </span>
-                      </a>
-                    </li>
-                    <li class="course-info__courses-list-item">
-                      <a href="#" class="course-info__courses-link">
-                        <img src="/images/courses/fareelancer.png" alt="Course Cover" class="course-info__courses-img" />
-                        <span class="course-info__courses-text">
-                          تعیین قیمت پروژه های فریلنسری
-                        </span>
-                      </a>
-                    </li>
-                    <li class="course-info__courses-list-item">
-                      <a href="#" class="course-info__courses-link">
-                        <img src="/images/courses/nodejs.png" alt="Course Cover" class="course-info__courses-img" />
-                        <span class="course-info__courses-text">
-                          دوره Api نویسی
-                        </span>
-                      </a>
-                    </li>
-                    <li class="course-info__courses-list-item">
-                      <a href="#" class="course-info__courses-link">
-                        <img src="/images/courses/jango.png" alt="Course Cover" class="course-info__courses-img" />
-                        <span class="course-info__courses-text">
-                          متخصص جنگو
-                        </span>
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+                {related.length != 0 ? (
+                  <div class="course-info">
+                    <span class="course-info__courses-title">دوره های مرتبط</span>
+                    <ul class="course-info__courses-list">
+                      {related.map(course => (
+                        <li class="course-info__courses-list-item">
+                          <Link to={`/course-info/${course.shortName}`} class="course-info__courses-link">
+                            <img src={`http://localhost:4000/courses/covers/${course.cover}`} alt="Course Cover" class="course-info__courses-img" />
+                            <span class="course-info__courses-text">
+                              {course.name}
+                            </span>
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
               </div>
             </div>
           </div>
