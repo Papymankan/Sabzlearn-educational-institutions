@@ -1,7 +1,30 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import AuthContext from "../../../Context/authContext";
 
 export default function UserSideBar() {
+
+    const authContext = useContext(AuthContext)
+    const navigate = useNavigate()
+
+    const logout = () => {
+        authContext.logout()
+        Swal.fire({
+            title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت خارج شدید</p>',
+            icon: 'success',
+            padding: '20px',
+            html: '<p style="font-size: 20px ; margin-bottom: 20px;">در حال منتقل شدن...</p>',
+            didOpen: () => {
+                Swal.showLoading()
+            },
+            width: '380px',
+            timer: 1500,
+            willClose: () => {
+                navigate('/', { replace: true })
+            }
+        })
+    }
     return (
         <>
             <div class="col-3">
@@ -39,7 +62,7 @@ export default function UserSideBar() {
                             </a>
                         </li>
                         <li class="sidebar__item">
-                            <a class="sidebar__link" href="#">
+                            <a class="sidebar__link" href="javascript:void(0)" onClick={logout}>
                                 خروج از سیستم
                             </a>
                         </li>
