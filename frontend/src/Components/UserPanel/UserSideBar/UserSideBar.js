@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function UserSideBar() {
     return (
@@ -8,9 +9,9 @@ export default function UserSideBar() {
                     <span class="sidebar__name">محمدامین سعیدی راد</span>
                     <ul class="sidebar__list">
                         <li class="sidebar__item">
-                            <a class="sidebar__link" href="#">
+                            <Link class="sidebar__link" to={''}>
                                 پیشخوان
-                            </a>
+                            </Link>
                         </li>
                         <li class="sidebar__item">
                             <a class="sidebar__link" href="#">
