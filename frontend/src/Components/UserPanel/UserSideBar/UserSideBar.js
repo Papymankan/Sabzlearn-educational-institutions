@@ -29,7 +29,7 @@ export default function UserSideBar() {
         <>
             <div class="col-3">
                 <div class="sidebar">
-                    <span class="sidebar__name">محمدامین سعیدی راد</span>
+                    <span class="sidebar__name">{authContext.userInfos.name}</span>
                     <ul class="sidebar__list">
                         <li class="sidebar__item">
                             <Link class="sidebar__link" to={''}>
@@ -37,7 +37,7 @@ export default function UserSideBar() {
                             </Link>
                         </li>
                         <li class="sidebar__item">
-                            <Link class="sidebar__link" to={'orders/1'}>
+                            <Link class="sidebar__link" to={'orders'}>
                                 سفارش
                             </Link>
                         </li>
@@ -52,9 +52,9 @@ export default function UserSideBar() {
                             </a>
                         </li>
                         <li class="sidebar__item">
-                            <a class="sidebar__link" href="#">
+                            <Link class="sidebar__link" to={'courses'}>
                                 دوره های خریداری شده
-                            </a>
+                            </Link>
                         </li>
                         <li class="sidebar__item">
                             <a class="sidebar__link" href="#">
