@@ -24,7 +24,7 @@ export default function UserMain() {
           </p>
           <div class="main__links">
             <div class="row">
-              <IndexBox title="سفارش" href="orders" />
+              <IndexBox title="سفارش" href="orders/1" />
               <IndexBox title="دوره های خریداری شده" href="courses" />
               <IndexBox title="کیف پول من" href="money" />
               <IndexBox title="جزئیات حساب کاربری" href="infos" />
