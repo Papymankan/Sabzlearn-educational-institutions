@@ -4,6 +4,8 @@ export default function SendTicket() {
 
     const [deps, setDeps] = useState([])
     const [departmentSubs, setDepartmentSubs] = useState([])
+    const [subId, setSubId] = useState('')
+    const [courses, setCourses] = useState([])
 
     const fetchDeps = () => {
         const localData = JSON.parse(localStorage.getItem('user'))
@@ -20,11 +22,20 @@ export default function SendTicket() {
             headers: {
                 'Authorization': `Bearer ${localData.token}`
             }
-        }).then(res=>res.json()).then(data => setDepartmentSubs(data))
+        }).then(res => res.json()).then(data => setDepartmentSubs(data))
     }
 
     useEffect(() => {
         fetchDeps()
+
+        const localData = JSON.parse(localStorage.getItem('user'))
+        fetch(`http://localhost:4000/v1/users/courses`, {
+            headers: {
+                'Authorization': `Bearer ${localData.token}`
+            },
+        }).then(res => res.json()).then(data => {
+            setCourses(data)
+        })
     }, [])
 
     return (
@@ -42,7 +53,9 @@ export default function SendTicket() {
                             <label class="ticket-form__label">دپارتمان را انتخاب کنید:</label>
                             <select
                                 class="ticket-form__select"
-                                onChange={e => fetchDepartmentsSubs(e.target.value)}
+                                onChange={e => {
+                                    setSubId('')
+                                    fetchDepartmentsSubs(e.target.value)}}
                             >
                                 <option class="ticket-form__option" disabled selected value={''}>
                                     لطفا یک مورد را انتخاب نمایید.
@@ -54,13 +67,13 @@ export default function SendTicket() {
                         </div>
                         <div class="col-6">
                             <label class="ticket-form__label">نوع تیکت را انتخاب کنید:</label>
-                            <select class="ticket-form__select">
+                            <select class="ticket-form__select" onChange={(e) => setSubId(e.target.value)} value={subId}>
                                 <option class="ticket-form__option" disabled selected value={''}>
                                     لطفا یک مورد را انتخاب نمایید.
                                 </option>
                                 {departmentSubs.map((sub) => (
-                                        <option value={sub._id}>{sub.title}</option>
-                                    ))}
+                                    <option value={sub._id}>{sub.title}</option>
+                                ))}
                             </select>
                         </div>
                         <div class="col-6">
@@ -79,6 +92,20 @@ export default function SendTicket() {
                                 <option class="ticket-form__option">ارتباط با مدیریت</option>
                             </select>
                         </div>
+                        {
+                            subId == '63b688c5516a30a651e98156' && <div class="col-6">
+                                <label class="ticket-form__label">دوره را انتخاب کنید:</label>
+                                <select class="ticket-form__select">
+                                    <option class="ticket-form__option">
+                                        لطفا یک مورد را انتخاب نمایید.
+                                    </option>
+                                    {
+                                        courses.map(course => (
+                                            <option class="ticket-form__option" value={course._id}>{course.course.name}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>}
                         <div class="col-12">
                             <label class="ticket-form__label">
                                 محتوای تیکت را وارد نمایید:
