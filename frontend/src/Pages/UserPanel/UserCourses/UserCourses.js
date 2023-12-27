@@ -5,8 +5,7 @@ import './UserCourses.css'
 export default function UserCourses() {
     const [courses, setCourses] = useState([])
     const [showCourses, setShowCourses] = useState([])
-
-    const [tab , setTab] = useState('all')
+    const [tab, setTab] = useState('all')
 
     useEffect(() => {
         const localData = JSON.parse(localStorage.getItem('user'))
@@ -14,23 +13,25 @@ export default function UserCourses() {
             headers: {
                 'Authorization': `Bearer ${localData.token}`
             },
-        }).then(res => res.json()).then(data => setCourses(data))
+        }).then(res => res.json()).then(data => {
+            setCourses(data)
+            setShowCourses(data)
+        })
     }, [])
 
-    const FilterCourses = ()=>{
-        if(tab == 'all'){
+    const FilterCourses = () => {
+        if (tab == 'all') {
             setShowCourses(courses)
-        }else if(tab == 'free'){
+        } else if (tab == 'free') {
             let arr = courses.filter(course => course.course.price == 0)
             setShowCourses(arr)
-        }else if(tab == 'notFree'){
+        } else if (tab == 'notFree') {
             let arr = courses.filter(course => course.course.price != 0)
             setShowCourses(arr)
         }
-        
     }
 
-    useEffect(FilterCourses , [tab])
+    useEffect(FilterCourses, [tab])
 
     return (
         <div class="col-9">
@@ -39,34 +40,37 @@ export default function UserCourses() {
                     <span class="courses-header__title">دوره های ثبت نام شده</span>
                     <ul class="courses-header__list">
                         <li class="courses-header__item">
-                            <a class={`Usercourses-header__link  ${tab == 'all'?'Usercourses-header__link-active' : ''}`}
-                                href="#" onClick={(e)=>{
+                            <a class={`Usercourses-header__link  ${tab == 'all' ? 'Usercourses-header__link-active' : ''}`}
+                                href="#" onClick={(e) => {
                                     e.preventDefault()
-                                    setTab('all')}}
+                                    setTab('all')
+                                }}
                             >
                                 همه دوره ها
                             </a>
                         </li>
                         <li class="courses-header__item">
-                            <a class={`Usercourses-header__link  ${tab == 'free'?'Usercourses-header__link-active' : ''}`} href="#" onClick={(e)=>{
-                                    e.preventDefault()
-                                    setTab('free')}}>
+                            <a class={`Usercourses-header__link  ${tab == 'free' ? 'Usercourses-header__link-active' : ''}`} href="#" onClick={(e) => {
+                                e.preventDefault()
+                                setTab('free')
+                            }}>
                                 دوره های رایگان
                             </a>
                         </li>
                         <li class="courses-header__item">
-                            <a class={`Usercourses-header__link  ${tab == 'notFree'?'Usercourses-header__link-active' : ''}`} href="#" onClick={(e)=>{
-                                    e.preventDefault()
-                                    setTab('notFree')}}>
+                            <a class={`Usercourses-header__link  ${tab == 'notFree' ? 'Usercourses-header__link-active' : ''}`} href="#" onClick={(e) => {
+                                e.preventDefault()
+                                setTab('notFree')
+                            }}>
                                 دوره های پولی
-                            </a>    
+                            </a>
                         </li>
                     </ul>
                 </div>
                 <div class="UserCourses-main">
                     <div class="row">
                         <div class="col-12">
-                            {showCourses.map((course) => (
+                            {showCourses.length ? showCourses.map((course) => (
                                 <div class="main__box">
                                     <div class="main__box-right">
                                         <a class="main__box-img-link" href="#">
@@ -94,7 +98,7 @@ export default function UserCourses() {
                                         </div>
                                     </div>
                                 </div>
-                            ))}
+                            )) : <div className="alert alert-info">برای این قسمت دوره ای وجود ندارد</div>}
                         </div>
                     </div>
                 </div>
