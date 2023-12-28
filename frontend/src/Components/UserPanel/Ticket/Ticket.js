@@ -22,7 +22,6 @@ export default function Ticket({ title, departmentSubID, answer, createdAt }) {
                             {departmentSubID}
                         </a>
                         <span class="ticket-content__category">
-                            <i class="fa fa-ellipsis-v ticket-content__icon"></i>
                             {title}
                         </span>
                     </div>

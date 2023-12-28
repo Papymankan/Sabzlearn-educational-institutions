@@ -132,23 +132,25 @@
   }
   .ticket-content__right {
     display: flex;
+    flex-direction: column;
     align-items: center;
   }
   .ticket-content__right-right {
     display: flex;
-    flex-direction: column;
+    align-items: center;
   }
   .ticket-content__link {
     color: #000;
     font-size: 1.4rem;
     font-weight: bold;
-    max-width: 12rem;
+    margin-left: 1rem;
+    /* max-width: 16rem; */
   }
   .ticket-content__category {
     font-size: 1.3rem;
     margin: 1rem 0;
-    max-width: 11rem;
-    padding: 1.5rem 0.5rem;
+    max-width: 15rem;
+    padding: 1.5rem 2.5rem;
     background-color: #fff;
     border-radius: 1.5rem;
     display: flex;
