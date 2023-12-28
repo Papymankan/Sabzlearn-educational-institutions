@@ -138,8 +138,6 @@
     display: flex;
     flex-direction: column;
   }
-  .ticket-content__right-left {
-  }
   .ticket-content__link {
     color: #000;
     font-size: 1.4rem;
@@ -175,13 +173,13 @@
     display: flex;
     flex-direction: column;
   }
-  .ticket-content__condition {
+  .ticket-content__condition-true {
     border: 2px solid var(--white-color);
     border-radius: 0 14px 14px 14px;
     padding: 0.4rem 3rem;
     position: relative;
   }
-  .ticket-content__condition::before {
+  .ticket-content__condition-true::before {
     content: "";
     position: absolute;
     right: 1.4rem;
@@ -191,6 +189,24 @@
     width: 1rem;
     height: 1rem;
     background-color: rgb(46, 204, 113);
+    border-radius: 50%;
+  }
+  .ticket-content__condition-false {
+    border: 2px solid var(--white-color);
+    border-radius: 0 14px 14px 14px;
+    padding: 0.4rem 3rem;
+    position: relative;
+  }
+  .ticket-content__condition-false::before {
+    content: "";
+    position: absolute;
+    right: 1.4rem;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    width: 1rem;
+    height: 1rem;
+    background-color: #f0932b;
     border-radius: 50%;
   }
   .ticket-content__condition-text {

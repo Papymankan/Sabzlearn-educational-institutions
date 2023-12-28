@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import './UserTickets.css'
 import { Link } from 'react-router-dom'
+import Ticket from "../../../Components/UserPanel/Ticket/Ticket";
 
 
 
@@ -107,35 +108,9 @@ export default function UserTickets() {
           </div>
           <div class="ticket-content">
             <span class="ticket-content__title">نمایش 1 تیکت</span>
-            <div class="ticket-content__box">
-              <div class="ticket-content__right">
-                <div class="ticket-content__right-right">
-                  <a class="ticket-content__link" href="#">
-                    عضو شدن در گروه تلگرامی دوره ریکت
-                  </a>
-                  <span class="ticket-content__category">
-                    <i class="fa fa-ellipsis-v ticket-content__icon"></i>
-                    پشتیبانی دوره ها
-                  </span>
-                </div>
-                <div class="ticket-content__right-left">
-                  <span class="ticket-content__name">محمدامین سعیدی راد</span>
-                </div>
-              </div>
-              <div class="ticket-content__left">
-                <div class="ticket-content__left-right">
-                  <div class="ticket-content__condition">
-                    <span class="ticket-content__condition-text">
-                      پاسخ داده شده
-                    </span>
-                  </div>
-                </div>
-                <div class="ticket-content__left-left">
-                  <span class="ticket-content__time">2022/04/08</span>
-                  <span class="ticket-content__time-month">8 ماه قبل</span>
-                </div>
-              </div>
-            </div>
+            {
+              tickets.map(ticket => <Ticket {...ticket} />) 
+            }
           </div>
         </div>
       </div>
