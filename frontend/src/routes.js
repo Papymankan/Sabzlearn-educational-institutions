@@ -58,7 +58,8 @@ const routes = [
         { path: '', element: <UserMain/>} , 
         { path: 'orders', element: <UserOrders/>}  ,
         { path: 'courses', element: <UserCourses/>} , 
-        { path: 'tickets', element: <SendTicket/>} , 
+        { path: 'tickets', element: <UserTickets/>} , 
+        { path: 'send-ticket', element: <SendTicket/>} , 
     ] }
 ]
 

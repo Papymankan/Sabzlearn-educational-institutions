@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
+import './SendTickets.css'
 import Swal from "sweetalert2";
+import { Link } from "react-router-dom";
 
 export default function SendTicket() {
 
@@ -104,9 +106,9 @@ export default function SendTicket() {
             <div class="ticket">
                 <div class="ticket-header">
                     <span class="ticket-header__title">ارسال تیکت جدید</span>
-                    <a class="ticket-header__link" href="#">
+                    <Link class="ticket-header__link" to="/user-panel/tickets">
                         همه تیکت ها
-                    </a>
+                    </Link>
                 </div>
                 <form class="ticket-form" action="#">
                     <div class="row">
