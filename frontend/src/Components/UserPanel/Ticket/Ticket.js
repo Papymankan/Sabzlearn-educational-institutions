@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-export default function Ticket({ title, departmentSubID, answer, createdAt }) {
+export default function Ticket({ title, departmentSubID, answer, createdAt , user , _id}) {
 
     const dateMaker = () => {
         let date1 = new Date()
@@ -11,22 +12,20 @@ export default function Ticket({ title, departmentSubID, answer, createdAt }) {
         return [diffDays , date2]
     }
 
-    useEffect(dateMaker, [])
-
     return (
         <>
             <div class="ticket-content__box">
                 <div class="ticket-content__right">
                     <div class="ticket-content__right-right">
-                        <a class="ticket-content__link" href="#">
-                            {departmentSubID}
-                        </a>
                         <span class="ticket-content__category">
-                            {title}
+                            {departmentSubID}
                         </span>
+                        <Link class="ticket-content__link" to={`/user-panel/tickets/answer/${_id}`}>
+                            {title}
+                        </Link>
                     </div>
                     <div class="ticket-content__right-left">
-                        <span class="ticket-content__name">محمدامین سعیدی راد</span>
+                        <span class="ticket-content__name">{user}</span>
                     </div>
                 </div>
                 <div class="ticket-content__left">

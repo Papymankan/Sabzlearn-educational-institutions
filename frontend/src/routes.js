@@ -26,6 +26,7 @@ import UserOrders from './Pages/UserPanel/UserOrders/UserOrders'
 import UserCourses from './Pages/UserPanel/UserCourses/UserCourses'
 import UserTickets from './Pages/UserPanel/UserTickets/UserTickets'
 import SendTicket from './Pages/UserPanel/UserTickets/SendTicket/SendTicket'
+import TicketAnswer from './Pages/UserPanel/TicketAnswer/TicketAnswer'
 
 
 const routes = [
@@ -60,6 +61,7 @@ const routes = [
         { path: 'courses', element: <UserCourses/>} , 
         { path: 'tickets', element: <UserTickets/>} , 
         { path: 'send-ticket', element: <SendTicket/>} , 
+        { path: 'tickets/answer/:id', element: <TicketAnswer/>} , 
     ] }
 ]
 

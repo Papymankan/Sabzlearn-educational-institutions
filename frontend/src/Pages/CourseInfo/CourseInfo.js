@@ -229,7 +229,7 @@ export default function CourseInfo() {
   }
 
   return (
-    <>
+    <div>
       <TopBar />
       <NavBar />
       <BreadCrumb
@@ -465,6 +465,6 @@ export default function CourseInfo() {
       </main>
 
       <Footer />
-    </>
+    </div>
   )
 }

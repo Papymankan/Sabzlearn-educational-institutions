@@ -143,13 +143,11 @@
     color: #000;
     font-size: 1.4rem;
     font-weight: bold;
-    margin-left: 1rem;
     /* max-width: 16rem; */
   }
   .ticket-content__category {
     font-size: 1.3rem;
-    margin: 1rem 0;
-    max-width: 15rem;
+    margin: 1rem 1rem;
     padding: 1.5rem 2.5rem;
     background-color: #fff;
     border-radius: 1.5rem;

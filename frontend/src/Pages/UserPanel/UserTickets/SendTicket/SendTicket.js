@@ -59,7 +59,7 @@ export default function SendTicket() {
             if (res.isConfirmed) {
                 const localData = JSON.parse(localStorage.getItem('user'))
                 fetch('http://localhost:4000/v1/tickets', {
-                    method:'POST',
+                    method: 'POST',
                     headers: {
                         'Authorization': `Bearer ${localData.token}`,
                         'Content-Type': 'application/json'
@@ -67,35 +67,40 @@ export default function SendTicket() {
                     body: JSON.stringify(ticket)
                 }).then(res => {
                     console.log(res);
-                    if(res.ok){
+                    if (res.ok) {
                         Swal.fire({
                             title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت ارسال شد</p>',
                             icon: 'success',
                             padding: '20px',
                             didOpen: () => {
-                              Swal.showLoading()
+                                Swal.showLoading()
                             },
                             width: '380px',
                             timer: 1500,
                             willClose: () => {
                                 navigate('/user-panel', { replace: true })
                             }
-                          })
+                        })
                     }
-                }) 
+                })
             }
         })
 
     }
 
     useEffect(() => {
-        fetchDeps()
-
+        // fetchDeps()
         const localData = JSON.parse(localStorage.getItem('user'))
+        fetch('http://localhost:4000/v1/tickets/departments', {
+            headers: {
+                'Authorization': `Bearer ${localData.token}`
+            }
+        }).then(res => res.json()).then(data => setDeps(data))
+        
         fetch(`http://localhost:4000/v1/users/courses`, {
             headers: {
                 'Authorization': `Bearer ${localData.token}`
-            },
+            }
         }).then(res => res.json()).then(data => {
             setCourses(data)
         })
