@@ -47,9 +47,9 @@ export default function UserSideBar() {
                             </a>
                         </li>
                         <li class="sidebar__item">
-                            <a class="sidebar__link" href="#">
+                            <Link class="sidebar__link" to={'/user-panel/edit-account'}>
                                 جزئیات حساب کاربری
-                            </a>
+                            </Link>
                         </li>
                         <li class="sidebar__item">
                             <Link class="sidebar__link" to={'courses'}>

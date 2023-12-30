@@ -78,7 +78,7 @@ export default function SendTicket() {
                             width: '380px',
                             timer: 1500,
                             willClose: () => {
-                                navigate('/user-panel', { replace: true })
+                                navigate('/user-panel/tickets', { replace: true })
                             }
                         })
                     }

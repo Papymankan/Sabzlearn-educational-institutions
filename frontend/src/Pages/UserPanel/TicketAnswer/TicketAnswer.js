@@ -33,9 +33,9 @@ export default function TicketAnswer() {
                     </div>
                     <div class="ticket-top">
                         <div class="ticket-top__right">
-                            <a class="ticket-top__link" href="#">
+                            <Link class="ticket-top__link" to="/user-panel/tickets">
                                 <i class="fa fa-angle-right ticket-top__icon"></i>
-                            </a>
+                            </Link>
                         </div>
                         <div class="ticket-top__left">
                             <span class="ticket-top__title">تیکت تست</span>
