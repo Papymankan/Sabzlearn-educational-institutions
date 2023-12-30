@@ -139,8 +139,8 @@ export default function EditAccount() {
                                     />
                                     {
                                         password.length < 8 && <span class="phone__help">
-                                        حداقل 8 کاراکتر باشد
-                                    </span>
+                                            حداقل 8 کاراکتر باشد
+                                        </span>
                                     }
                                 </div>
                             </div>

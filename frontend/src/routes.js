@@ -28,6 +28,7 @@ import UserTickets from './Pages/UserPanel/UserTickets/UserTickets'
 import SendTicket from './Pages/UserPanel/UserTickets/SendTicket/SendTicket'
 import TicketAnswer from './Pages/UserPanel/TicketAnswer/TicketAnswer'
 import EditAccount from './Pages/UserPanel/EditAccount/EditAccount'
+import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 
 
 const routes = [
@@ -43,7 +44,7 @@ const routes = [
     { path: '/search/:value', element: <Search/> } ,
     { path: '/:courseName/:sessionID', element: <Session/> } ,
 
-    { path: '/admin-panel/*', element: <AdminPanel/> , children : [
+    { path: '/admin-panel/*', element: <PrivateRoute><AdminPanel/></PrivateRoute> , children : [
         { path: 'users', element: <AdminUsers/>} , 
         { path: '', element: <AdminMain/>} , 
         { path: 'courses', element: <AdminCourses/>} , 

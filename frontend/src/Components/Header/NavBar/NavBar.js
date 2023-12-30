@@ -65,7 +65,10 @@ export default function NavBar() {
                         </a>
 
                         {
-                            authContext.isloggedIn ? (
+                            authContext.isloggedIn ? (authContext.userInfos.role == 'ADMIN' ?
+                                <Link to={'/admin-panel'} class="main-header__profile">
+                                    <span class="main-header__profile-text">{authContext.userInfos.name}</span>
+                                </Link> :
                                 <Link to={'/user-panel'} class="main-header__profile">
                                     <span class="main-header__profile-text">{authContext.userInfos.name}</span>
                                 </Link>
