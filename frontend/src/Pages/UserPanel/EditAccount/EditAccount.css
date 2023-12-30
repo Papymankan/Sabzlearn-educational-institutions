@@ -46,5 +46,13 @@
   .edit__btn:hover {
     background-color: #33be58;
   }
+  .phone__help{
+    display: block;
+    font-style: italic;
+    font-weight: bold;
+    margin: 1rem 0;
+    font-size: 1.5rem;
+    color: red;
+  }
   /* ============================== Content Main Style ============================== */
   
