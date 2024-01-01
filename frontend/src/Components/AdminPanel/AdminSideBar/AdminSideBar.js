@@ -87,6 +87,11 @@ export default function AdminSideBar() {
               <span>ارتباط</span>
             </Link>
           </li>
+          <li className={routeName.pathname == '/admin-panel/tickets' && 'active-menu'}>
+            <Link to={'/admin-panel/tickets'}>
+              <span>تیکت ها</span>
+            </Link>
+          </li>
           <li className={routeName.pathname == '/admin-panel/offs' && 'active-menu'}>
             <Link to={'/admin-panel/offs'}>
               <span>کدهای تخفیف</span>

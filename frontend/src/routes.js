@@ -29,6 +29,7 @@ import SendTicket from './Pages/UserPanel/UserTickets/SendTicket/SendTicket'
 import TicketAnswer from './Pages/UserPanel/TicketAnswer/TicketAnswer'
 import EditAccount from './Pages/UserPanel/EditAccount/EditAccount'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
+import AdminTickets from './Pages/AdminPanel/AdminTickets/AdminTickets'
 
 
 const routes = [
@@ -55,6 +56,7 @@ const routes = [
         { path: 'menus', element: <AdminMenus/>} , 
         { path: 'comments', element: <AdminComments/>} , 
         { path: 'offs', element: <AdminOffs/>} , 
+        { path: 'tickets', element: <AdminTickets/>} , 
     ] } ,
 
     { path: '/user-panel/*', element: <UserPanel/> , children : [
