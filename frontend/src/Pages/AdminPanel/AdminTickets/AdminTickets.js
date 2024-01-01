@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import DataTable from '../../../Components/AdminPanel/DataTable/DataTable'
 
 export default function AdminTickets() {
@@ -39,6 +40,18 @@ export default function AdminTickets() {
         })
     }
 
+    const ShowTicket = (text) => {
+
+        Swal.fire({
+            title: `
+            <p style="font-size: 18px ; margin-bottom: 10px;">${text}</p>
+            `,
+            padding: '30px 0',
+            width: '400px',
+            confirmButtonText: 'بستن'
+        })
+    }
+
     useEffect(() => {
         fetchTickets()
     }, [])
@@ -68,7 +81,7 @@ export default function AdminTickets() {
                                     <td>{ticket.title}</td>
                                     <td>{ticket.user}</td>
                                     <td>
-                                        <button className="btn btn-primary delete-btn" >مشاهده</button>
+                                        <button className="btn btn-primary delete-btn" onClick={()=>ShowTicket(ticket.body)}>مشاهده</button>
                                     </td>
                                 </tr>
                             ))
