@@ -30,6 +30,7 @@ import TicketAnswer from './Pages/UserPanel/TicketAnswer/TicketAnswer'
 import EditAccount from './Pages/UserPanel/EditAccount/EditAccount'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import AdminTickets from './Pages/AdminPanel/AdminTickets/AdminTickets'
+import AdminEvents from './Pages/AdminPanel/AdminEvents/AdminEvents'
 
 
 const routes = [
@@ -57,6 +58,7 @@ const routes = [
         { path: 'comments', element: <AdminComments/>} , 
         { path: 'offs', element: <AdminOffs/>} , 
         { path: 'tickets', element: <AdminTickets/>} , 
+        { path: 'events', element: <AdminEvents/>} , 
     ] } ,
 
     { path: '/user-panel/*', element: <UserPanel/> , children : [
