@@ -28,7 +28,7 @@ export default function AdminTickets() {
                     } else if (ticket.priority == 3) {
                         filterArr3.push(ticket)
                     }
-                }else {
+                } else {
                     filterArr4.push(ticket)
                 }
             })
@@ -55,6 +55,54 @@ export default function AdminTickets() {
         })
     }
 
+    const answerTicket = (id) => {
+        Swal.fire({
+            title: '<p style="font-size: 30px ; margin-bottom: 10px;">پاسخ را وارد کنید</p>',
+            html:
+                '<textArea id="swal-input1" class="swal2-input" placeholder="پاسخ">',
+            padding: '5px',
+            width: '380px',
+            preConfirm: () => {
+                return [
+                    document.getElementById('swal-input1').value,
+                ]
+            },
+            confirmButtonText: 'تایید',
+        }).then(res => {
+            if (res.isConfirmed && res.value[0]) {
+                const localData = JSON.parse(localStorage.getItem('user'))
+
+                let body = {
+                    body: res.value[0],
+                    ticketID: id
+                }
+
+                fetch(`http://localhost:4000/v1/tickets/answer`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${localData.token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body : JSON.stringify(body)
+                }).then(res => {
+                    if(res.ok){
+                        Swal.fire({
+                            title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت پاسخ داده شد</p>',
+                            icon: 'success',
+                            padding: '20px',
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                            width: '380px',
+                            timer: 1500,
+                        })
+                        fetchTickets()
+                    }
+                })
+            }
+        })
+    }
+
     useEffect(() => {
         fetchTickets()
     }, [])
@@ -71,6 +119,7 @@ export default function AdminTickets() {
                             <th>عنوان</th>
                             <th>کاربر</th>
                             <th>متن تیکت</th>
+                            <th>پاسخ</th>
 
                         </tr>
                     </thead>
@@ -87,7 +136,7 @@ export default function AdminTickets() {
                                         <button className="btn btn-primary delete-btn" onClick={() => ShowTicket(ticket.body)}>مشاهده</button>
                                     </td>
                                     <td>
-                                        <button className="btn btn-primary delete-btn" onClick={() => answerTicket(ticket._id)}>پاسخ</button>
+                                        <button className="btn btn-primary delete-btn" onClick={() => answerTicket(ticket._id)} disabled={ticket.answer}>{ticket.answer ? 'پاسخ داده شد' : 'پاسخ'}</button>
                                     </td>
                                 </tr>
                             ))
