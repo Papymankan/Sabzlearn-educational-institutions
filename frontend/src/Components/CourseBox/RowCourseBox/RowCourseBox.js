@@ -2,13 +2,13 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import './RowCourseBox.css'
 
-export default function RowCourseBox({ name, description, price, creator, cover, shortname }) {
+export default function RowCourseBox({ name, description, price, creator, cover, shortName, discount }) {
     return (
         <div class="col-12">
             <div class="course-box">
                 <div class="course__box-header">
                     <div class="course__box-right">
-                        <Link to={`/course-info/${shortname}`}
+                        <Link to={`/course-info/${shortName}`}
                             class="course__box-right-link"
                             href="#"
                         >
@@ -20,7 +20,7 @@ export default function RowCourseBox({ name, description, price, creator, cover,
                     </div>
                     <div class="course__box-left">
                         <div class="course__box-left-top">
-                            <Link to={`/course-info/${shortname}`}
+                            <Link to={`/course-info/${shortName}`}
                                 href="#"
                                 class="course__box-left-link"
                             >
@@ -72,6 +72,9 @@ export default function RowCourseBox({ name, description, price, creator, cover,
                         </div>
                     </div>
                 </div>
+                {
+                    discount && price != 0 && <span class="courses-box__discount">%{discount}</span>
+                }
             </div>
         </div>
     )

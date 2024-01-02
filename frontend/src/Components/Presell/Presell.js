@@ -34,7 +34,7 @@ export default function Presell() {
                                 {
                                     courses.map(course => (
                                         <SwiperSlide>
-                                            <CourseBox cover={course.cover} creator={course.creator} name={course.name} price={course.price} shortname={course.shortName} isSlider={true} />
+                                            <CourseBox {...course} isSlider={true} />
                                         </SwiperSlide>
                                     ))
                                 }

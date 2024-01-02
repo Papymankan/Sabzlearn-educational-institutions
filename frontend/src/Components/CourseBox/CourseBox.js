@@ -3,12 +3,12 @@ import './CourseBox.css'
 import { Skeleton } from '@mui/material'
 import { Link } from 'react-router-dom'
 
-export default function CourseBox({ name, cover, shortName, creator, price , isSlider , registers}) {
-    
+export default function CourseBox({ name, cover, shortName, creator, price, isSlider, registers, discount }) {
+
     return (
-        <div className={isSlider ? 'col-12' : 'col-4'}>
+        <div className={isSlider ? 'col-12 slider-con' : 'col-4 slider-con'}>
             <div class="course-box">
-                <Link to={`/course-info/${shortName}`}>
+                <Link to={`/course-info/${shortName}`} className='course-box_img_link'>
                     {
                         cover ? (
                             <img src={`http://localhost:4000/courses/covers/${cover}`} class="course-box__img" />
@@ -50,7 +50,11 @@ export default function CourseBox({ name, cover, shortName, creator, price , isS
                             <i class="fas fa-users course-box__users-icon"></i>
                             <span class="course-box__users-text">{registers}</span>
                         </div>
-                        <span class="course-box__price">{price >= 1 ? price.toLocaleString() : 'رایگان'}</span>
+                        <div>
+                            <span class={(discount && price != 0)? 'course-box__price lineThrough':'discount && price != 0'}>{price >= 1 ? price.toLocaleString() : 'رایگان'}</span> 
+                            &nbsp;
+                            {discount && price != 0 && <span class="course-box__price">{price >= 1 ? (price - (discount * price / 100)).toLocaleString() : 'رایگان'}</span>}
+                        </div>
                     </div>
                 </div>
 
@@ -60,7 +64,9 @@ export default function CourseBox({ name, cover, shortName, creator, price , isS
                         <i class="fas fa-arrow-left course-box__footer-icon"></i>
                     </Link>
                 </div>
-
+                {
+                    discount && price != 0 && <span class="courses-box__discount">%{discount}</span>
+                }
             </div>
         </div>
     )

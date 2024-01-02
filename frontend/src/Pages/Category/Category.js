@@ -140,10 +140,10 @@ export default function Category() {
                   showCourses.length >= 1 ? (
                     courseShow == 'box' ? (
                       showCourses.map(course => {
-                        return <CourseBox name={course.name} cover={course.cover} price={course.price} creator={course.creator} shortname={course.shortName} />
+                        return <CourseBox {...course} />
                       })
                     ) : (showCourses.map(course => {
-                      return <RowCourseBox name={course.name} cover={course.cover} price={course.price} creator={course.creator} shortname={course.shortName} description={course.description} />
+                      return <RowCourseBox {...course} />
                     }))
                   ) : <div className="alert alert-info">فعلا برای این بخش دوره ای در نظر گرفته نشده است</div>
 
