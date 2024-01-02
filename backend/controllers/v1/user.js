@@ -154,19 +154,21 @@ exports.updateUser = async (req, res, next) => {
 
 exports.changeUserRole = async (req, res, next) => {
   try {
+
     await userModel.changeUserRoleValidation(req.body).catch((err) => {
       err.statusCode = 400;
       throw err;
     });
+    const { id, role } = req.body
 
-    const { role, id } = req.body;
     console.log(role);
 
-    const user = await userModel.findByIdAndUpdate(
-      { _id: id },
+    const user = await userModel.findByIdAndUpdate(id,
       {
-        role: role,
-      }
+        _id: id,
+        role: role
+      },
+
     );
 
     res.json({ msg: `User role changed to ${role} successfully` });
@@ -174,3 +176,4 @@ exports.changeUserRole = async (req, res, next) => {
     next(error);
   }
 };
+

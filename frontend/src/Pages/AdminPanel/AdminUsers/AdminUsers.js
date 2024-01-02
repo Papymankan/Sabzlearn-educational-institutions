@@ -143,7 +143,7 @@ export default function AdminUsers() {
       body: JSON.stringify(newUser)
     }).then(res => {
       console.log(res);
-      if(res.ok){
+      if (res.ok) {
         Swal.fire({
           title: '<p style="font-size: 30px ; margin-bottom: 10px;">کاربر جدید اضافه شد</p>',
           icon: 'success',
@@ -160,6 +160,50 @@ export default function AdminUsers() {
       console.log(result);
       fetchUsers()
     })
+  }
+
+  const changeRole = (id, role) => {
+    let body = {
+      id,
+      role: role == 'USER' ? 'ADMIN' : 'USER',
+    }
+    console.log(body);
+    const localData = JSON.parse(localStorage.getItem('user'))
+    Swal.fire({
+      title: '<p style="font-size: 30px ; margin-bottom: 10px;">آیا از تغییر نقش مطمئن هستید؟</p>',
+      icon: 'warning',
+      padding: '30px 0',
+      width: '400px',
+      showCancelButton: true,
+      cancelButtonText: 'نه',
+      confirmButtonText: 'بله'
+    }).then(res => {
+      if (res.isConfirmed) {
+        fetch(`http://localhost:4000/v1/users/role`, {
+          method: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${localData.token}`,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify()
+        }).then(res => {
+          if (res.ok) {
+            Swal.fire({
+              title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت نقش تغییر داده شد</p>',
+              icon: 'success',
+              padding: '20px',
+              didOpen: () => {
+                Swal.showLoading()
+              },
+              width: '380px',
+              timer: 1500,
+            })
+            fetchUsers()
+          }
+        })
+      }
+    })
+
   }
 
   return (
@@ -281,7 +325,9 @@ export default function AdminUsers() {
               <th>نام و نام خانوادگی</th>
               <th>نام کاربری</th>
               <th>ایمیل</th>
+              <th>نقش</th>
               <th>ویرایش</th>
+              <th>تغییر نقش</th>
               <th>حذف</th>
               <th>بن</th>
             </tr>
@@ -294,9 +340,15 @@ export default function AdminUsers() {
                   <td>{user.name}</td>
                   <td>{user.username}</td>
                   <td>{user.email}</td>
+                  <td>{user.role == 'ADMIN' ? 'مدیر' : 'کاربر'}</td>
                   <td>
                     <button type="button" class="btn btn-primary edit-btn">
                       ویرایش
+                    </button>
+                  </td>
+                  <td>
+                    <button type="button" class="btn btn-primary edit-btn" onClick={() => changeRole(user._id, user.role)}>
+                      ارتقا
                     </button>
                   </td>
                   <td>

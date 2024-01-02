@@ -34,3 +34,4 @@ router
   .put(isAuthenticated, isAdminMiddleware, userController.changeUserRole);
 
 module.exports = router;
+
