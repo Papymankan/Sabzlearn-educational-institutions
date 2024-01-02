@@ -14,28 +14,31 @@ export default function AdminTickets() {
             },
         }).then(res => res.json()).then(data => {
             let arr = []
-            let filterArr = []
+            let filterArr1 = []
+            let filterArr2 = []
+            let filterArr3 = []
+            let filterArr4 = []
 
-            filterArr = data.filter(ticket => {
-                return ticket.answer == 0 && ticket.priority == 1
+            data.map(ticket => {
+                if (ticket.answer == 0) {
+                    if (ticket.priority == 1) {
+                        filterArr1.push(ticket)
+                    } else if (ticket.priority == 2) {
+                        filterArr2.push(ticket)
+                    } else if (ticket.priority == 3) {
+                        filterArr3.push(ticket)
+                    }
+                }else {
+                    filterArr4.push(ticket)
+                }
             })
-            arr = arr.concat(filterArr)
 
-            filterArr = data.filter(ticket => {
-                return ticket.answer == 0 && ticket.priority == 2
-            })
-            arr = arr.concat(filterArr)
+            arr = filterArr1.concat(filterArr2).concat(filterArr3).concat(filterArr4)
 
-            filterArr = data.filter(ticket => {
-                return ticket.answer == 0 && ticket.priority == 3
-            })
-            arr = arr.concat(filterArr)
-
-            filterArr = data.filter(ticket => {
-                return ticket.answer == 1
-            })
-            arr = arr.concat(filterArr)
-
+            console.log(filterArr1);
+            console.log(filterArr2);
+            console.log(filterArr3);
+            console.log(arr);
             setTickets(arr)
         })
     }
@@ -75,13 +78,16 @@ export default function AdminTickets() {
                         {
                             tickets.map((ticket, index) => (
                                 <tr className={ticket.answer ? 'answered-ticket' : ''}>
-                                    <td className={ticket.priority == 1 ? 'high-priority' : (ticket.priority == 2 ? 'mid-priority' : 'low-priority')} >{index + 1}</td>
+                                    <td className={!ticket.answer && (ticket.priority == 1 ? 'high-priority' : (ticket.priority == 2 ? 'mid-priority' : 'low-priority'))} >{index + 1}</td>
                                     <td>{ticket.priority == 1 ? 'بالا' : (ticket.priority == 2 ? 'متوسط' : 'پایین')}</td>
                                     <td>{ticket.departmentSubID}</td>
                                     <td>{ticket.title}</td>
                                     <td>{ticket.user}</td>
                                     <td>
-                                        <button className="btn btn-primary delete-btn" onClick={()=>ShowTicket(ticket.body)}>مشاهده</button>
+                                        <button className="btn btn-primary delete-btn" onClick={() => ShowTicket(ticket.body)}>مشاهده</button>
+                                    </td>
+                                    <td>
+                                        <button className="btn btn-primary delete-btn" onClick={() => answerTicket(ticket._id)}>پاسخ</button>
                                     </td>
                                 </tr>
                             ))

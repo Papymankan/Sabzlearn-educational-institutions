@@ -775,7 +775,7 @@
      height: 100px
   }
   .answered-ticket{
-    background-color: rgb(172, 172, 101);
+    background-color: rgba(239, 239, 116, 0.703);
   }
   .high-priority{
     background-color: rgb(38, 67, 197) !important;
