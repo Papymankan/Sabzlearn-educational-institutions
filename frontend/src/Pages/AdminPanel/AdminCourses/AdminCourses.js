@@ -14,8 +14,8 @@ export default function AdminCourses() {
     const [CourseStatus, setCourseStatus] = useState('presell')
     const [CourseCover, setCourseCover] = useState({})
 
-    
-    const [formState, onInputHandler] = useForm({
+
+    const [formState, onInputHandler, onInputSubmit] = useForm({
         name: {
             value: '',
             isValid: false
@@ -107,40 +107,42 @@ export default function AdminCourses() {
         setCatId(e.target.value)
     }
 
-    const addNewCourse = (event)=>{
+    const addNewCourse = (event) => {
         event.preventDefault()
         let formData = new FormData()
-        formData.append('name' , formState.inputs.name.value)
-        formData.append('description' , formState.inputs.description.value)
-        formData.append('shortName' , formState.inputs.shortName.value)
-        formData.append('price' , formState.inputs.price.value)
-        formData.append('support' , formState.inputs.support.value)
-        formData.append('categoryID' , catId)
-        formData.append('status' , CourseStatus)
-        formData.append('cover' , CourseCover)
+        formData.append('name', formState.inputs.name.value)
+        formData.append('description', formState.inputs.description.value)
+        formData.append('shortName', formState.inputs.shortName.value)
+        formData.append('price', formState.inputs.price.value)
+        formData.append('support', formState.inputs.support.value)
+        formData.append('categoryID', catId)
+        formData.append('status', CourseStatus)
+        formData.append('cover', CourseCover)
 
         const localData = JSON.parse(localStorage.getItem('user'))
-        fetch('http://localhost:4000/v1/courses' , {
-            method:'POST',
+        fetch('http://localhost:4000/v1/courses', {
+            method: 'POST',
             headers: {
                 'Authorization': `Bearer ${localData.token}`
-              },
-            body: formData  
+            },
+            body: formData
         }).then(res => {
-            if(res.ok){
+            if (res.ok) {
                 Swal.fire({
                     title: '<p style="font-size: 30px ; margin-bottom: 10px;">با موفقیت اضافه شد</p>',
                     icon: 'success',
                     padding: '20px',
                     didOpen: () => {
-                      Swal.showLoading()
+                        Swal.showLoading()
                     },
                     width: '380px',
                     timer: 1500,
                     willClose: () => {
                         fetchCourses()
+                        onInputSubmit()
+                        setCatId('')
                     }
-                  })
+                })
             }
         })
     }
@@ -170,6 +172,8 @@ export default function AdminCourses() {
                                         minValidator(3),
                                         maxValidator(20),
                                     ]}
+                                    state={formState.inputs}
+
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -188,6 +192,8 @@ export default function AdminCourses() {
                                         minValidator(3),
                                         maxValidator(20),
                                     ]}
+                                    state={formState.inputs}
+
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -205,6 +211,8 @@ export default function AdminCourses() {
                                         requiredValidator(),
                                         minValidator(3),
                                     ]}
+                                    state={formState.inputs}
+
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -223,6 +231,8 @@ export default function AdminCourses() {
                                         minValidator(3),
                                         maxValidator(20),
                                     ]}
+                                    state={formState.inputs}
+
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -241,6 +251,8 @@ export default function AdminCourses() {
                                         minValidator(3),
                                         maxValidator(20),
                                     ]}
+                                    state={formState.inputs}
+
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -248,8 +260,8 @@ export default function AdminCourses() {
                         <div class="col-6">
                             <div class="number input">
                                 <label class="input-title">دسته‌بندی دوره</label>
-                                <select onChange={(e) => catChange(e)} className={'selectBox'}>
-                                    <option value='none' disabled selected hidden >انتخاب دسته‌بندی</option>
+                                <select onChange={(e) => catChange(e)} className={'selectBox'} value={catId}>
+                                    <option value='' disabled selected hidden >انتخاب دسته‌بندی</option>
                                     {
                                         categories.map(cat => (
                                             <option value={cat._id}>{cat.title}</option>
@@ -262,9 +274,9 @@ export default function AdminCourses() {
                         <div class="col-6 " id='fileBox'>
                             <div class="file input">
                                 <label class="input-title">عکس دوره</label>
-                                <input type="file" id="file" onChange={event =>{
+                                <input type="file" id="file" onChange={event => {
                                     setCourseCover(event.target.files[0])
-                                }}/>
+                                }} />
                             </div>
                         </div>
                         <div class="col-6">
@@ -272,22 +284,22 @@ export default function AdminCourses() {
                                 <label class="input-title">وضعیت دوره</label>
                                 <div class="radios" id='statusRadio'>
                                     <div class="presell-true">
-                                            <span>پیش فروش</span>
-                                            <input
-                                                type="radio"
-                                                value="presell"
-                                                name="presell"
-                                                className='radioInput'
-                                                checked onInput={event => setCourseStatus(event.target.value)
-                                                
-                                                }
-                                            />
+                                        <span>پیش فروش</span>
+                                        <input
+                                            type="radio"
+                                            value="presell"
+                                            name="presell"
+                                            className='radioInput'
+                                            checked onInput={event => setCourseStatus(event.target.value)
+
+                                            }
+                                        />
                                     </div>
                                     <div class="presell-false">
-                                            <span>در حال برگزاری</span>
-                                            <input type="radio" value="start" name="presell"  onInput={event => setCourseStatus(event.target.value)}
+                                        <span>در حال برگزاری</span>
+                                        <input type="radio" value="start" name="presell" onInput={event => setCourseStatus(event.target.value)}
                                             className='radioInput'
-                                            />
+                                        />
                                     </div>
                                 </div>
                             </div>
@@ -297,7 +309,7 @@ export default function AdminCourses() {
                             <div class="bottom-form">
                                 <div class="submit-btn">
                                     <input type="submit" value="افزودن" onClick={addNewCourse}
-                                    disabled={!formState.isFormValid || catId == ''}
+                                        disabled={!formState.isFormValid || catId == ''}
                                     />
                                 </div>
                             </div>
