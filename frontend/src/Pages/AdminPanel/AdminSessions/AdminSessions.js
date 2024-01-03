@@ -13,7 +13,7 @@ export default function AdminSessions() {
     const [SessionFile, setSessionFile] = useState({})
     const [sessions, setSessions] = useState([])
     const [isFree, setIsFree] = useState(0)
-    const [formState, onInputHandler] = useForm(
+    const [formState, onInputHandler , onInputSubmit] = useForm(
         {
             title: {
                 value: "",
@@ -74,6 +74,8 @@ export default function AdminSessions() {
                     timer: 1500,
                     willClose: () => {
                         fetchSessions()
+                        onInputSubmit()
+                        setSessionCourse('')
                     }
                 })
             }
@@ -137,6 +139,8 @@ export default function AdminSessions() {
                                     id="title"
                                     validation={[minValidator(5)]}
                                     placeholder="لطفا نام جلسه را وارد کنید..."
+                                    state={formState.inputs}
+
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -151,6 +155,7 @@ export default function AdminSessions() {
                                     id="time"
                                     validation={[minValidator(1)]}
                                     placeholder="لطفا مدت زمان جلسه را وارد کنید..."
+                                    state={formState.inputs}
                                 />
                                 <span class="error-message text-danger"></span>
                             </div>
@@ -160,8 +165,8 @@ export default function AdminSessions() {
                                 <label class="input-title" style={{ display: "block" }}>
                                     دوره
                                 </label>
-                                <select class="select" onChange={event => setSessionCourse(event.target.value)}>
-                                    <option value="none" disabled hidden selected>دوره مدنظر را انتخاب کنید</option>
+                                <select class="select" onChange={event => setSessionCourse(event.target.value)} value={SessionCourse}>
+                                    <option value="" disabled hidden selected>دوره مدنظر را انتخاب کنید</option>
                                     {courses.map((course) => (
                                         <option value={course._id} key={course._id}>{course.name}</option>
                                     ))}
