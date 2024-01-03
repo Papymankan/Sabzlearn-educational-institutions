@@ -8,7 +8,7 @@ export default function AdminUsers() {
 
   const [users, setUsers] = useState([])
 
-  const [formState, onInputHandler] = useForm({
+  const [formState, onInputHandler, onInputSubmit] = useForm({
     name: {
       value: '',
       isValid: false
@@ -157,8 +157,8 @@ export default function AdminUsers() {
       }
       res.json()
     }).then(result => {
-      console.log(result);
       fetchUsers()
+      onInputSubmit()
     })
   }
 
@@ -227,6 +227,7 @@ export default function AdminUsers() {
                   maxValidator(20),
                 ]}
                 onInputHandler={onInputHandler}
+                state={formState.inputs}
                 placeholder="لطفا نام و نام خانوادگی کاربر را وارد کنید..."
               />
               <span class="error-message text-danger"></span>
@@ -246,6 +247,7 @@ export default function AdminUsers() {
                   maxValidator(20),
                 ]}
                 onInputHandler={onInputHandler}
+                state={formState.inputs}
                 placeholder="لطفا نام کاربری را وارد کنید..."
               />
               <span class="error-message text-danger"></span>
@@ -265,6 +267,7 @@ export default function AdminUsers() {
                   emailValidator(),
                 ]}
                 onInputHandler={onInputHandler}
+                state={formState.inputs}
                 placeholder="لطفا ایمیل کاربر را وارد کنید..."
               />
               <span class="error-message text-danger"></span>
@@ -284,6 +287,7 @@ export default function AdminUsers() {
                   maxValidator(20),
                 ]}
                 onInputHandler={onInputHandler}
+                state={formState.inputs}
                 placeholder="لطفا رمز عبور کاربر را وارد کنید..."
               />
               <span class="error-message text-danger"></span>
@@ -303,6 +307,7 @@ export default function AdminUsers() {
                   maxValidator(20),
                 ]}
                 onInputHandler={onInputHandler}
+                state={formState.inputs}
                 placeholder="لطفا شماره تلفن کاربر را وارد کنید..."
               />
               <span class="error-message text-danger"></span>

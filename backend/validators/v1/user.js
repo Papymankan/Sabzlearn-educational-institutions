@@ -24,8 +24,8 @@ const editUserValidator = yup.object().shape({
     .max(40, "نام و نام خانوادگی نباید بیشتر از 40 کاراکتر باشد"),
   phone: yup.string(),
   role: yup
-  .string()
-  .oneOf(["ADMIN", "USER"], "نقش کاربر باید یکی از مقادیر ADMIN و USER باشد"),
+    .string()
+    .oneOf(["ADMIN", "USER"], "نقش کاربر باید یکی از مقادیر ADMIN و USER باشد"),
   id: yup
     .string()
     .required("شناسه کاربر الزامی است")
@@ -48,14 +48,14 @@ const updateUserValidator = yup.object().shape({
 
 
 const changeUserRoleValidator = yup.object().shape({
+  role: yup
+    .string()
+    .required("نقش کاربر الزامی است")
+    .oneOf(["ADMIN", "USER"], "نقش کاربر باید یکی از مقادیر ADMIN و USER باشد"),
   id: yup
     .string()
     .required("شناسه کاربر الزامی است")
     .matches(/^[0-9a-fA-F]{24}$/, "شناسه کاربر معتبر نیست"),
-  role: yup
-    .string()
-    .oneOf(["ADMIN", "USER"], "نقش کاربر باید یکی از مقادیر ADMIN و USER باشد")
-    .required("نقش کاربر الزامی است"),
 });
 
 module.exports = {

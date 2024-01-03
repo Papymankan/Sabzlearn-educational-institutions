@@ -163,13 +163,7 @@ exports.changeUserRole = async (req, res, next) => {
 
     console.log(role);
 
-    const user = await userModel.findByIdAndUpdate(id,
-      {
-        _id: id,
-        role: role
-      },
-
-    );
+    const user = await userModel.findOneAndUpdate({_id:id} , {role})
 
     res.json({ msg: `User role changed to ${role} successfully` });
   } catch (error) {
