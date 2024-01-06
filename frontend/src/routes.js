@@ -31,6 +31,7 @@ import EditAccount from './Pages/UserPanel/EditAccount/EditAccount'
 import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import AdminTickets from './Pages/AdminPanel/AdminTickets/AdminTickets'
 import AdminEvents from './Pages/AdminPanel/AdminEvents/AdminEvents'
+import NotFoundPage from './Pages/404Page/NotFoundPage'
 
 
 const routes = [
@@ -43,33 +44,39 @@ const routes = [
     { path: '/register', element: <Register /> },
     { path: '/articles/:page', element: <AllArticles /> },
     { path: '/contact', element: <Contact /> },
-    { path: '/search/:value', element: <Search/> } ,
-    { path: '/:courseName/:sessionID', element: <Session/> } ,
+    { path: '/search/:value', element: <Search /> },
+    { path: '/:courseName/:sessionID', element: <Session /> },
 
-    { path: '/admin-panel/*', element: <PrivateRoute><AdminPanel/></PrivateRoute> , children : [
-        { path: 'users', element: <AdminUsers/>} , 
-        { path: '', element: <AdminMain/>} , 
-        { path: 'courses', element: <AdminCourses/>} , 
-        { path: 'categories', element: <AdminCategory/>} , 
-        { path: 'contact', element: <AdminContact/>} , 
-        { path: 'articles', element: <AdminArticles/>} , 
-        { path: 'sessions', element: <AdminSessions/>} , 
-        { path: 'menus', element: <AdminMenus/>} , 
-        { path: 'comments', element: <AdminComments/>} , 
-        { path: 'offs', element: <AdminOffs/>} , 
-        { path: 'tickets', element: <AdminTickets/>} , 
-        { path: 'events', element: <AdminEvents/>} , 
-    ] } ,
+    {
+        path: '/admin-panel/*', element: <PrivateRoute><AdminPanel /></PrivateRoute>, children: [
+            { path: 'users', element: <AdminUsers /> },
+            { path: '', element: <AdminMain /> },
+            { path: 'courses', element: <AdminCourses /> },
+            { path: 'categories', element: <AdminCategory /> },
+            { path: 'contact', element: <AdminContact /> },
+            { path: 'articles', element: <AdminArticles /> },
+            { path: 'sessions', element: <AdminSessions /> },
+            { path: 'menus', element: <AdminMenus /> },
+            { path: 'comments', element: <AdminComments /> },
+            { path: 'offs', element: <AdminOffs /> },
+            { path: 'tickets', element: <AdminTickets /> },
+            { path: 'events', element: <AdminEvents /> },
+        ]
+    },
 
-    { path: '/user-panel/*', element: <UserPanel/> , children : [
-        { path: '', element: <UserMain/>} , 
-        { path: 'orders', element: <UserOrders/>}  ,
-        { path: 'courses', element: <UserCourses/>} , 
-        { path: 'tickets', element: <UserTickets/>} , 
-        { path: 'send-ticket', element: <SendTicket/>} , 
-        { path: 'tickets/answer/:id', element: <TicketAnswer/>} , 
-        { path: 'edit-account', element: <EditAccount/>} , 
-    ] }
+    {
+        path: '/user-panel/*', element: <UserPanel />, children: [
+            { path: '', element: <UserMain /> },
+            { path: 'orders', element: <UserOrders /> },
+            { path: 'courses', element: <UserCourses /> },
+            { path: 'tickets', element: <UserTickets /> },
+            { path: 'send-ticket', element: <SendTicket /> },
+            { path: 'tickets/answer/:id', element: <TicketAnswer /> },
+            { path: 'edit-account', element: <EditAccount /> },
+        ]
+    }
+    ,
+    { path: '*', element: <NotFoundPage /> },
 ]
 
 export default routes

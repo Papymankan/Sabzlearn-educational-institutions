@@ -1,0 +1,11 @@
+
+.notFound-main>h1:first-of-type{
+    font-size: 40px;
+    color: var(--primary-color);
+    font-family: var(--primary-font);
+}
+.notFound-main>p:first-of-type{
+    font-size: 20px;
+    font-family: var(--primary-font);
+    margin: 30px 0 60px 0;
+}
