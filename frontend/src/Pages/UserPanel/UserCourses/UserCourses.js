@@ -76,24 +76,24 @@ export default function UserCourses() {
                                         <a class="main__box-img-link" href="#">
                                             <img
                                                 class="main__box-img img-fluid"
-                                                src={`http://localhost:4000/courses/covers/${course.course.cover}`}
+                                                src={`http://localhost:4000/courses/covers/${course.course && course.course.cover}`}
                                             />
                                         </a>
                                     </div>
                                     <div class="main__box-left">
-                                        <Link to={`/course-info/${course.course.shortName}`} class="main__box-title">
-                                            {course.course.name}
+                                        <Link to={`/course-info/${course.course &&  course.course.shortName}`} class="main__box-title">
+                                            {course.course && course.course.name}
                                         </Link>
                                         <div class="main__box-bottom">
                                             <div class="main__box-all">
                                                 <span class="main__box-all-text">وضعیت:</span>
-                                                <span class="main__box-all-value">{course.course.isComplete ? 'تکمیل شده' : ' در حال برگزاری'}</span>
+                                                <span class="main__box-all-value">{course.course && course.course.isComplete ? 'تکمیل شده' : ' در حال برگزاری'}</span>
                                             </div>
                                             <div class="main__box-completed">
                                                 <span class="main__box-completed-text">
                                                     قیمت:{' '}
                                                 </span>
-                                                <span class="main__box-completed-value">{course.course.price ? course.course.price.toLocaleString() : 'رایگان'}</span>
+                                                <span class="main__box-completed-value">{course.course &&  (course.course.price ? course.course.price.toLocaleString() : 'رایگان')}</span>
                                             </div>
                                         </div>
                                     </div>

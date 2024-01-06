@@ -17,7 +17,7 @@ export default function UserSideBar() {
             html: '<p style="font-size: 20px ; margin-bottom: 20px;">در حال منتقل شدن...</p>',
             didOpen: () => {
                 Swal.showLoading()
-            }, 
+            },
             width: '380px',
             timer: 1500,
             willClose: () => {
@@ -36,11 +36,11 @@ export default function UserSideBar() {
                                 پیشخوان
                             </Link>
                         </li>
-                        <li class="sidebar__item">
+                        {authContext.userInfos.role != 'ADMIN' && <li class="sidebar__item">
                             <Link class="sidebar__link" to={'orders'}>
                                 سفارش
                             </Link>
-                        </li>
+                        </li>}
                         <li class="sidebar__item">
                             <a class="sidebar__link" href="#">
                                 کیف پول من
@@ -51,11 +51,11 @@ export default function UserSideBar() {
                                 جزئیات حساب کاربری
                             </Link>
                         </li>
-                        <li class="sidebar__item">
+                        {authContext.userInfos.role != 'ADMIN' && <li class="sidebar__item">
                             <Link class="sidebar__link" to={'courses'}>
                                 دوره های خریداری شده
                             </Link>
-                        </li>
+                        </li>}
                         <li class="sidebar__item">
                             <Link class="sidebar__link" to={'tickets'}>
                                 تیکت های پشتیبانی

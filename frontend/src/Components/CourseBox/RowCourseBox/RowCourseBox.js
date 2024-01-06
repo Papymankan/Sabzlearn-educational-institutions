@@ -65,9 +65,9 @@ export default function RowCourseBox({ name, description, price, creator, cover,
                                 </span>
                             </div>
                             <span class="course__box-footer-left">
-                                {price === 0
-                                    ? "رایگان"
-                                    : price.toLocaleString()}
+                                <span class={(discount && price != 0) ? 'course-box__price lineThrough' : ''}>{price >= 1 ? price.toLocaleString() : 'رایگان'}</span>
+                                &nbsp;
+                                {discount && price != 0 && <span class="course-box__price">{price >= 1 ? (price - (discount * price / 100)).toLocaleString() : 'رایگان'}</span>}
                             </span>
                         </div>
                     </div>

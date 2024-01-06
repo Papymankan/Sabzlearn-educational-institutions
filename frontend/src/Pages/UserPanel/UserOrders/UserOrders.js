@@ -12,7 +12,9 @@ export default function UserOrders() {
             headers: {
                 'Authorization': `Bearer ${localData.token}`
             },
-        }).then(res => res.json()).then(data => setOrders(data))
+        }).then(res => res.json()).then(data => {
+            console.log(data);
+            setOrders(data)})
     }, [])
 
     return (
@@ -38,15 +40,15 @@ export default function UserOrders() {
                                     </a>
                                 </td>
                                 <td class="order__table-body-item">{order.createdAt.slice(0, 10)}</td>
-                                <td class="order__table-body-item">{order.course.isComplete ? 'تکمیل شده' : 'در حال برگزاری'}</td>
+                                <td class="order__table-body-item">{order.course && (order.course.isComplete ? 'تکمیل شده' : 'در حال برگزاری')}</td>
                                 <td class="order__table-body-item">
-                                    {order.course.name}
+                                    {order.course && order.course.name}
                                 </td>
                                 <td class="order__table-body-item">
                                     {order.price}
                                 </td>
                                 <td class="order__table-body-item">
-                                    <Link class="order__table-body-btn" to={`/course-info/${order.course.shortName}`}>
+                                    <Link class="order__table-body-btn" to={order.course &&(`/course-info/${order.course.shortName}`)}>
                                         نمایش
                                     </Link>
                                 </td>
