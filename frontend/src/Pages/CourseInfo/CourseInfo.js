@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Comments from '../../Components/Comments/Comments'
 import Footer from './../../Components/Footer/Footer'
 import BreadCrumb from '../../Components/BreadCrumb/BreadCrumb'
@@ -12,6 +12,7 @@ import { Link } from 'react-router-dom'
 import NavBar from '../../Components/Header/NavBar/NavBar'
 import TopBar from '../../Components/Header/TopBar/TopBar'
 import Swal from 'sweetalert2'
+import AuthContext from '../../Context/authContext'
 
 
 export default function CourseInfo() {
@@ -26,7 +27,7 @@ export default function CourseInfo() {
   const [category, setCategory] = useState({})
   const [related, setRelated] = useState([])
 
-
+  const authContext = useContext(AuthContext)
 
   useEffect(() => {
     const localData = JSON.parse(localStorage.getItem('user'))
@@ -372,9 +373,13 @@ export default function CourseInfo() {
             <div className="col-4">
               <div class="courses-info">
                 <div class="course-info">
-                  <div class="course-info__register" onClick={registerToCourse}>
+                  <div class="course-info__register" onClick={()=>{
+                    if(authContext.isloggedIn){
+                      registerToCourse()
+                    }
+                  }}>
                     {
-                      courseData.isUserRegisteredToThisCourse ? (
+                      authContext.isloggedIn ? (courseData.isUserRegisteredToThisCourse ? (
                         <span class="course-info__register-title">
                           <i class="fas fa-graduation-cap course-info__register-icon"></i>
                           &nbsp;
@@ -384,7 +389,9 @@ export default function CourseInfo() {
                         <span class="course-info__register-title">
                           ثبت نام در دوره
                         </span>
-                      )
+                      )) : <span class="course-info__register-title">
+                        برای ثبت نام ابتدا وارد شوید
+                      </span>
                     }
                   </div>
                 </div>
