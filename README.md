@@ -20,7 +20,7 @@
 2. Single Page Application 
 3. Inputs Validators
 4. Pagination
-5. Dashboard Admin (new)
+5. Dashboard Admin (NEW!!  To access cms login with ||USERNAME : amin_saeedi / PASSWORD : 123456789||   then go to "/admin-panel" route)
 6. Add, delete, and edit new courses, sessions, articles, users, etc. (NEW)
 7. Swiper.js
 8. ckeditor
@@ -40,5 +40,7 @@ cd frontend
 npm i
 npm start
 ```
+
+> NOTE : The backend of this project is designed by the backend development team, and if there is a problem, the frontend developers are not involved.
 
 ![](1.PNG)
