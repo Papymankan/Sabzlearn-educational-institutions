@@ -27,8 +27,8 @@ export default function UserMain() {
               <IndexBox title="سفارش" href="orders" />
               <IndexBox title="دوره های خریداری شده" href="courses" />
               <IndexBox title="کیف پول من" href="money" />
-              <IndexBox title="جزئیات حساب کاربری" href="infos" />
-              <IndexBox title="تیکت های پشتیبانی" href="ticket" />
+              <IndexBox title="جزئیات حساب کاربری" href="edit-account" />
+              <IndexBox title="تیکت های پشتیبانی" href="tickets" />
             </div>
           </div>
         </div>

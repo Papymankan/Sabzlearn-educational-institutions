@@ -32,6 +32,7 @@ import PrivateRoute from './Components/PrivateRoute/PrivateRoute'
 import AdminTickets from './Pages/AdminPanel/AdminTickets/AdminTickets'
 import AdminEvents from './Pages/AdminPanel/AdminEvents/AdminEvents'
 import NotFoundPage from './Pages/404Page/NotFoundPage'
+import NotFoundPageUser from './Pages/UserPanel/404Page/NotFoundPageUser'
 
 
 const routes = [
@@ -73,6 +74,7 @@ const routes = [
             { path: 'send-ticket', element: <SendTicket /> },
             { path: 'tickets/answer/:id', element: <TicketAnswer /> },
             { path: 'edit-account', element: <EditAccount /> },
+            { path: '*', element: <NotFoundPageUser /> },
         ]
     }
     ,
