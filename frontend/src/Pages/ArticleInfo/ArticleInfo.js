@@ -6,6 +6,7 @@ import TopBar from '../../Components/Header/TopBar/TopBar'
 import Footer from '../../Components/Footer/Footer'
 import CommentSection from '../../Components/CommentSection/CommentSection'
 import { useParams } from 'react-router'
+import { Skeleton } from '@mui/material'
 import domPurify from 'dompurify'
 
 export default function ArticleInfo() {
@@ -26,12 +27,13 @@ export default function ArticleInfo() {
     <>
       <TopBar />
       <NavBar />
-      <BreadCrumb links={[
-        { id: 1, title: 'خانه', to: '/' },
-        { id: 2, title: 'آموزش برنامه نویسی فرانت اند', to: '/category/frontend' },
-        { id: 3, title: 'دوره متخصص جاوا اسکریپت', to: '/courseInfo/javascript' },
-      ]}
-      />
+      {
+        articleInfo.categoryID && <BreadCrumb links={[
+          { id: 1, title: 'خانه', to: '/' },
+          { id: 2, title: 'آموزش برنامه نویسی فرانت اند', to: `/category/${articleInfo.categoryID.name}/1` },
+        ]}
+        />
+      }
       <main class="main">
         <div class="container">
           <div class="row">
@@ -43,23 +45,14 @@ export default function ArticleInfo() {
                 <div class="article__header">
                   <div class="article-header__category article-header__item">
                     <i class="far fa-folder article-header__icon"></i>
-                    <a href="#" class="article-header__text">جاوا اسکریپت</a>
+                    {articleInfo.categoryID ? <a href="#" class="article-header__text">{articleInfo.categoryID.title}</a> : <Skeleton variant="rectangular" width={100} height={18} className='Skleton-articleTop' />}
                   </div>
                   <div class="article-header__category article-header__item">
                     <i class="far fa-user article-header__icon"></i>
-                    <span class="article-header__text"> ارسال شده توسط قدیر</span>
-                  </div>
-                  <div class="article-header__category article-header__item">
-                    <i class="far fa-clock article-header__icon"></i>
-                    <span class="article-header__text"> ارسال شده توسط قدیر</span>
-                  </div>
-                  <div class="article-header__category article-header__item">
-                    <i class="far fa-eye article-header__icon"></i>
-                    <span class="article-header__text">  2.14k بازدید</span>
+                    {articleInfo.creator ? <span class="article-header__text"> ارسال شده توسط {articleInfo.creator.name}</span> : <Skeleton variant="rectangular" width={100} height={18} className='Skleton-articleTop' />}
                   </div>
                 </div>
-                <img src="/images/blog/1.jpg" alt="Article Cover" class="article__banner" />
-
+                {articleInfo.cover ? <img src={`http://localhost:4000/courses/covers/${articleInfo.cover}`} alt="Article Cover" class="article__banner" /> : <Skeleton variant="rectangular" width={"100%"} height={400} className='Skleton-articleIMG' /> }
                 <div class="article__score">
                   <div class="article__score-icons">
                     <img src="/images/svgs/star_fill.svg" class="article__score-icon" />
@@ -90,7 +83,7 @@ export default function ArticleInfo() {
                   </ul>
                 </div>
 
-                <div className="article-section" dangerouslySetInnerHTML={{__html : domPurify.sanitize(articleInfo.body)}}>
+                <div className="article-section" dangerouslySetInnerHTML={{ __html: domPurify.sanitize(articleInfo.body) }}>
 
                 </div>
 

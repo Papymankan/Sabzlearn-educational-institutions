@@ -27,6 +27,7 @@
 
 .article-header__item {
     margin-left: 2rem;
+    display: flex;
 }
 
 .article-header__icon {
@@ -37,10 +38,13 @@
 .article-header__text {
     font-size: 1.2rem;
     color: #8f8f8f;
+    margin-right: 8px;
 }
 
 .article__banner {
     margin-top: 4rem;
+    width: 100%;
+    height: auto;
 }
 
 .article__score {
@@ -263,3 +267,10 @@
 }
 
 /* Finish Helper Classes */
+
+.Skleton-articleTop{
+    margin-right: 10px;
+}
+.Skleton-articleIMG{
+    margin-top: 50px;
+}

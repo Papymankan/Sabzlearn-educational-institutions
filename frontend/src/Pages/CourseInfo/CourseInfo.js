@@ -338,7 +338,7 @@ export default function CourseInfo() {
                     <a href="#" class="introduction__btns-item">دانلود همگانی ویدیوها</a>
                     <a href="#" class="introduction__btns-item">دانلود همگانی پیوست‌ها</a>
                   </div>
-                  <AccordionCourse sessions={sessions} IsRegistered={courseData.isUserRegisteredToThisCourse} courseName={courseName} />
+                  {/* <AccordionCourse sessions={sessions} IsRegistered={courseData.isUserRegisteredToThisCourse} courseName={courseName} /> */}
                 </div>
                 {/* Introduction end */}
 
